@@ -98,7 +98,7 @@ Additionally, each loop of vasa recta begins at and returns to the cortex-medull
 Moreover, we must have the turning points of the loops of Henle and vasa recta at the end and the beginning of their corresponding descending and the ascending compartments, i.e., $\sup\Omega_k = \sup\Omega_{-k}$ for $k=1,\dots,N,3N+1,\dots,3N+P$.
 For collecting tubules, we have $\Omega_{3N+P+1}=\Omega_{3N+P+2}=\Omega_{3N+P+3}=\Omega$.
 We require that, by setting $\alpha_k=0$ in $\Omega\setminus\Omega_k$, we must have
-\begin{equation}
+\begin{equation}\label{eq:const_vol}
     \sum_{k=-3N-P}^{3N+P+3} \alpha_k = \alpha
 \end{equation}
     for a given volume density function $\alpha:\overline{\Omega}\to\mathbb{R}_+$.
@@ -212,8 +212,8 @@ The reaction terms $s_i^k$, $k=0,\pm(3N+1),\dots,\pm(3N+P)$, also have similar e
 
 Now, we describe the water flow velocity, $u_k$ and the solute flow within each compartment $f_i^k$.
 In Alan Weinstein's steady state model, there is no axial flow in the interstitium ($k=0$) --- that is $f_i^0=u_0=0$ for all $i$.
-For $k=\pm 1,\dots,\pm N,\pm(3N+1),\dots,\pm(3N+P),K+1,K+2,K+3$, 
-the water flow is given by Poisseuille's equation $\xi_k\alpha_ku_k = -\partial p_k/\partial x$, where $\xi_k\alpha_k$ is the hydrolic resistivity with $\xi_k$ constant and $p_k$ is the hydrostatic pressure, and the corresponding solute flows 
+For $k=\pm 1,\dots,\pm N,\pm(3N+1),\dots,\pm(3N+P),K,K+1,K+2$, 
+the water flow is given by Poisseuille's equation $\rho_k\alpha_ku_k = -\partial p_k/\partial x$, where $\rho_k\alpha_k$ is the hydrolic resistivity with $\rho_k$ constant and $p_k$ is the hydrostatic pressure, and the corresponding solute flows 
 $f_i^k$ are assumed to be purely convective, i.e., $f_i^k = \alpha_ku_kc_i^k$.
 In general, $f_i^k$ can be generalized into Nernst-Planck equation:
 \begin{equation}
@@ -225,9 +225,9 @@ and the water flow velocity $u_k$
 % , including possibly when $k=0$, 
 is determined by the compartmental pressure field and driven by electrostatic force:
 \begin{gather}
-    \xi_k\alpha_k u_k = -\frac{\partial \tilde{p}_k}{\partial x} - \sum_{i=1}^{M'}z_iFc_i^k\frac{\partial \phi_k}{\partial x},\\
+    \rho_k\alpha_k u_k = -\frac{\partial \tilde{p}_k}{\partial x} - \sum_{i=1}^{M'}z_iFc_i^k\frac{\partial \phi_k}{\partial x},\\
     M'=\begin{cases}
-        M&\quad \text{if}\quad k=\pm 1,\dots,\pm N,K+1,\dots,K+3,\\
+        M&\quad \text{if}\quad k=\pm 1,\dots,\pm N,K,K+1,K+2,\\
         M+B &\quad \text{if}\quad k=0,\pm(3N+1),\dots,\pm(3N+P),
     \end{cases}\nonumber
 \end{gather}
@@ -242,9 +242,18 @@ To determine the electrical potential $\phi_k$ and the hydrostatic pressure in e
 \begin{equation}
      0=z_0^k Fa_k+\sum_{i=1}^{M'}z_iF \alpha_k c_i^k,
 \end{equation}
-and the pressure balance between compartments is described by compliances:
+and the pressure balance between compartments is described by compliances $\nu_k$, $k=\pm 1,\dots,\pm N,\pm(3N+1),\dots,\pm(3N+P),K,K+1,K+2$:
 \begin{equation}
-    \nu_k(p_k - p_0) = \frac{\alpha_k}{\alpha_k^0}-1,\quad k=1,\dots,N,
+    \nu_k(p_k - p_0) = \frac{\alpha_k}{\alpha_k^0}-1,\quad 
 \end{equation}
+where $\alpha_k^0$ is the baseline volume in which the pressure on both sides are equal.
+For the ICS and ECS compartments, we set, for $n=\pm 1,\dots,\pm N$:
+\begin{gather}
+    p_{N'+n} = p_n,\\
+    p_K = p_{K+1},\\
+    p_{2N'+n} = p_0 = p_{K+2}.
+\end{gather}
+Note that, in Alan Weinstein's model, the hydrostatic pressures of vasa recta and interstitium are computed from the balance equation, since the volume densities of vasa recta and interstitium are fixed.
+These conditions are functionally equivalent to our equation (\ref{eq:const_vol}).
 
 \end{document}
