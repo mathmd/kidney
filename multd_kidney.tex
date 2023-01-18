@@ -70,7 +70,7 @@
 This is a reformulation of Alan Weinstein's kidney model as of 2022 in the framework of multidomain model.
 In the process, we point out the necessary assumptions, in addition to those of multidomain model, needed to be made in order to derive the kidney model.
 Then, we give the steady state model used in Alan Weinstein's recent papers.
-This is in hope that we have a clear overall picture which will ease us in the analysis of the model.
+% This is in hope that we have a clear overall picture which will ease us in our analysis of the model.
 
 \section{Model derivation}
 
@@ -182,14 +182,14 @@ We have the equations for the solutes in nephron compartments, with $n=\pm 1,\do
 Similarly, for collecting tubules, we also have
 \begin{alignat}{2}
     \frac{\partial }{\partial t}(\alpha_Kc_i^K) &= -\frac{\partial f_i^K}{\partial x}-\sum_{m=1}^4 \gamma_m^Kg_i^{K,m}+s_i^K \qquad \ &&\text{in}\quad \Omega,\\
-    \frac{\partial }{\partial t}(\alpha_{K+m}c_i^{K+m}) &= \gamma_m^Kg_i^{K,m}-\beta_m^Kq_i^{K,m}-\lambda_m^K\ell_i^{K,m}+s_i^{K+m} \quad \ &&\text{in}\quad \Omega,\\
+    \frac{\partial }{\partial t}(\alpha_{K+m}c_i^{K+m}) &= \gamma_m^Kg_i^{K,m}-\beta_m^Kq_i^{K,m}-\lambda_m^K\ell_i^{K,m}+s_i^{K+m} \quad \ &&\text{in}\quad \Omega_{K+m},\\
     \frac{\partial }{\partial t}(\alpha_{K+2} c_i^{K+2}) &= \gamma_4^Kg_i^{K,4}-\beta_4^Kq_i^{K,4}+\sum_{m=1}^3\lambda_m^K\ell_i^{K,m}+s_i^{K+4}\quad &&\text{in}\quad \Omega.
 \end{alignat}
 
 We will use $i=M$ to represent \ce{CO2} and write $\mathbf{s}_k := (s_1^k,\dots,s_M^k)^\top$ for all tubular compartments $k=\pm 1,\dots,\pm 3N,\, K,\dots,K+4$.
-We describe the tubular solute generation by an invertible reaction matrix $R\in \mathbb{Z}^{M\times M}$ and the metabolic generation $\mathbf{r}_k$, whose value is in $\mathbb{R}^M$ so that we have
+We describe the tubular solute generation by an invertible reaction matrix $R\in \mathbb{Z}^{M\times M}$ and the metabolic generation $\mathbf{r}_k$, whose value is in $\mathbb{R}^M$ so that we have for $k=\pm 1,\dots,\pm 3N,\, K,\dots,K+4$:
 \begin{equation}\label{eq:gen}
-    R \mathbf{s}_k = \alpha_k\mathbf{r}_k.
+    R \mathbf{s}_k = \alpha_k\mathbf{r}_k\quad\text{in}\quad \Omega_k.
 \end{equation}
 The trivial case of $R$ would be $R=I$, the identity matrix, and $\mathbf{r}_k=\mathbf{0}$.
 In case that there are buffer reactions, $R$ represents both mass conservation and the reaction kinetics captured by $\mathbf{r}_k$.
@@ -267,32 +267,40 @@ For the interstitium, we have the equations for $i=1,\dots,M$:
 \end{equation}
 Here, $\vartheta_i^j:\Omega_{3N'+j}\times [0,\tau)\to \mathbb{R}$, $j=\pm 1,\dots,\pm P$, and $\vartheta_i^j:(0,2)\times [0,\tau)\to \mathbb{R}$, $j=0,\pm(P+1)$, are the solute fluxes from vasa recta ($j=\pm 1,\dots,\pm P$) and the renal cortex ($j=0$) into the interstitium, and the vascular input and output ($j=\pm(P+1)$) \textit{into} the capillary plexus of medullary ray.
 In the equation (\ref{eq:int_sol}), we also set $\vartheta_i^j=0$ in $\Omega\setminus \Omega_{3N'+j}$ for $j=\pm 1,\dots,\pm P$, and $q_1^n,q_2^n=0$ in $\Omega\setminus\Omega_n$; similarly, $\vartheta_i^{\pm(P+1)} = 0$ in $[0,7)$.
-Note that it is assumed $f_i^0\equiv 0$ and $\vartheta_i^0\equiv 0$ in Alan Weinstein's model.
-Moreover, since there is no need to explicitly describe $\vartheta_i^j$, $j=\pm(P+1)$, in the steady state model, $\vartheta_i^{P+1}$ is given and $\vartheta_i^{-P-1}$ is a model unknown in such a case; we need to have equations for these for the time-dependent model.
-Note that, since we need to account for the total blood volume for the hemoglobin buffer species, the axial flux $f_i^{3N'+j}$ in the equation (\ref{eq:vr_sol}) are slightly different from that when $i=1,\dots,M$.
-That is, the convection need to account for the total blood flow instead of the plasma flow.
+% Note that it is assumed $f_i^0\equiv 0$ and $\vartheta_i^0\equiv 0$ in Alan Weinstein's model.
+% Moreover, since there is no need to explicitly describe $\vartheta_i^j$, $j=\pm(P+1)$, in the steady state model, $\vartheta_i^{P+1}$ is given and $\vartheta_i^{-P-1}$ is a model unknown in such a case; we need to have equations for these for the time-dependent model.
+% Note that, since we need to consider the total blood volume, instead of just plasma, for the hemoglobin buffer species, the axial flux $f_i^{3N'+j}$ in the equation (\ref{eq:vr_sol}) are slightly different from that when $i=1,\dots,M$.
+% That is, the advection need to account for the total blood flow instead of the plasma flow.
 
-The reaction terms $s_i^k$, $k=0,\pm(3N+1),\dots,\pm(3N+P)$, also have similar equations as (\ref{eq:gen}), but now with $\mathbf{s}_k:=(s_1^k,\dots,s_M^k,s_{M+1}^k,\dots,s_{M+B}^k)$, $R$ is replaced by another non-invertible matrix $R'\in \mathbb{R}^{(M+B)\times (M+B)}$ and $\mathbf{r}_k$ has value in $\mathbb{R}^{M+B}$, i.e.,
+The reaction terms $s_i^k$, $k=0,\pm(3N+1),\dots,\pm(3N+P)$, also have similar equations as (\ref{eq:gen}), but now with $\mathbf{s}_k:=(s_1^k,\dots,s_M^k,s_{M+1}^k,\dots,s_{M+B}^k)$, $R$ is replaced by another non-invertible matrix $R'\in \mathbb{R}^{(M+B)\times (M+B)}$ and $\mathbf{r}_k$ has value in $\mathbb{R}^{M+B}$, i.e., for $k=0,\pm(3N+1),\dots,\pm(3N+P)$,
 \begin{equation}
-    R'\mathbf{s}_k=\mathrm{diag}(\underbrace{\alpha_k,...}_{M},\underbrace{\tilde{\alpha}_k,\dots}_B)\mathbf{r}_k,\quad k=0,\pm(3N+1),\dots,\pm(3N+P)
+    R'\mathbf{s}_k=\mathrm{diag}(\underbrace{\alpha_k,...}_{M},\underbrace{\tilde{\alpha}_k,\dots}_B)\mathbf{r}_k,\quad \text{in}\quad \Omega_k
 \end{equation}
 with $\mathbf{r}_k$ depending on $\mathbf{c}_k:=(c_1^k,\dots,c_{M+B}^k)^\top$ which provides the `missing' equations, as before.
 
 Now, we describe the water flow velocity, $u_k$ and the solute flow within each compartment $f_i^k$.
-In Alan Weinstein's steady state model, there is no axial flow in the interstitium ($k=0$) --- that is $u_0\equiv 0$ and $f_i^0\equiv 0$ for all $i$.
+Note that, in Alan Weinstein's steady state model, there is no radial flow in the interstitium ($k=0$) --- that is 
+\begin{equation}
+    u_0\equiv 0.
+\end{equation}
+%  and $f_i^0\equiv 0$ for all $i$.
 For $k=\pm 1,\dots,\pm N,\pm(3N+1),\dots,\pm(3N+P),K$, 
 the water flow is given by Poisseuille's equations
-\begin{align}
-    \frac{\rho_ku_k}{\alpha_k} &= -\frac{\partial p}{\partial x},\quad k=\pm 1,\dots,\pm N, K,\\
-    \frac{\rho_ku_k}{\tilde{\alpha}_k} &= -\frac{\partial p}{\partial x},\quad k=\pm(3N+1),\dots,\pm(3N+P),
-\end{align}
-where $\rho_k/\alpha_k$ and $\rho_k/\tilde{\alpha}_k$ are the hydraulic resistivity with $\rho_k$ constant and $p_k$ is the hydrostatic pressure, and the solute flows $f_i^k$, $i=1,\dots,M$, are assumed to be purely convective, i.e., $f_i^k = \alpha_ku_kc_i^k$.
-In general, $f_i^k$ can be generalized into Nernst-Planck equation:
+\begin{alignat}{2}
+    \frac{\rho_nu_n}{\alpha_n} &= -\frac{\partial p_n}{\partial x},\quad n=\pm 1,\dots,\pm N, K, \quad &&\text{in}\quad \Omega_n\\
+    \frac{\rho_ku_k}{\tilde{\alpha}_k} &= -\frac{\partial p_k}{\partial x},\quad k=\pm(3N+1),\dots,\pm(3N+P), \quad &&\text{in}\quad \Omega_k
+\end{alignat}
+where $\rho_k/\alpha_k$ and $\rho_k/\tilde{\alpha}_k$ are the hydraulic resistivity with $\rho_k$ constant and $p_k:\overline{\Omega_k}\times [0,\tau)\to \mathbb{R}_{+}$ is the hydrostatic pressure, and the solute flows $f_i^k$, $i=1,\dots,M$, are assumed to be purely advective, i.e., $f_i^k = \alpha_ku_kc_i^k$.
+In general, $f_i^k$ can be generalized into Nernst-Planck equation: for $i=1,\dots,M$ and $k=0,\pm 1,\dots,\pm N,\pm(3N+1),\dots,\pm(3N+P),K$,
 \begin{equation}
-    f_i^k = -D_i^k\left( \frac{\partial c_i^k}{\partial x}+\frac{z_iFc_i^k}{RT} \frac{\partial\phi_k}{\partial x}\right) + \alpha_k u_kc_i^k,\quad i=1,\dots,M,
+    f_i^k = -D_i^k\left( \frac{\partial c_i^k}{\partial x}+\frac{z_iFc_i^k}{RT} \frac{\partial\phi_k}{\partial x}\right) + \alpha_k u_kc_i^k,\quad \text{in}\quad \Omega_k
     % \quad k\neq \pm (2N+1),\dots,\pm 3N
 \end{equation}
-where $D_i^k$ is the diffusion coefficient, $z_i$ is the valence of the solute $i$, $F/RT$ is a constant, $\phi_k$ is the electrical potential in compartment $k$.
+where $D_i^k:\Omega_k\to \mathbb{R}_+$ is the diffusion coefficient, $z_i$ is the valence of the solute $i$, $F/RT$ is a constant, $\phi_k$ is the electrical potential in compartment $k$.
+% In fact, we might as well include the electrodiffusive flux for $i=1,\dots,M$ in the intertitium ($k=0$):
+% \begin{equation}
+%     f_i^0 = -D_i^0\left( \frac{\partial c_i^0}{\partial x}+\frac{z_iFc_i^0}{RT} \frac{\partial\phi_0}{\partial x}\right),\quad \text{in}\quad \Omega
+% \end{equation}
 % and the water flow velocity $u_k$
 % is determined by the compartmental pressure field and driven by electrostatic force:
 % \begin{gather}
@@ -327,24 +335,47 @@ where $\tilde{\alpha}_ku_k$ is the \textit{blood flow} which must satisfy the in
     
 To determine the electrical potential $\phi_k$ and the hydrostatic pressure in each compartment, we have an electroneutrality approximation:
 \begin{equation}
-    0=z_0^k Fa_k+\sum_{i=1}^{M'}z_iF \alpha_k c_i^k,\quad k=-3N-P,\dots,K+2,
+    0=z_0^k Fa_0^k+\sum_{i=1}^{M'}z_iF \alpha_k c_i^k,\quad k=-3N-P,\dots,K+4,\quad\text{in}\quad \Omega_k
 \end{equation}
 and the pressure balance between compartments are described by compliances $\nu_k$.
-For the luminal compartments ($k=\pm 1,\dots,\pm N,\pm (3N+1),\dots,\pm(3N+p), K$), we have:
+We can have all luminal compartments be compliant structure, i.e., for $k=\pm 1,\dots,\pm N,$:
 %  $k=\pm 1,\dots,\pm 2N,\pm(3N+1),\dots,\pm(3N+P),K,K+1$:
 \begin{align}
-    \nu_k(p_k - p_0) &= \frac{\alpha_k}{\alpha_k^0}-1.
+    \nu_k(p_k - p_0) &= \frac{\alpha_k}{\alpha_k^0}-1\quad\text{in}\quad\Omega_k.\label{eq:lumen_p}
     % \\
     % p_{N'+n} &= p_n,\\
     % \nu_{2N'+n}(p_{2N'+n} - p_{N'+n}) &= \frac{\alpha_{2N'+n}}{\alpha_{2N'+n}^0}-1,
 \end{align}
 and for the ICS and LCS, with $n=\pm 1,\dots,\pm N$:
-\begin{align}
-    p_{N'+n} &= p_n,\\
-    \nu_{2N'+n}(p_{2N'+n} - p_{N'+n}) &= \frac{\alpha_{2N'+n}}{\alpha_{2N'+n}^0}-1,
-\end{align}
+\begin{alignat}{2}
+    p_{N'+n} &= p_n,\quad &&\text{in}\quad\Omega_{N'+n}\label{eq:ICS_p} \\ 
+    \nu_{2N'+n}(p_{2N'+n} - p_{N'+n}) &= \frac{\alpha_{2N'+n}}{\alpha_{2N'+n}^0}-1\quad &&\text{in}\quad\Omega_{N'+n},\label{eq:LIS_p}\\
+    p_K=p_{K+1}&=p_{K+2}=p_{K+3}\quad &&\text{in}\quad (-2,0),\\
+    \nu_{K+4}(p_{K+4} - p_{K}) &= \frac{\alpha_{K+4}}{\alpha_{K+4}^0}-1\quad &&\text{in}\quad (-2,0),
+\end{alignat}
 where $\alpha_k^0$ are the baseline volumes in which the pressure on both sides are equal.
-Note that the interstitial pressure is determined so that the equation (\ref{eq:const_vol}) is satisfied.
+For the collecting ducts and vasa recta, we could have the same equations as (\ref{eq:lumen_p}), (\ref{eq:ICS_p}), and (\ref{eq:LIS_p}).
+However, in Alan Weinstein's model, the lumina of vasa recta and collecting ducts are not compliant.
+Instead, we have for $k=\pm (3N+1),\dots,\pm(3N+p), K$:
+\begin{alignat}{2}
+    \frac{\partial\alpha_k}{\partial t}&\equiv 0\\
+    p_k(0) &= p_k^0
+\end{alignat}
+    where $p_k^0:[0,\tau)\to \mathbb{R}_+$ is given for $k=\pm (3N+1),\dots,\pm(3N+p)$ and depending on the terminal flow of the connecting tubule in the renal cortex when $k=K$.
+The interstitial pressure is determined so that a condition for tissue volume is satisfied.
+In Alan Weinstein's model, such a condition is that the interstitial volume is constant in time.
+% , so we have
+% \begin{equation}
+%     \frac{\partial \alpha_0}{\partial t} \equiv 0.
+% \end{equation}
+Alternatively, we can still have $\alpha_0$ be time-dependent by having another condition such that the sum of the volume of all compartments is constant in time.
+In other words, we choose either
+\begin{equation}\label{eq:const_vol}
+    \frac{\partial \alpha_0}{\partial t} \equiv 0\quad\text{or}\quad\sum_{k=-3N-P}^{3N+P+3} \alpha_k = \alpha\quad\text{(choose only one)}\quad
+\end{equation}
+    for a given volume density function $\alpha:\overline{\Omega}\to\mathbb{R}_+$.
+That is, we assume that the total volume of the medullary tissue is constant.
+
 % For the ICS and ECS compartments, we set, for $n=\pm 1,\dots,\pm N$:
 % \begin{gather}
 %     p_{N'+n} = p_n,\quad p_K = p_{K+1}.
@@ -353,7 +384,7 @@ Note that the interstitial pressure is determined so that the equation (\ref{eq:
 % Note that, in Alan Weinstein's model, the hydrostatic pressures of vasa recta and interstitium are computed from the balance equation, since the volume densities of vasa recta and interstitium are fixed.
 % These conditions are functionally equivalent to our equation (\ref{eq:const_vol}).
 
-Now, we describe the boundary conditions for the time-dependent model which include those of hydrostatic pressures, water flow velocities, and solute flows.
+Now, we describe the rest of the boundary conditions for the time-dependent model which include those of hydrostatic pressures, water flow velocities, and solute flows.
 The water and solute flows at the beginning of the descending tubules, including the collecting tubules, are determined by those at the ending point of the proximal convoluted tubule (PCT) or the connecting tubules (CNT) in the renal cortex:
 \begin{equation}
     \left.
@@ -404,6 +435,9 @@ Finally, we have no-flux boundary conditions for the interstitium:
     u_0(-2,\cdot) = u_0(7,\cdot)=0,\\
     f_i^0(-2,\cdot) = f_i^0(7,\cdot) = 0.
 \end{gather}
+
+
+
 We are now left with the description of the renal cortex and its coupling with the renal medulla and medullary ray.
 
 \subsection{The renal cortex}
@@ -413,32 +447,35 @@ We use the same convention to label these compartments.
 We have $k=0$ for the cortical interstitium together with the plasma of the capillary plexus.
 However, unlike the medullary ray, we shall treat this compartment as a homogeneous compartment with no spatial variation.
 For $N$ types of nephrons, the lumen of PCT are labeled by $k=1,\dots,N$ and that of the DCT by $k=-1,\dots,-N$, with $k=\pm n$ belongs to the $n^{\mathrm{th}}$ type nephron.
-As before, we also have the ICS and the LIS labeled by $k=\pm(N+1),\dots,\pm 3N$.
-Lastly, the CNT, which receives flows from all types of nephrons is labeled by $k=K,K+1,K+2$, corresponding to the lumen, the ICS, and the LIS respectively.
+As before, we also have the ICS and the LIS of PCT (positive) and DCT (negative) labeled by $k=\pm(N+1),\dots,\pm 3N$.
+Lastly, the CNT, which receives flows from all types of nephrons is labeled by $k=K,\dots,K+4$, corresponding to the lumen, the ICS of principal cells, $\alpha$- and $\beta$-intercalated cells of the CNT, and the LIS respectively.
 
 We describe the volume of the cortical interstitium by $\bar{\alpha}_0:[0,\tau)\to \mathbb{R}_+$, and the cross-sectional area of each tubular components by $\bar{\alpha}_{n},\bar{\alpha}_{N'+n},\bar{\alpha}_{2N'+n}:(0,L_n)\to \mathbb{R}_+$, for $n=\pm 1,\dots,\pm N$ and $\bar{\alpha}_K,\bar{\alpha}_{K+1},\bar{\alpha}_{K+2}:(0,L_K)\to \mathbb{R}_+$, where $L_n>0$, $n=\pm 1,\dots,\pm N,K$ are the length of the PCT, the DCT, and the CNT.
+Here, we use the notation $\xi\in(0,L_n)$, instead of $x$, for the spatial variable of each tubule.
 We have equations for the compartment volumes, for $n=\pm 1,\dots,\pm N$:
-\begin{align}
-    \frac{\partial \bar{\alpha}_n}{\partial t} + \frac{\partial}{\partial x}(\bar{\alpha}_n\bar{u}_n) &= -\bar{\gamma}_n(\bar{w}_{1}^n+\bar{w}_{2}^n)\quad \quad \quad \ \ \text{in}\quad (0,L_n),\\
-    \frac{\partial \bar{\alpha}_{N'+n}}{\partial t} &= \bar{\gamma}_{n}\bar{w}_{1}^n-\bar{\beta}_n\bar{v}_1^n-\bar{\lambda}_n\bar{\ell}_0^n\quad \text{in}\quad (0,L_n),\\
-    \frac{\partial \bar{\alpha}_{2N'+n}}{\partial t} &= \bar{\gamma}_{n}\bar{w}_{2}^n-\bar{\beta}_n\bar{v}_2^n+\bar{\lambda}_n\bar{\ell}_0^n\quad \text{in}\quad (0,L_n),\\
-    \frac{\partial \bar{\alpha}_K}{\partial t} + \frac{\partial}{\partial x}(\bar{\alpha}_K\bar{u}_K) &= -\bar{\gamma}_K(\bar{w}_{1}^K+\bar{w}_{2}^K)\qquad \quad \ \ \ \, \text{in}\quad (0,L_K),\\
-    \frac{\partial \bar{\alpha}_{K+1}}{\partial t} &= \bar{\gamma}_{n}\bar{w}_{1}^K-\bar{\beta}_K\bar{v}_1^K-\bar{\lambda}_K\bar{\ell}_0^K\quad \text{in}\quad (0,L_K),\\
-    \frac{\partial \bar{\alpha}_{K+2}}{\partial t} &= \bar{\gamma}_{n}\bar{w}_{2}^K-\bar{\beta}_K\bar{v}_2^K+\bar{\lambda}_K\bar{\ell}_0^K\quad \text{in}\quad (0,L_K),\\
+\begin{alignat}{2}
+    \frac{\partial \bar{\alpha}_n}{\partial t} + \frac{\partial}{\partial \xi}(\bar{\alpha}_n\bar{u}_n) &= -\bar{\gamma}_1^n\bar{w}_{1}^n+\bar{\gamma}_2^n\bar{w}_{2}^n\quad \quad \quad \ \  &&\text{in}\quad (0,L_n),\\
+    \frac{\partial \bar{\alpha}_{N'+n}}{\partial t} &= \bar{\gamma}_1^n\bar{w}_{1}^n-\bar{\beta}_1^n\bar{v}_1^n-\bar{\lambda}_n\bar{\ell}_0^n\quad  &&\text{in}\quad (0,L_n),\\
+    \frac{\partial \bar{\alpha}_{2N'+n}}{\partial t} &= \bar{\gamma}_2^n\bar{w}_{2}^n-\bar{\beta}_2^n\bar{v}_2^n+\bar{\lambda}_n\bar{\ell}_0^n\quad  &&\text{in}\quad (0,L_n),\\
+    \frac{\partial \bar{\alpha}_K}{\partial t} + \frac{\partial}{\partial \xi}(\bar{\alpha}_K\bar{u}_K) &= -\sum_{m=1}^4\bar{\gamma}_m^K\bar{w}_{m}^K \qquad \quad \ \ \ \,  &&\text{in}\quad (0,L_K),\\
+    \frac{\partial \bar{\alpha}_{K+m}}{\partial t} = \bar{\gamma}_m^K\bar{w}_{m}^K&-\bar{\beta}_m^K\bar{v}_m^K-\bar{\lambda}_m^K\bar{\ell}_0^{K,m},\quad m=1,2,3,\quad  &&\text{in}\quad (0,L_K),\\
+    \frac{\partial \bar{\alpha}_{K+4}}{\partial t} &= \bar{\gamma}_4^K\bar{w}_4^K-\bar{\beta}_4^K\bar{v}_4^K+\sum_{m=1}^3\bar{\lambda}_m^K\bar{\ell}_0^{K,m}\quad  &&\text{in}\quad (0,L_K),\\
     \frac{d \bar{\alpha}_0}{d t} = 
-        \sum_{\substack{1\leq|n|\leq N\\\text{or } n=K}}\int_0^{L_n}&\bar{\beta}_n(\bar{v}_{1}^n+\bar{v}_{2}^n)\,d\xi+\eta_+\omega_++\eta_-\omega_--\eta_0\omega_0.
-\end{align}
+        \sum_{\substack{1\leq|n|\leq N\\ \text{or } n=K}}\sum_m&\int_0^{L_n}\bar{\beta}_m^K\bar{v}_m^K\,d\xi+\eta_+\omega_++\eta_-\omega_--\eta_0\omega_0.
+\end{alignat}
 
 Further, we have solutes $i=1,\dots,M$ for the tubular compartments and $i=1,\dots,M+B$ for the cortical interstitium.
 The concentrations of the solutes $i=1,\dots,M$ in the tubular components are given below:
-\begin{align}
-    \frac{\partial }{\partial t}(\bar{\alpha}_n\bar{c}_i^n) &= -\frac{\partial \bar{f}_i^n}{\partial \xi}-\bar{\gamma}_n(\bar{g}_i^{n,1}+\bar{g}_i^{n,2})+\bar{s}_i^{n} \qquad \   \text{in}\quad (0,L_n),\\
-    \frac{\partial }{\partial t}(\bar{\alpha}_{N'+n}\bar{c}_i^{N'+n}) &= \bar{\gamma}_{n}\bar{g}_i^{n,1}-\bar{\beta}_n\bar{q}_i^{n,1}-\bar{\lambda}_n\bar{\ell}_i^n+\bar{s}_i^{N'+n} \quad \, \text{in}\quad (0,L_n),\\
-    \frac{\partial }{\partial t}(\bar{\alpha}_{2N'+n} \bar{c}_i^{2N'+n}) &= \bar{\gamma}_{n}\bar{g}_i^{n,2}-\bar{\beta}_n\bar{q}_i^{n,2}+\bar{\lambda}_n\bar{\ell}_i^n+\bar{s}_i^{2N'+n}\ \ \text{in}\quad (0,L_n),\\
-    \frac{\partial }{\partial t}(\bar{\alpha}_K\bar{c}_i^K) &= -\frac{\partial \bar{f}_i^K}{\partial \xi}-\bar{\gamma}_K(\bar{g}_i^{K,1}+\bar{g}_i^{K,2})+\bar{s}_i^{n} \qquad  \text{in}\quad (0,L_K),\\
-    \frac{\partial }{\partial t}(\bar{\alpha}_{K+1}\bar{c}_i^{K+1}) &= \bar{\gamma}_{n}\bar{g}_i^{K,1}-\bar{\beta}_K\bar{q}_i^{K,1}-\bar{\lambda}_K\bar{\ell}_i^K+\bar{s}_i^{K+1} \quad  \text{in}\quad (0,L_K),\\
-    \frac{\partial }{\partial t}(\bar{\alpha}_{K+2} \bar{c}_i^{K+2}) &= \bar{\gamma}_{n}\bar{g}_i^{K,2}-\bar{\beta}_K\bar{q}_i^{n,2}+\bar{\lambda}_K\bar{\ell}_i^K+\bar{s}_i^{K+2}\quad \,  \text{in}\quad (0,L_K),
-\end{align}
+\begin{alignat}{2}
+    \frac{\partial }{\partial t}(\bar{\alpha}_n\bar{c}_i^n) &= -\frac{\partial \bar{f}_i^n}{\partial \xi}-\bar{\gamma}_1^n\bar{g}_i^{n,1}+\bar{\gamma}_2^n\bar{g}_i^{n,2}+\bar{s}_i^{n} \qquad \   \\%&&\text{in}\quad (0,L_n),\\
+    \frac{\partial }{\partial t}(\bar{\alpha}_{N'+n}\bar{c}_i^{N'+n}) &= \bar{\gamma}_1^n\bar{g}_i^{n,1}-\bar{\beta}_1^n\bar{q}_i^{n,1}-\bar{\lambda}_n\bar{\ell}_i^n+\bar{s}_i^{N'+n} \quad \, \\%&&\text{in}\quad (0,L_n),\\
+    \frac{\partial }{\partial t}(\bar{\alpha}_{2N'+n} \bar{c}_i^{2N'+n}) &= \bar{\gamma}_2^n\bar{g}_i^{n,2}-\bar{\beta}_2^n\bar{q}_i^{n,2}+\bar{\lambda}_n\bar{\ell}_i^n+\bar{s}_i^{2N'+n}\ \ \\%&&\text{in}\quad (0,L_n),\\
+    \frac{\partial }{\partial t}(\bar{\alpha}_K\bar{c}_i^K) &= -\frac{\partial \bar{f}_i^K}{\partial \xi}-\sum_{m=1}^4\bar{\gamma}_m^K\bar{g}_i^{K,m}+\bar{s}_i^K \qquad  \\%&&\text{in}\quad (0,L_K),\\
+    \frac{\partial }{\partial t}(\bar{\alpha}_{K+m}\bar{c}_i^{K+m}) &= \bar{\gamma}_m^K\bar{g}_i^{K,m}-\bar{\beta}_K\bar{q}_i^{K,m}-\bar{\lambda}_m^K\bar{\ell}_i^{K,m}+\bar{s}_i^{K+m} \quad  \\%&&\text{in}\quad (0,L_K),\\
+    \frac{\partial }{\partial t}(\bar{\alpha}_{K+4} \bar{c}_i^{K+4}) &= \bar{\gamma}_4^K\bar{g}_i^{K,4}-\bar{\beta}_4^K\bar{q}_i^{n,4}+\sum_{m=1}^3\bar{\lambda}_m^K\bar{\ell}_i^{K,m}+\bar{s}_i^{K+4}\quad \,  %&&\text{in}\quad (0,L_K),\\
+    % \frac{d \bar{\alpha}_0}{d t} = 
+    %     \sum_{\substack{1\leq|n|\leq N\\ \text{or } n=K}}\sum_m&\int_0^{L_n}\bar{\beta}_m^K\bar{q}_m^K\,d\xi+\eta_+\vartheta_++\eta_-\vartheta_--\eta_0\vartheta_0+\bar{s}^{0}.
+\end{alignat}
 and we have the solute generation
 \begin{align}
     R\bar{\mathbf{s}}_k = \bar{\alpha}_k \mathbf{r}_k.
@@ -446,7 +483,7 @@ and we have the solute generation
 For the interstitial concentration when $i=1,\dots,M$ we have
 \begin{equation}
     \frac{d}{d t}(\bar{\alpha}_0 \bar{c}_i^0) =  
-        \sum_{\substack{1\leq|n|\leq N\\\text{or } n=K}}\int_0^{L_n}\bar{\beta}_n(\bar{q}_{1}^n+\bar{q}_{2}^n)\,d\xi+\eta_+\vartheta_i^+ + \eta_-\vartheta_i^- -\eta_0\vartheta_i^0+\bar{s}_i^0.
+        \sum_{\substack{1\leq|n|\leq N\\\text{or } n=K}}\sum_m\int_0^{L_n}\bar{\beta}_m^n\bar{q}_{1}^n\,d\xi+\eta_+\vartheta_i^+ + \eta_-\vartheta_i^- -\eta_0\vartheta_i^0+\bar{s}_i^0.
 \end{equation}
 For the hemoglobin buffer species, $i=M+1,\dots,M+B$, we have
 \begin{equation}
@@ -459,11 +496,43 @@ The solute generations in the cortical interstitium and capillary plexus are giv
     R'\bar{\mathbf{s}}_0 = \mathrm{diag}(\underbrace{\bar{\alpha}_0,...}_{M},\underbrace{\tilde{\bar{\alpha}}_0,\dots}_B)\mathbf{r}_0.
 \end{equation}
 
-We also have the electroneutrality approximation and the compliance of the tubular structures determining the hydrostatic pressure in each compartment.
-
-The model renal cortex is completed with three conditions of the single nephron glomerular filtration rate (SNGFR), which gives the flow at the beginning of the PCT of each nephron, and the CNT end pressure which depends on the terminal flow in the lumen:
+We also have the electroneutrality approximation and the compliance of the tubular structures determining the hydrostatic pressure in each compartment:
+\begin{gather}
+    0=z_0^k F\bar{a}_0^k+\sum_{i=1}^{M'}z_iF\bar{\alpha}_k \bar{c}_i^k
+\end{gather}
+and
 \begin{align}
-    \bar{\alpha}_n (0,t)\bar{u}_n(0,t) &= \mathrm{SNGFR}\left( \mathbf{c}_{-n}\left( \inf \Omega_{-n},t \right) \right),\quad n=1,\dots,N
+    \bar{\nu}_n(\bar{p}_n - \bar{p}_0) &= \frac{\bar{\alpha}_n}{\bar{\alpha}_n^0}-1\quad\text{in}\quad (0,L_n),
+    % \\
+    % p_{N'+n} &= p_n,\\
+    % \nu_{2N'+n}(p_{2N'+n} - p_{N'+n}) &= \frac{\bar{\alpha}_{2N'+n}}{\bar{\alpha}_{2N'+n}^0}-1,
+\end{align}
+and for the ICS and LCS, with $n=\pm 1,\dots,\pm N$:
+\begin{alignat}{2}
+    \bar{p}_{N'+n} &= \bar{p}_n,\quad &&\text{in}\quad (0,L_n) \\ 
+    \bar{\nu}_{2N'+n}(\bar{p}_{2N'+n} - \bar{p}_{N'+n}) &= \frac{\bar{\alpha}_{2N'+n}}{\bar{\alpha}_{2N'+n}^0}-1\quad &&\text{in}\quad (0,L_n),\\
+    \bar{p}_K=\bar{p}_{K+1}&=\bar{p}_{K+2}=\bar{p}_{K+3}\quad &&\text{in}\quad (0,L_K),\\
+    \bar{\nu}_{K+4}(\bar{p}_{K+4} - \bar{p}_{K}) &= \frac{\bar{\alpha}_{K+4}}{\bar{\alpha}_{K+4}^0}-1\quad &&\text{in}\quad (0,L_K).
+\end{alignat}
+Also,
+\begin{alignat}{2}
+    \frac{\partial\bar{\alpha}_K}{\partial t}&\equiv 0,\\
+    p_K(0) &= p_K^0
+\end{alignat}
+and
+\begin{equation}
+    \frac{d \bar{\alpha}_0}{dt} = 0.
+\end{equation}
+
+The model renal cortex is completed with three conditions of the single nephron glomerular filtration rate (SNGFR), which gives the flow at the beginning of the PCT of each nephron, and the CNT end pressure which depends on the terminal flow in the lumen, for $n=1,\dots,N
+\quad n=1,\dots,N$:
+\begin{align}
+    \bar{\alpha}_n (0,t)\bar{u}_n(0,t) &= \mathrm{SNGFR}\left( \mathbf{c}_{-n}\left( \inf \Omega_{-n},t \right) \right),\\
+    \bar{f}_i^n (0,t) &= \bar{\alpha}_n (0,t)\bar{u}_n(0,t)\bar{c}_i^{n,0},\\
+    \bar{\alpha}_{-n} (0,t)\bar{u}_{-n}(0,t) &= \alpha_{-n}(\sup \Omega_{-n},t)u_{-n}(\sup\Omega_{-n},t)\\
+    \bar{f}_i^{-n} (0,t) &= f_{i}^{-n}(\sup\Omega_{-n},t)\\
+    \bar{\alpha}_{K} (0,t)\bar{u}_{K}(0,t) &= \sum_{n=1}^N\bar{\alpha}_{-n}(L_n,t)\bar{u}_{-n}(L_n,t)\\
+    \bar{f}_i^{K} (0,t) &= \sum_{n=1}^N \bar{f}_{i}^{-n}(L_n,t).
 \end{align}
 
 \section{Steady state model}
