@@ -87,13 +87,18 @@ Therefore, we treat the tubules within the cortex as separated systems with thei
 We will use the label
 % $k=\pm(3N+1)$ the ascending and the descending vasa recta respectively and 
 $k=0$ for the interstitium of medullary ray and the renal medulla.
-It is important to note that, in this model, we do not make a distinction between the actual interstitium and the capillary plexus present in the renal cortex and medullary ray.
+It is important to note that, in this model, we do not make a distinction between the actual interstitium and the \textit{plasma} of capillary plexus present in the renal cortex and medullary ray.
 Suppose there are $N$ distinct types of nephrons.
 For each type of nephron there are $2$ components contained in $\Omega$: the descending and the ascending parts, each of which are divided into the lumen, the intracellular space (ICS), and the lateral intercellular space (LIS).
 For the $n^{\mathrm{th}}$ type nephron, $1\leq n\leq N$, we label by $k=\pm n$, $k=\pm(N+n)$, and $k=\pm(2N+n)$ the descending (positive) and the ascending (negative) parts of the lumen, the ICS, and the LIS respectively.
+<<<<<<< HEAD
 Similarly, for $P$ distinct types of vasa recta, the capillaries of the renal medulla running in opposition, we label by $k=\pm(3N+j)$, for $j=1,\dots,P$, the descending and the ascending vasa recta.
 Finally, there are 3 distinct types of collecting tubular cells: principal cell, $\alpha$-cell, and $\beta$-cell; the functions of the two additional cell types are urine acidification by $\alpha$-intercalated cell and urine alkalinization by $\beta$-intercalated cell, and hence the necessity of assigning a distinct compartment for each of them.
 We assign $k=K,K+1,K+2,K+3,K+4$, where $K:=3N+P+1$ the lumen, the ICS of principal, $\alpha$- and $\beta$-intercalted cells, and the LIS of the collecting tubules respectively.
+=======
+Similarly, for $P$ distinct types of vasa recta, we label by $k=\pm(3N+j)$, for $j=1,\dots,P$, the \textit{plasma} of the descending and the ascending vasa recta.
+Finally, the lumen, the ICS, and the LIS of the collecting tubules are labeled by $k=3N+P+1,3N+P+2,3N+P+3$ respectively.
+>>>>>>> 658c9db2468b29bfa83c92afc80fae0f3e6a3c28
 
 We describe the occupied volume of each $k^{\mathrm{th}}$ compartment, $-3N-P\leq k\leq 3N+P+3$, in $\Omega$ by the volume per unit depth $\alpha_k:\Omega_k\times [0,\tau)\to \mathbb{R}_+$, where $0<\tau\leq \infty$ and $\Omega_k\subset\Omega$ is an open interval with $\Omega_{n} \supset \Omega_{N'+n} = \Omega_{2N'+n}$ and $\inf\Omega_n = \inf\Omega_{N'+n}\leq 0$ for $n=\pm 1,\dots\pm N$ where we denote $N'+n := \mathrm{sign}(n)N+n$ and $2N'+n := 2\, \mathrm{sign}(n)N+n$.
 The sets $\Omega_n\setminus \Omega_{N'+n}$ are where the thin loops of Henle located.
