@@ -502,7 +502,7 @@ We also have the electroneutrality approximation and the compliance of the tubul
 \end{gather}
 and
 \begin{align}
-    \bar{\nu}_n(\bar{p}_n - \bar{p}_0) &= \frac{\bar{\alpha}_n}{\bar{\alpha}_n^0}-1\quad\text{in}\quad (0,L_n),
+    \bar{\nu}_n(\bar{p}_n - \bar{p}_0) &= \frac{\bar{\alpha}_n}{\bar{\alpha}_n^0}-1\quad\text{in}\quad (0,L_n), \quad n=\pm 1,\dots,\pm N,
     % \\
     % p_{N'+n} &= p_n,\\
     % \nu_{2N'+n}(p_{2N'+n} - p_{N'+n}) &= \frac{\bar{\alpha}_{2N'+n}}{\bar{\alpha}_{2N'+n}^0}-1,
@@ -514,17 +514,17 @@ and for the ICS and LCS, with $n=\pm 1,\dots,\pm N$:
     \bar{p}_K=\bar{p}_{K+1}&=\bar{p}_{K+2}=\bar{p}_{K+3}\quad &&\text{in}\quad (0,L_K),\\
     \bar{\nu}_{K+4}(\bar{p}_{K+4} - \bar{p}_{K}) &= \frac{\bar{\alpha}_{K+4}}{\bar{\alpha}_{K+4}^0}-1\quad &&\text{in}\quad (0,L_K).
 \end{alignat}
-Also,
+Also, the CNT is not compliant, i.e.,
 \begin{alignat}{2}
     \frac{\partial\bar{\alpha}_K}{\partial t}&\equiv 0,\\
     p_K(0) &= p_K^0
 \end{alignat}
-and
+and the cortical interstitial volume is fixed, i.e., 
 \begin{equation}
     \frac{d \bar{\alpha}_0}{dt} = 0.
 \end{equation}
 
-The model renal cortex is completed with three conditions of the single nephron glomerular filtration rate (SNGFR), which gives the flow at the beginning of the PCT of each nephron, and the CNT end pressure which depends on the terminal flow in the lumen, for $n=1,\dots,N
+Finally, the model renal cortex is completed with three conditions of the single nephron glomerular filtration rate (SNGFR), which gives the flow at the beginning of the PCT of each nephron, and the CNT end pressure which depends on the terminal flow in the lumen, for $n=1,\dots,N
 \quad n=1,\dots,N$:
 \begin{align}
     \bar{\alpha}_n (0,t)\bar{u}_n(0,t) &= \mathrm{SNGFR}\left( \mathbf{c}_{-n}\left( \inf \Omega_{-n},t \right) \right),\\
@@ -534,6 +534,7 @@ The model renal cortex is completed with three conditions of the single nephron 
     \bar{\alpha}_{K} (0,t)\bar{u}_{K}(0,t) &= \sum_{n=1}^N\bar{\alpha}_{-n}(L_n,t)\bar{u}_{-n}(L_n,t)\\
     \bar{f}_i^{K} (0,t) &= \sum_{n=1}^N \bar{f}_{i}^{-n}(L_n,t).
 \end{align}
+Note that the first equation above characterize the Tubuloglomerular Feedback (TGF).
 
 \section{Steady state model}
 
