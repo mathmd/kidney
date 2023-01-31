@@ -92,9 +92,9 @@ Suppose there are $N$ distinct types of nephrons.
 For each type of nephron there are $2$ components contained in $\Omega$: the descending and the ascending parts, each of which are divided into the lumen, the intracellular space (ICS), and the lateral intercellular space (LIS).
 For the $n^{\mathrm{th}}$ type nephron, $1\leq n\leq N$, we label by $k=\pm n$, $k=\pm(N+n)$, and $k=\pm(2N+n)$ the descending (positive) and the ascending (negative) parts of the lumen, the ICS, and the LIS respectively.
 Similarly, for $P$ distinct types of vasa recta, the capillaries of the renal medulla running in opposition, we label by $k=\pm(3N+j)$, for $j=1,\dots,P$, the descending and the ascending vasa recta.
-Finally, there are 3 distinct types of collecting tubular cells: principal cell, $\alpha$-intercalted cell, and $\beta$-intercalted cell
+Finally, there are 3 distinct types of collecting tubular cells: principal cell, $\alpha$-intercalated cell, and $\beta$-intercalated cell.
 The functions of the two additional cell types are urine acidification by $\alpha$-intercalated cell and urine alkalinization by $\beta$-intercalated cell, and hence the necessity of assigning a distinct compartment for each of them.
-We assign $k=K,K+1,K+2,K+3,K+4$, where $K:=3N+P+1$, the lumen, the ICS of principal, $\alpha$- and $\beta$-intercalted cells, and the LIS of the collecting tubules respectively.
+We assign $k=K,K+1,K+2,K+3,K+4$, where $K:=3N+P+1$, for the lumen, the ICS of principal, $\alpha$- and $\beta$-intercalted cells, and the LIS of the collecting tubules respectively.
 
 We describe the occupied volume of each $k^{\mathrm{th}}$ compartment, $-3N-P\leq k\leq 3N+P+5=K+4$, in $\Omega$ by the volume per unit depth $\alpha_k:\Omega_k\times [0,\tau)\to \mathbb{R}_+$, where $0<\tau\leq \infty$ and $\Omega_k\subset\Omega$ is an open interval with 
 \begin{enumerate}[label=(\roman*)]
@@ -266,7 +266,7 @@ For the interstitium, we have the equations for $i=1,\dots,M$:
     \eta_{P+1}\vartheta_i^{P+1}+\eta_{-P-1}\vartheta_i^{-P-1}+s_i^0\quad \text{in}\quad (-2,0).
 \end{equation}
 Here, $\vartheta_i^j:\Omega_{3N'+j}\times [0,\tau)\to \mathbb{R}$, $j=\pm 1,\dots,\pm P$, and $\vartheta_i^j:(0,2)\times [0,\tau)\to \mathbb{R}$, $j=0,\pm(P+1)$, are the solute fluxes from vasa recta ($j=\pm 1,\dots,\pm P$) and the renal cortex ($j=0$) into the interstitium, and the vascular input and output ($j=\pm(P+1)$) \textit{into} the capillary plexus of medullary ray.
-In the equation (\ref{eq:int_sol}), we also set $\vartheta_i^j=0$ in $\Omega\setminus \Omega_{3N'+j}$ for $j=\pm 1,\dots,\pm P$, and $q_1^n,q_2^n=0$ in $\Omega\setminus\Omega_n$; similarly, $\vartheta_i^{\pm(P+1)} = 0$ in $[0,7)$.
+In the equation (\ref{eq:int_sol}), we also set $\vartheta_i^j=0$ in $\Omega\setminus \Omega_{3N'+j}$ for $j=\pm 1,\dots,\pm P$, and $q_1^n,q_2^n=0$ in $\Omega\setminus\Omega_n$; similarly, $\vartheta_i^{\pm(P+1)} = 0$ in $(0,2)$.
 % Note that it is assumed $f_i^0\equiv 0$ and $\vartheta_i^0\equiv 0$ in Alan Weinstein's model.
 % Moreover, since there is no need to explicitly describe $\vartheta_i^j$, $j=\pm(P+1)$, in the steady state model, $\vartheta_i^{P+1}$ is given and $\vartheta_i^{-P-1}$ is a model unknown in such a case; we need to have equations for these for the time-dependent model.
 % Note that, since we need to consider the total blood volume, instead of just plasma, for the hemoglobin buffer species, the axial flux $f_i^{3N'+j}$ in the equation (\ref{eq:vr_sol}) are slightly different from that when $i=1,\dots,M$.
@@ -361,7 +361,7 @@ Instead, we have for $k=\pm (3N+1),\dots,\pm(3N+p), K$:
     \frac{\partial\alpha_k}{\partial t}&\equiv 0\\
     p_k(0) &= p_k^0
 \end{alignat}
-    where $p_k^0:[0,\tau)\to \mathbb{R}_+$ is given for $k=\pm (3N+1),\dots,\pm(3N+p)$ and depending on the terminal flow of the connecting tubule in the renal cortex when $k=K$.
+    where $p_k^0:[0,\tau)\to \mathbb{R}_+$ is given for $k=\pm (3N+1),\dots,\pm(3N+P)$ and depending on the terminal flow of the connecting tubule in the renal cortex when $k=K$.
 The interstitial pressure is determined so that a condition for tissue volume is satisfied.
 In Alan Weinstein's model, such a condition is that the interstitial volume is constant in time.
 % , so we have
