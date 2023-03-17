@@ -1,0 +1,72 @@
+% !TEX program = xelatex
+\documentclass{article}
+
+%% ---- Set up paper margin ---- %%
+%\usepackage[a4paper,top=1in,bottom=1in,left=1in,right=1in]{geometry}
+
+% use multiple languages
+\input{../preambles/polyglot.tex}
+
+%% ---- math packages ---- %%
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bm} % same functionality as \mathbf{} but for greek letters
+\usepackage{diffcoeff}
+\usepackage{physics}
+\usepackage{mathdots}
+% \numberwithin{equation}{section} % equation numbers are formatted as <#Section>.<#eq in the section>
+
+%% ---- define math environment ---- %%
+\usepackage{amsthm}
+% \newtheorem{definition}{Definition}[section]
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{corollary}{Corollary}[definition]
+\newtheorem{remark}{Remark}[definition]
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{problem}[definition]{Problem}
+% \newtheorem*{problem}{Problem}
+
+%% ---- hyperref settings ---- %%
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{cite}
+\usepackage{xcolor}
+\hypersetup{
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={green!50!black},
+    urlcolor={blue!80!black}
+    }
+
+%% ---- misc. packages ---- %%
+\usepackage{enumitem} % allow customizing list environments: enumerate, itemize and description.
+\usepackage{mhchem} % use chemistry notation
+\usepackage{lipsum}
+\usepackage{metalogo} % for extended LaTeX logo such as XeTeX
+\usepackage{subcaption} % allowing subfigure environment
+% \usepackage[section]{placeins} % ensure floats do not go into the next section and allow the use of \FloatBarrier
+\usepackage{graphicx} % allow cropping and rotating images
+\usepackage{caption}
+\usepackage{float} % allow the use of [H] for positioning of tables and figures
+\usepackage{tikz-cd}
+\restylefloat{table}
+
+%% ---- title, authors, and dates ---- %%
+\usepackage{authblk}
+\title{A simple time-dependent model of kidney}
+\author[1]{Chanoknun Sintavanuruk}
+% \affil[1]{Department of Physiology, Faculty of Medicine Siriraj Hospital, Mahidol University}
+% \author[2,3]{XXXX XXXX}
+% \affil[2]{Department of XXXX, XXXX University}
+% \affil[3]{Department of XXXX, XXXX University}
+\date{\today}
+
+\begin{document}
+\sloppy % ช่วยตัดคำภาษาไทย
+\maketitle
+
+
+
+\end{document}
