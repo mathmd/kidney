@@ -67,6 +67,53 @@
 \sloppy % ช่วยตัดคำภาษาไทย
 \maketitle
 
+\section{Model equations}
 
+\section{Non-dimensionalization}
+
+
+\section{Numerical method}
+Consider a multidomain type model on a (rescaled) spatial domain $\Omega = (0,1)$, on which we have a non-dimensionalized system:
+\begin{align}
+    \frac{\partial \alpha_k}{\partial t}  + \mathrm{Pe}\frac{\partial}{\partial x}\left( \alpha_k u_k \right) &= - w_k,\\
+    \frac{\partial\alpha_0}{\partial t}+\mathrm{Pe}\frac{\partial}{\partial x}\left( \alpha_0 u_0 \right) &=\sum_k w_k,\\
+    \frac{\partial}{\partial t}\left( \alpha_k c_i^k \right)&=-\frac{\partial}{\partial x} f_i^k - g_i^k,\\
+    \frac{\partial}{\partial t}\left( \alpha_0 c_i^0 \right)&=-\frac{\partial}{\partial x} f_i^0 + \sum_k g_i^k,\\
+    \nu_k\left( p_k - p_0 \right) &= \frac{\alpha_k}{\bar{\alpha}_k}-1,\\
+    \alpha_0 + \sum_{k} \alpha_k &= \alpha_*,
+\end{align}
+    where
+\begin{align}
+    \frac{\rho_\cdot}{\alpha_\cdot}u_\cdot &= -\frac{\partial p_\cdot}{\partial x},\\
+    % f_i^\cdot&= -D_i^\cdot\frac{\partial c_i^\cdot}{\partial x}+\mathrm{Pe}\left( \alpha_\cdot u_\cdot c_i^\cdot \right),\\
+    f_i^\cdot&= -D_i^\cdot c_i^\cdot\frac{\partial \mu_i^\cdot}{\partial x}+\mathrm{Pe}\left( \alpha_\cdot u_\cdot c_i^\cdot \right),\quad \mu_i^\cdot:=\ln c_i^k \\
+    w_k&= \zeta_k\left( \psi_k-\psi_0 \right),\quad\psi_\cdot := p_\cdot - \pi_.,\quad \pi_\cdot := \frac{a_\cdot}{\alpha_\cdot}+\sum_i c_i^\cdot,\\
+    g_i^k &= j_i^k+h_i^k,\quad j_i^k :=\gamma_i^k(\mu_i^k-\mu_i^0).
+    % := \ln\left( \frac{c_i^k}{c_i^0} \right).
+\end{align}
+    % where $\mathrm{Pe}$ is the P\'eclet number, $k:\mathrm{D},\mathrm{A},\mathrm{C}$ represents the descending, ascending and collecting tubules of a homogeneous population of nephrons
+
+Let $N\in \mathbb{N}$ be the number of uniformly spaced grids in $(0,1)$, and $\delta x = 1/N$ be the spatial grid size.
+Similarly, we denote $\delta t$ as the size of time steps.
+We will use the notation $\alpha^{n}_{kl},c_{il}^{kn}, p_{kl}^{n}$ for the discretization of $\alpha_k,c_i^k$ and $p_k$ at the $l$-th spatial grid and time $t = n\delta t$.
+
+We define difference quotient operators:
+\begin{equation}
+    \Delta_x^+y^n_l:= \frac{y^n_{l+1}-y^n_{l}}{\delta x},\quad \Delta_x^+ y^n_l :=\frac{y^n_l-y^n_{l-1}}{\delta x},\quad \Delta_t y^n_l = \frac{y^n_l - y^{n-1}_l}{\delta t}.
+\end{equation}
+and an average operator:
+\begin{equation}
+    Ay_l^n := \frac{y^n_{l+1}+y^n_l}{2}.
+\end{equation}
+
+We start with known values of $\alpha^{n-1}_{kl},c_{il}^{k,n-1}, p_{kl}^{n-1}$, $l = 1,\dots,N$.
+The first step is to update the unknowns for the next time step $n$.
+We have
+\begin{gather}
+    \Delta_t \alpha_{kl}^n +\mathrm{Pe}(\alpha_{kl}^n u_{kl}^n) = -w_{kl}^{n},\quad w_{kl}^n:=\zeta_k\left( \psi_{kl}^n-\psi_{0l}^n \right)\\
+    \psi_{\cdot l}^n:= p_{.l}^n - \pi_{\cdot l}^n,\quad \pi_{\cdot l}^n:= \sum_i c_{il}^{\cdot n}.\nonumber
+\end{gather}
+
+2
 
 \end{document}
