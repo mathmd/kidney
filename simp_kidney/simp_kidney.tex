@@ -82,16 +82,27 @@ Consider a multidomain type model on a (rescaled) spatial domain $\Omega = (0,1)
     \nu_k\left( p_k - p_0 \right) &= \frac{\alpha_k}{\bar{\alpha}_k}-1,\\
     \alpha_0 + \sum_{k} \alpha_k &= \alpha_*,
 \end{align}
-    where
+    where $k$ represents ascending ($\mathrm{A}$), descending ($\mathrm{D}$) and collecting ($\mathrm{C}$) tubules of a homogeneous population of nephrons, and
 \begin{align}
     \frac{\rho_\cdot}{\alpha_\cdot}u_\cdot &= -\frac{\partial p_\cdot}{\partial x},\\
-    % f_i^\cdot&= -D_i^\cdot\frac{\partial c_i^\cdot}{\partial x}+\mathrm{Pe}\left( \alpha_\cdot u_\cdot c_i^\cdot \right),\\
-    f_i^\cdot&= -D_i^\cdot c_i^\cdot\frac{\partial \mu_i^\cdot}{\partial x}+\mathrm{Pe}\left( \alpha_\cdot u_\cdot c_i^\cdot \right),\quad \mu_i^\cdot:=\ln c_i^k \\
+    f_i^\cdot&= -D_i^\cdot\frac{\partial c_i^\cdot}{\partial x}+\mathrm{Pe}\left( \alpha_\cdot u_\cdot c_i^\cdot \right),\\
+    % f_i^\cdot&= -D_i^\cdot c_i^\cdot\frac{\partial \mu_i^\cdot}{\partial x}+\mathrm{Pe}\left( \alpha_\cdot u_\cdot c_i^\cdot \right),\quad \mu_i^\cdot:=\ln c_i^k \\
     w_k&= \zeta_k\left( \psi_k-\psi_0 \right),\quad\psi_\cdot := p_\cdot - \pi_.,\quad \pi_\cdot := \frac{a_\cdot}{\alpha_\cdot}+\sum_i c_i^\cdot,\\
     g_i^k &= j_i^k+h_i^k,\quad j_i^k :=\gamma_i^k(\mu_i^k-\mu_i^0).
     % := \ln\left( \frac{c_i^k}{c_i^0} \right).
 \end{align}
     % where $\mathrm{Pe}$ is the P\'eclet number, $k:\mathrm{D},\mathrm{A},\mathrm{C}$ represents the descending, ascending and collecting tubules of a homogeneous population of nephrons
+    The subscript $i$ here represents solute species, namely, salt and urea, and $\cdot$ is to be replaced by $\mathrm{A,D,C},0$.
+
+    We can see that the physical parameters of the dimensionless model are $\mathrm{Pe},\rho_\cdot, D_i^\cdot, \nu_k, \bar{\alpha}_k, \alpha_*,a$.
+    In this simulation, we will use $\alpha_* = 1$, $a=0$, and $\bar{\alpha}_k = 1/4$.
+    For the transport parameters, we have $\zeta_k,\gamma_i^k$; we assume $\zeta_\mathrm{A} = 0$ and $\gamma$.
+    For illustrating purpose, we assume that
+    \begin{equation}
+        h_\mathrm{salt}^\mathrm{A} = h_*(c_\mathrm{salt}^\mathrm{A})^+,\quad \text{on}\quad (0,1/2),
+    \end{equation}
+        where $h_*>0$ is the pump strength, and $h^A_\mathrm{salt} = 0$ elsewhere.
+    Also, we assume no active transport other than the pump in the ascending tubule.
 
 Let $N\in \mathbb{N}$ be the number of uniformly spaced grids in $(0,1)$, and $\delta x = 1/N$ be the spatial grid size.
 Similarly, we denote $\delta t$ as the size of time steps.
