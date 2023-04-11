@@ -130,7 +130,7 @@ We write $f_i^k$ as
 {\color{red}Correction: since $f_i^k$ is a \textit{flow} and $-D_i^k\partial c_i^k/\partial x$ is a diffusive \textit{flux}, we should have an additional $\alpha_k$ as indicated above.}
 For the transmural fluxes $g_i^k$, we have
 \begin{equation}
-    g_i^k := j_i^k+h_i^k,\quad k=\mathrm{D},\mathrm{A},\mathrm{C}.
+    g_i^k := j_i^k+h_i^k,\quad k=\mathrm{D},\mathrm{A},\mathrm{C}
 \end{equation}
     where $j_i^k$ is the passive transport of the solutes, and $h_i^k$ is the active transport.
 We assume that the passive transports take the form:
@@ -229,12 +229,13 @@ Note that we have $h_i^k = \gamma_k\hat{h}_i^k$ for the dimensionless active tra
 In this dimensionless formulation, we have identified parameters:
 \begin{gather}
     \mathrm{Pe} = \frac{\bar{\alpha}p_*/\rho_*}{D_*},\quad \hat{\rho}_k = \frac{\rho_k}{\rho_*},\quad \hat{\nu}_k = p_*\nu_k,\quad \hat{\bar{\alpha}}_k = \frac{\bar{\alpha}_k}{\bar{\alpha}},\\
+    \hat{a}_k = \frac{a_k}{\bar{\alpha}c_*},\quad
     \hat{D}_k = \frac{D_k}{D_*},\quad \hat{\zeta}_\mathrm{w}^k = \frac{\gamma_k c_*L^2}{\bar{\alpha}D_*}\zeta_\mathrm{w}^k,\quad\hat{\zeta}_i^k = \frac{\gamma_kRT L^2}{\bar{\alpha}c_* D_*}\zeta_i^k,
 \end{gather}
     where the subscript $*$ denotes the typical magnitudes of the parameters described in the previous section.
 We have the P\'eclet number $\mathrm{Pe}$ which can be interpreted as the ratio between the rate of advection $\bar{\alpha}p_*/\rho_*L$ and the rate of diffusion $D_*/L$.
-The mechanical parameters, which are the hydraulic resistivity $\hat{\rho}_k$, the tubular compliances $\hat{\nu}_k$, the resting volume density $\hat{\bar{\alpha}}_k$, and the diffusion coefficients $\hat{D}_k$ persist through the non-dimensionalization.
-The transport parameters, however, are now reduced to only $\hat{\zeta}_\mathrm{w}^k$ and $\hat{\zeta}_i^k$ which combine the geometric parameters $\gamma_k$ with the solute and water permeabilities.
+The mechanical parameters, which are the hydraulic resistivity $\hat{\rho}_k$, the tubular compliance $\hat{\nu}_k$, and the resting volume density $\hat{\bar{\alpha}}_k$, together with immobile solutes $\hat{a}_k$ and the diffusion coefficients $\hat{D}_k$, persist through the non-dimensionalization.
+The transport parameters, however, are now reduced to only $\hat{\zeta}_\mathrm{w}^k$ and $\hat{\zeta}_i^k$ which combine the geometric parameters $\gamma_k$ with the solute and water permeability.
 
 For the boundary conditions, we have the same form as previously described, but with $\hat{\cdot}$ notations, where we have
 \begin{equation}
@@ -271,21 +272,23 @@ We will use the notation $\alpha^{n}_{kl},c_{il}^{kn}, p_{kl}^{n}$ for the discr
 
 We define difference quotient operators:
 \begin{equation}
-    \mathcal{D}_x^+y^n_l:= \frac{y^n_{l+1}-y^n_{l}}{\delta x},\quad \mathcal{D}_x^- y^n_l :=\frac{y^n_l-y^n_{l-1}}{\delta x},\quad \mathcal{D}_t y^n_l = \frac{y^n_l - y^{n-1}_l}{\delta t}.
+    \mathcal{D}_x^+y^n_l:= \frac{y^n_{l+1}-y^n_{l}}{\delta x},\quad \mathcal{D}_x^- y^n_l :=\frac{y^n_l-y^n_{l-1}}{\delta x},\quad \mathcal{D}_t y^n_l = \frac{y^n_l - y^{n-1}_l}{\delta t},
 \end{equation}
 and an average operator:
 \begin{equation}
     \mathcal{A} y_l^n := \frac{y^n_{l+1}+y^n_l}{2}.
 \end{equation}
 
-We start with known values of $\alpha^{n-1}_{kl},c_{il}^{k,n-1}, p_{kl}^{n-1}$, $l = 1,\dots,N$.
-The first step is to update the unknowns for the next time step $n$.
+Starting with known values of $\alpha^{n-1}_{kl},c_{il}^{k,n-1}, p_{kl}^{n-1}$, $l = 1,\dots,N$, the first step is to update the unknowns for the next time step $n$.
 We have
-\begin{gather}
-    \mathcal{D}_t \alpha_{kl}^n +\mathrm{Pe}(\alpha_{kl}^n u_{kl}^n) = -w_{kl}^{n},\quad w_{kl}^n:=\zeta_\mathrm{w}^k\left( \psi_{kl}^n-\psi_{0l}^n \right)\\
-    \psi_{\cdot l}^n:= p_{.l}^n - \pi_{\cdot l}^n,\quad \pi_{\cdot l}^n:= \sum_i c_{il}^{\cdot n}.\nonumber
-\end{gather}
-
+\begin{align}
+    \mathcal{D}_t \alpha_{kl}^n +\mathrm{Pe}\mathcal{D}_x^-v &= -w_{kl}^{n},\quad k=0,\mathrm{D},\mathrm{A},\mathrm{C}\\
+\end{align}
+where
+\begin{align}
+    w_{kl}^n:=\zeta_\mathrm{w}^k\left( \psi_{kl}^n-\psi_{0l}^n \right),\quad
+    \psi_{\cdot l}^n:= p_{.l}^n - \pi_{\cdot l}^n,\quad \pi_{\cdot l}^n:= \sum_i c_{il}^{\cdot n}
+\end{align}
 
 \section{Simulation of the countercurrent mechanism}
 
