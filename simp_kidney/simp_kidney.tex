@@ -69,45 +69,201 @@
 
 \section{Model equations}
 
+In this model, we consider the medulla of the kidney as a multiphasic continuum consisting of luminal compartments of nephrons and a single combined interstitium-vessel compartment, which we will refer to as simply the interstitium. 
+We assume that there is no variation across the medullary tissue of the same depth so that the model can be represented in a one-dimensional spatial domain $(0,L)$, where $x=0$ is the most superficial part of the outer medulla.
+Further, we suppose that the population of nephrons is homogeneous, so that we have three distinct luminal compartments: the descending tubules, the ascending tubules, and the collecting tubules.
+
+For each compartment, the occupied volume is given by the volume density (per unit depth) $\alpha_k$, as a function of space and time, where we use $k$ to identify the compartment; $k=0,\mathrm{D},\mathrm{A},\mathrm{C}$ are for the interstitium, the descending, ascending, and collecting tubules respectively.
+By assuming the total volume of the medulla is constant, we have
+\begin{equation}\label{eq:vol_conserv}
+    \sum_k \alpha_k = \alpha_*
+\end{equation}
+    where $\alpha_*:(0,L)\to \mathbb{R}_+$ is the total volume density of the medulla.
+
+The dynamics of $\alpha_k$ are given by
+\begin{align}\label{eq:volume_dynamics}
+    \frac{\partial \alpha_k}{\partial t} + \frac{\partial}{\partial x}\left( \alpha_k u_k \right) &= -\gamma_kw_k,\quad k=\mathrm{D},\mathrm{A},\mathrm{C},\\
+    \frac{\partial \alpha_0}{\partial t} + \frac{\partial }{\partial x}\left( \alpha_0 u_0 \right) &= \sum_{k=\mathrm{D},\mathrm{A},\mathrm{C}} \gamma_kw_k.
+\end{align}
+Here, $u_k$ is the water flow velocity, $w_k$ is the transmural flux of the water reabsorbed into the interstitium, and $\gamma_k$ describes the area of the luminal wall per unit depth.
+For each compartment $k$, the flow velocity $u_k$ depends on the hydrostatic pressure $p_k$, and is described by the Poiseuille equation:
+\begin{equation}
+    \frac{\rho_k u_k}{\alpha_k} = -\frac{\partial p_k}{\partial x},\quad k=0,\mathrm{D},\mathrm{A},\mathrm{C},
+\end{equation}
+    with $\rho_k$ is a constant so that $\rho_k/\alpha_k$ represents the hydraulic resistivity which depends on the volume density $\alpha_k$.
+The transmural fluxes $w_k$ on the right-hand side of (\ref{eq:volume_dynamics}) depend on the difference of both the hydrostatic pressures $p_k$ and the osmotic pressures $\pi_k$ between the luminal and the interstitial compartments.
+That is,
+\begin{equation}
+    w_k := \zeta_\mathrm{w}^k\left( \psi_k - \psi_0 \right),\quad \psi_k:=p_k - \pi_k,\quad k=\mathrm{D},\mathrm{A},\mathrm{C}
+\end{equation}
+    where $\zeta_\mathrm{w}^k$ are the water permeability of the tubules, and $\psi_k$ are called the `water potential'.
+
+We describe the hydrostatic pressure $p_k$ by considering a mechanical property of the nephrons.
+We assume that this can be captured by the compliance $\nu_k$, $k=\mathrm{D},\mathrm{A},\mathrm{C}$, of the tubular walls, and we have
+\begin{equation}
+    \nu_k(p_k - p_0) = \frac{\alpha_k}{\bar{\alpha}_k} - 1,\quad k=\mathrm{D},\mathrm{A},\mathrm{C},
+\end{equation}
+where $\bar{\alpha}_k$ are the resting volume density for which $p_k = p_0$.
+Note that the interstitial hydrostatic pressure is determined by the volume conservation given by (\ref{eq:vol_conserv}).
+
+The osmotic pressure $\pi_k$, on the other hand, depends on the total concentration of the solutes.
+In this model, for each compartment $k$, we will only consider two unknown concentrations of solute species: the salt concentration $c_\mathrm{s}^k$, and the urea concentration $c_\mathrm{u}^k$.
+The rest of the solute species will be treated as a fixed immobile solute, and we denote the total amount (per unit depth) by $a_k$.
+We define the osmotic pressure by
+\begin{equation}
+    \pi_k:= \sum_{i=\mathrm{s},\mathrm{u}}c_i^k+\frac{a_k}{\alpha_k},\quad k=0,\mathrm{D},\mathrm{A},\mathrm{C}.
+\end{equation}
+
+Now, similarly to the dynamics of the volume density, we have equations for the salt and urea concentrations:
+\begin{align}\label{eq:solute_dynamics}
+    \frac{\partial}{\partial t}\left( \alpha_k c_i^k \right)&=-\frac{\partial}{\partial x} f_i^k - \gamma_kg_i^k,\quad k=\mathrm{D},\mathrm{A},\mathrm{C},\\
+    \frac{\partial}{\partial t}\left( \alpha_0 c_i^0 \right)&=-\frac{\partial}{\partial x} f_i^0 + \sum_{k=\mathrm{D},\mathrm{A},\mathrm{C}} \gamma_k g_i^k,
+\end{align}
+    where $i=\mathrm{s},\mathrm{u}$.
+The axial flow and transmural flux of the solute $i$ are denoted by $f_i^k$ and $g_i^k$ respectively.
+The axial flow has two components: diffusion and advection.
+We write $f_i^k$ as
+\begin{equation}
+    f_i^k := -{\color{red}\alpha_k}D_i^k\frac{\partial c_i^k}{\partial x}+\alpha_ku_kc_i^k,\quad k=0,\mathrm{D},\mathrm{A},\mathrm{C},
+\end{equation}
+    where $D_i^k$ are the diffusion coefficients.
+{\color{red}Correction: since $f_i^k$ is a \textit{flow} and $-D_i^k\partial c_i^k/\partial x$ is a diffusive \textit{flux}, we should have an additional $\alpha_k$ as indicated above.}
+For the transmural fluxes $g_i^k$, we have
+\begin{equation}
+    g_i^k := j_i^k+h_i^k,\quad k=\mathrm{D},\mathrm{A},\mathrm{C}.
+\end{equation}
+    where $j_i^k$ is the passive transport of the solutes, and $h_i^k$ is the active transport.
+We assume that the passive transports take the form:
+\begin{equation}
+    j_i^k = \zeta_i^k\left( \mu_i^k - \mu_i^0 \right),\quad k=\mathrm{D},\mathrm{A},\mathrm{C},
+\end{equation}
+    where $\zeta_i^k$ are the permeability of the solute $i$ through the tubules, and $\mu_i^k$ is the chemical potential of the solute $i$ in the compartment $k$:
+\begin{equation}
+    \mu_i^k:= RT\ln c_i^k,\quad k=0,\mathrm{D},\mathrm{A},\mathrm{C}.
+\end{equation}
+Note that, since we are considering only salt and urea, we essentially eliminate the need to address the electrical potential, i.e., the electroneutrality condition requires that the movement of \ce{Na+} ions must be accompanied by that of \ce{Cl-} ions, so we can think of salt as having no charge.
+The active transport $h_i^k$ represent the transport which requires external energy.
+In this case, we are interested the molecular pump of salt from the ascending tubules into the interstitium.
+So, $h_\mathrm{s}^\mathrm{A}$ is a non-negative function and $h_i^k\equiv 0$ for $k=\mathrm{D},\mathrm{C}$ or $i=\mathrm{u}$.
+
+Now, we need to specify the boundary conditions.
+For the interstitial compartment, we assume no-flux boundary at $x=L$, i.e.,
+\begin{align}
+    u_0(t,L) &= 0,\\ 
+    f_i^0(t,L)&=0,\quad i=\mathrm{s},\mathrm{u}.
+\end{align}
+On the other hand, we allow interstitial water flow and advective solute flow at $x=0$ in the negative direction.
+More precisely,
+\begin{align}
+    (\alpha_0u_0)(t,0) &= \min\left\{ 0,\frac{P_{\mathrm{v}}-p_0(t,0) }{R_{\mathrm{v}}}\right\},\\ 
+    f_i^0(t,0) &= (\alpha_0 u_0 c_i^0)(t,0),\quad i=\mathrm{s},\mathrm{u},
+\end{align}
+    where $P_{\mathrm{v}}$ is the pressure inside larger vessels which are coupled to the interstitial compartment, and $R_\mathrm{v}$ is the resistance of the coupling.
+The rectification is so that we avoid having to specify the solute input from the outside when the pressure $p_0(t,0)$ is less than that of the pressure $P_\mathrm{vessel}$ of larger vessels.
+With this same reason, we do not allow diffusive solute flow through this coupling.
+
+For the luminal compartments, we have solute and water input from the proximal tubules in the descending compartment at $x=0$.
+Formally, we write
+\begin{align}
+    (\alpha_\mathrm{D} u_\mathrm{D})(t,0) &= \mathrm{GFR}(t),\\
+    f_i^\mathrm{D}(t,0) &= (\alpha_\mathrm{D}u_\mathrm{D}c_i^\mathrm{D})(t,0),\quad i=\mathrm{s,u}
+\end{align}
+    where $\mathrm{GFR}$ is a non-negative function of time, which can be given or depend on other model unknowns such as the pressure of the descending tubule or the salt concentration in the ascending tubule.
+Furthermore, we have couplings between the descending and ascending tubules at $x=L$ and between the ascending and collecting tubules at $x=0$, i.e., we have
+\begin{align}
+    (\alpha_\mathrm{D}u_\mathrm{D}+\alpha_\mathrm{A}u_\mathrm{A})(t,L) &= 0,\\
+    \quad\left( f_i^\mathrm{D}+f_i^\mathrm{A} \right)(t,L) &= 0,\\
+    p_\mathrm{D}(t,L)&= p_{\mathrm{A}}(t,L),\\ 
+    c_i^\mathrm{D}(t,L) &=c_i^\mathrm{A}(t,L)
+\end{align}
+and, similarly,
+\begin{align}
+    (\alpha_\mathrm{A}u_\mathrm{A}+\alpha_\mathrm{C}u_\mathrm{C})(t,0) &= 0,\\
+    \quad\left( f_i^\mathrm{A}+f_i^\mathrm{C} \right)(t,0) &= 0,\\
+    p_\mathrm{A}(t,0)&= p_{\mathrm{C}}(t,0),\\ 
+    c_i^\mathrm{A}(t,0) &=c_i^\mathrm{C}(t,0),
+\end{align}
+    where $i = \mathrm{s},\mathrm{u}$.
+Note that in our simplification, we are bypassing the distal convoluted tubules in the coupling between the ascending and the collecting tubules.
+Finally, since the volume density of the collecting tubule is the model unknown, we need to specify the solute and water flow at $x=L$ where we use the same idea as those of the interstitium:
+\begin{align}
+    (\alpha_\mathrm{C} u_\mathrm{C} )(t,L) &= \max\left\{ 0,\frac{p_\mathrm{C} (t,L) - P_{\mathrm{p}} }{R_{\mathrm{p}}}\right\},\\
+    f_i^\mathrm{C}(t,L) &= (\alpha_\mathrm{C}  u_\mathrm{C}  c_i^\mathrm{C})(t,L),\quad i=\mathrm{s},\mathrm{u},
+\end{align}
+    where $P_\mathrm{p}$ is the papillary pressure and $R_\mathrm{p}$ is the resistance of the coupling between the collecting tubules and the renal papillae.
+
 \section{Non-dimensionalization}
 
+We now consider the rescaling of space and time:
+\begin{equation}
+    x = L\hat{x},\quad t = \frac{L^2}{D_*}\hat{t},
+\end{equation}
+    where $D_*$ is the typical magnitude of the diffusion coefficients across all solutes and compartments.
+With this, we rescale the model unknowns as follows:
+\begin{gather}
+    \alpha_k = \bar{\alpha}\hat{\alpha},\quad c_i^k = c_*\hat{c}_i^k,\quad p_k = p_*\hat{p}_k,
+    % \quad u_k = \frac{\bar{\alpha}p_*}{\rho_* L}\hat{u}
+\end{gather}
+    % where $\bar{\alpha} = \frac{1}{L}\int_0^L\alpha_*(x)\,dx$, and $c_*,p_*,\rho_*$ are the typical magnitudes of all solute concentrations, hydrostatic pressures, and hydraulic resistivity.
+    where $\bar{\alpha} = \frac{1}{L}\int_0^L\alpha_*(x)\,dx$, and $c_*,p_*$ are the typical magnitudes of solute concentrations and hydrostatic pressures.
+Here, the dimensionless unknowns with $\hat{\cdot}$ notation are functions in the rescaled space and time $(\hat{t},\hat{x})$.
+
+We have the model equations in the dimensionless form:
+\begin{align}
+    \frac{\partial \hat{\alpha}_k}{\partial \hat{t}}  + \mathrm{Pe}\frac{\partial}{\partial \hat{x}}\left( \hat{\alpha}_k \hat{u}_k \right) &= - \hat{w}_k,\\ \label{eq:nd_1steq}
+    \frac{\partial\hat{\alpha}_0}{\partial \hat{t}}+\mathrm{Pe}\frac{\partial}{\partial \hat{x}}\left( \hat{\alpha}_0 \hat{u}_0 \right) &=\sum_k \hat{w}_k,\\
+    \hat{\nu}_k\left( \hat{p}_k - \hat{p}_0 \right) &= \frac{\hat{\alpha}_k}{\hat{\bar{\alpha}}_k}-1,\\
+    \hat{\alpha}_0 + \sum_{k} \hat{\alpha}_k &= \hat{\alpha}_*,\\
+    \frac{\partial}{\partial \hat{t}}\left( \hat{\alpha}_k \hat{c}_i^k \right)&=-\frac{\partial}{\partial \hat{x}} \hat{f}_i^k - \hat{g}_i^k,\\
+    \frac{\partial}{\partial \hat{t}}\left( \hat{\alpha}_0 \hat{c}_i^0 \right)&=-\frac{\partial}{\partial \hat{x}} \hat{f}_i^0 + \sum_k \hat{g}_i^k,
+\end{align}
+    where
+\begin{align}
+    \hat{u}_k &:= -\frac{\hat{\alpha}_k}{\hat{\rho}_k}\frac{\partial \hat{p}_k}{\partial \hat{x}},\\
+    \hat{f}_i^k &:= -{\color{red}\hat{\alpha}_k}\hat{D}_k \frac{\partial \hat{c}_i^k}{\partial \hat{x}} + \mathrm{Pe}(\hat{\alpha}_k\hat{u}_k\hat{c}_i^k),\\
+    \hat{w}_k&:= \hat{\zeta}_\mathrm{w}^k\left( \hat{\psi}_k-\hat{\psi}_0 \right),\quad\hat{\psi}_k := \hat{p}_k - \hat{\pi}_.,\quad \hat{\pi}_k := \frac{\hat{a}_k}{\hat{\alpha}_k}+\sum_i \hat{c}_i^k,\\
+    \hat{g}_i^k &:= \hat{j}_i^k+\hat{h}_i^k,\quad \hat{j}_i^k :=\hat{\zeta}_i^k(\hat{\mu}_i^k-\hat{\mu}_i^0),\quad \hat{\mu}_i^k:=\ln \hat{c}_i^k.\label{eq:nd_lasteq}
+\end{align}
+{\color{red}Correction: as in the previous section, the diffusive term should have an additional $\hat{\alpha}_k$}.
+Note that we have $h_i^k = \gamma_k\hat{h}_i^k$ for the dimensionless active transport $\hat{h}_i^k$.
+In this dimensionless formulation, we have identified parameters:
+\begin{gather}
+    \mathrm{Pe} = \frac{\bar{\alpha}p_*/\rho_*}{D_*},\quad \hat{\rho}_k = \frac{\rho_k}{\rho_*},\quad \hat{\nu}_k = p_*\nu_k,\quad \hat{\bar{\alpha}}_k = \frac{\bar{\alpha}_k}{\bar{\alpha}},\\
+    \hat{D}_k = \frac{D_k}{D_*},\quad \hat{\zeta}_\mathrm{w}^k = \frac{\gamma_k c_*L^2}{\bar{\alpha}D_*}\zeta_\mathrm{w}^k,\quad\hat{\zeta}_i^k = \frac{\gamma_kRT L^2}{\bar{\alpha}c_* D_*}\zeta_i^k,
+\end{gather}
+    where the subscript $*$ denotes the typical magnitudes of the parameters described in the previous section.
+We have the P\'eclet number $\mathrm{Pe}$ which can be interpreted as the ratio between the rate of advection $\bar{\alpha}p_*/\rho_*L$ and the rate of diffusion $D_*/L$.
+The mechanical parameters, which are the hydraulic resistivity $\hat{\rho}_k$, the tubular compliances $\hat{\rho}_k$, the resting volume density $\hat{\bar{\alpha}}_k$, and the diffusion coefficients $\hat{D}_k$ persist through the non-dimensionalization.
+The transport parameters, however, are now reduced to only $\hat{\zeta}_\mathrm{w}^k$ and $\hat{\zeta}_i^k$ which combine the geometric parameters $g_k$ with the solute and water permeabilities.
+
+For the boundary conditions, we have the same form as previously described, but with $\hat{\cdot}$ notations, where we have
+\begin{equation}
+    GFR = \frac{\bar{\alpha}^2 p_*}{\rho_* L}\widehat{\mathrm{GFR}},\quad
+    P_\cdot = p_*\hat{P}_\cdot,\quad R_\cdot = \frac{\rho_* L}{\bar{\alpha}^2}\hat{R}_\cdot,
+\end{equation}
+    where the subscript $\cdot$ represents $\mathrm{v}$ and $\mathrm{p}$.
 
 \section{Numerical method}
-Consider a multidomain type model on a (rescaled) spatial domain $\Omega = (0,1)$, on which we have a non-dimensionalized system:
-\begin{align}
-    \frac{\partial \alpha_k}{\partial t}  + \mathrm{Pe}\frac{\partial}{\partial x}\left( \alpha_k u_k \right) &= - w_k,\\
-    \frac{\partial\alpha_0}{\partial t}+\mathrm{Pe}\frac{\partial}{\partial x}\left( \alpha_0 u_0 \right) &=\sum_k w_k,\\
-    \frac{\partial}{\partial t}\left( \alpha_k c_i^k \right)&=-\frac{\partial}{\partial x} f_i^k - g_i^k,\\
-    \frac{\partial}{\partial t}\left( \alpha_0 c_i^0 \right)&=-\frac{\partial}{\partial x} f_i^0 + \sum_k g_i^k,\\
-    \nu_k\left( p_k - p_0 \right) &= \frac{\alpha_k}{\bar{\alpha}_k}-1,\\
-    \alpha_0 + \sum_{k} \alpha_k &= \alpha_*,
-\end{align}
-    where $k$ represents ascending ($\mathrm{A}$), descending ($\mathrm{D}$) and collecting ($\mathrm{C}$) tubules of a homogeneous population of nephrons, and
-\begin{align}
-    \frac{\rho_\cdot}{\alpha_\cdot}u_\cdot &= -\frac{\partial p_\cdot}{\partial x},\\
-    f_i^\cdot&= -D_i^\cdot\frac{\partial c_i^\cdot}{\partial x}+\mathrm{Pe}\left( \alpha_\cdot u_\cdot c_i^\cdot \right),\\
-    % f_i^\cdot&= -D_i^\cdot c_i^\cdot\frac{\partial \mu_i^\cdot}{\partial x}+\mathrm{Pe}\left( \alpha_\cdot u_\cdot c_i^\cdot \right),\quad \mu_i^\cdot:=\ln c_i^k \\
-    w_k&= \zeta_k\left( \psi_k-\psi_0 \right),\quad\psi_\cdot := p_\cdot - \pi_.,\quad \pi_\cdot := \frac{a_\cdot}{\alpha_\cdot}+\sum_i c_i^\cdot,\\
-    g_i^k &= j_i^k+h_i^k,\quad j_i^k :=\gamma_i^k(\mu_i^k-\mu_i^0).
-    % := \ln\left( \frac{c_i^k}{c_i^0} \right).
-\end{align}
-    % where $\mathrm{Pe}$ is the P\'eclet number, $k:\mathrm{D},\mathrm{A},\mathrm{C}$ represents the descending, ascending and collecting tubules of a homogeneous population of nephrons
-    The subscript $i$ here represents solute species, namely, salt and urea, and $\cdot$ is to be replaced by $\mathrm{A,D,C},0$.
 
-    Here, we have
-    \begin{gather}
-        \mathrm{Pe} = \frac{c_0RT}{}
-    \end{gather}
+% \begin{align}
+%     \frac{\partial \alpha_k}{\partial t}  + \mathrm{Pe}\frac{\partial}{\partial x}\left( \alpha_k u_k \right) &= - w_k,\\
+%     \frac{\partial\alpha_0}{\partial t}+\mathrm{Pe}\frac{\partial}{\partial x}\left( \alpha_0 u_0 \right) &=\sum_k w_k,\\
+%     \frac{\partial}{\partial t}\left( \alpha_k c_i^k \right)&=-\frac{\partial}{\partial x} f_i^k - g_i^k,\\
+%     \frac{\partial}{\partial t}\left( \alpha_0 c_i^0 \right)&=-\frac{\partial}{\partial x} f_i^0 + \sum_k g_i^k,\\
+%     \nu_k\left( p_k - p_0 \right) &= \frac{\alpha_k}{\bar{\alpha}_k}-1,\\
+%     \alpha_0 + \sum_{k} \alpha_k &= \alpha_*,
+% \end{align}
+% \begin{align}
+%     \frac{\rho_\cdot}{\alpha_\cdot}u_\cdot &= -\frac{\partial p_\cdot}{\partial x},\\
+%     f_i^\cdot&= -D_i^\cdot\frac{\partial c_i^\cdot}{\partial x}+\mathrm{Pe}\left( \alpha_\cdot u_\cdot c_i^\cdot \right),\\
+%     % f_i^\cdot&= -D_i^\cdot c_i^\cdot\frac{\partial \mu_i^\cdot}{\partial x}+\mathrm{Pe}\left( \alpha_\cdot u_\cdot c_i^\cdot \right),\quad \mu_i^\cdot:=\ln c_i^k \\
+%     w_k&= \zeta_k\left( \psi_k-\psi_0 \right),\quad\psi_\cdot := p_\cdot - \pi_.,\quad \pi_\cdot := \frac{a_\cdot}{\alpha_\cdot}+\sum_i c_i^\cdot,\\
+%     g_i^k &= j_i^k+h_i^k,\quad j_i^k :=\gamma_i^k(\mu_i^k-\mu_i^0).
+%     % := \ln\left( \frac{c_i^k}{c_i^0} \right).
+% \end{align}
 
-    We can see that the physical parameters of the dimensionless model are $\mathrm{Pe},\rho_\cdot, D_i^\cdot, \nu_k, \bar{\alpha}_k, \alpha_*,a$.
-    In this simulation, we will use $\alpha_* = 1$, $a=0$, and $\bar{\alpha}_k = 1/4$.
-    For the transport parameters, we have $\zeta_k,\gamma_i^k$; we assume $\zeta_\mathrm{A} = 0$ and $\gamma$.
-    For illustrating purpose, we assume that
-    \begin{equation}
-        h_\mathrm{salt}^\mathrm{A} = h_*(c_\mathrm{salt}^\mathrm{A})^+,\quad \text{on}\quad (0,1/2),
-    \end{equation}
-        where $h_*>0$ is the pump strength, and $h^A_\mathrm{salt} = 0$ elsewhere.
-    Also, we assume no active transport other than the pump in the ascending tubule.
+We now give an implicit scheme to numerically solve the dimensionless system (\ref{eq:nd_1steq}) - (\ref{eq:nd_lasteq}) described in the previous section.
+To simplify the notation, we will omit the $\hat{\cdot}$ notation in these equations.
 
 Let $N\in \mathbb{N}$ be the number of uniformly spaced grids in $(0,1)$, and $\delta x = 1/N$ be the spatial grid size.
 Similarly, we denote $\delta t$ as the size of time steps.
@@ -115,21 +271,31 @@ We will use the notation $\alpha^{n}_{kl},c_{il}^{kn}, p_{kl}^{n}$ for the discr
 
 We define difference quotient operators:
 \begin{equation}
-    \Delta_x^+y^n_l:= \frac{y^n_{l+1}-y^n_{l}}{\delta x},\quad \Delta_x^+ y^n_l :=\frac{y^n_l-y^n_{l-1}}{\delta x},\quad \Delta_t y^n_l = \frac{y^n_l - y^{n-1}_l}{\delta t}.
+    \mathcal{D}_x^+y^n_l:= \frac{y^n_{l+1}-y^n_{l}}{\delta x},\quad \mathcal{D}_x^- y^n_l :=\frac{y^n_l-y^n_{l-1}}{\delta x},\quad \mathcal{D}_t y^n_l = \frac{y^n_l - y^{n-1}_l}{\delta t}.
 \end{equation}
 and an average operator:
 \begin{equation}
-    Ay_l^n := \frac{y^n_{l+1}+y^n_l}{2}.
+    \mathcal{A} y_l^n := \frac{y^n_{l+1}+y^n_l}{2}.
 \end{equation}
 
 We start with known values of $\alpha^{n-1}_{kl},c_{il}^{k,n-1}, p_{kl}^{n-1}$, $l = 1,\dots,N$.
 The first step is to update the unknowns for the next time step $n$.
 We have
 \begin{gather}
-    \Delta_t \alpha_{kl}^n +\mathrm{Pe}(\alpha_{kl}^n u_{kl}^n) = -w_{kl}^{n},\quad w_{kl}^n:=\zeta_k\left( \psi_{kl}^n-\psi_{0l}^n \right)\\
+    \mathcal{D}_t \alpha_{kl}^n +\mathrm{Pe}(\alpha_{kl}^n u_{kl}^n) = -w_{kl}^{n},\quad w_{kl}^n:=\zeta_\mathrm{w}^k\left( \psi_{kl}^n-\psi_{0l}^n \right)\\
     \psi_{\cdot l}^n:= p_{.l}^n - \pi_{\cdot l}^n,\quad \pi_{\cdot l}^n:= \sum_i c_{il}^{\cdot n}.\nonumber
 \end{gather}
 
-2
+
+\section{Simulation of the countercurrent mechanism}
+
+In this simulation, we will use $\alpha_* = 1$, $a=0$, and $\bar{\alpha}_k = 1/4$.
+For the transport parameters, we have $\zeta_k,\gamma_i^k$; we assume $\zeta_\mathrm{A} = 0$ and $\gamma$.
+    For illustrating purpose, we assume that
+    \begin{equation}
+        h_\mathrm{salt}^\mathrm{A} = h_*(c_\mathrm{salt}^\mathrm{A})^+,\quad \text{on}\quad (0,1/2),
+    \end{equation}
+        where $h_*>0$ is the pump strength, and $h^A_\mathrm{salt} = 0$ elsewhere.
+    Also, we assume no active transport other than the pump in the ascending tubule.
 
 \end{document}
