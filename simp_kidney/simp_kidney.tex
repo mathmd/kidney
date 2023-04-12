@@ -166,9 +166,11 @@ For the luminal compartments, we have solute and water input from the proximal t
 Formally, we write
 \begin{align}
     (\alpha_\mathrm{D} u_\mathrm{D})(t,0) &= \mathrm{GFR}(t),\\
-    f_i^\mathrm{D}(t,0) &= (\alpha_\mathrm{D}u_\mathrm{D}c_i^\mathrm{D})(t,0),\quad i=\mathrm{s,u}
+    f_i^\mathrm{D}(t,0) &= (\alpha_\mathrm{D}u_\mathrm{D}c_i^\mathrm{D})(t,0),\quad i=\mathrm{s,u}\\
+    c_i^\mathrm{D}(t,0) &= c_{i}^{\mathrm{filtrate}}(t)
 \end{align}
     where $\mathrm{GFR}$ is a non-negative function of time, which can be given or depend on other model unknowns such as the pressure of the descending tubule or the salt concentration in the ascending tubule.
+We also have the concentration at the beginning of the descending tubule $c_i^\mathrm{filtrate}$ given.
 Furthermore, we have couplings between the descending and ascending tubules at $x=L$ and between the ascending and collecting tubules at $x=0$, i.e., we have
 \begin{align}
     (\alpha_\mathrm{D}u_\mathrm{D}+\alpha_\mathrm{A}u_\mathrm{A})(t,L) &= 0,\\
@@ -205,7 +207,7 @@ With this, we rescale the model unknowns as follows:
     % \quad u_k = \frac{\bar{\alpha}p_*}{\rho_* L}\hat{u}
 \end{gather}
     % where $\bar{\alpha} = \frac{1}{L}\int_0^L\alpha_*(x)\,dx$, and $c_*,p_*,\rho_*$ are the typical magnitudes of all solute concentrations, hydrostatic pressures, and hydraulic resistivity.
-    where $\bar{\alpha} = \frac{1}{L}\int_0^L\alpha_*(x)\,dx$, and $c_*,p_*$ are the typical magnitudes of solute concentrations and hydrostatic pressures.
+    for $k=0,\mathrm{D},\mathrm{A},\mathrm{C}$, where $\bar{\alpha} = \frac{1}{L}\int_0^L\alpha_*(x)\,dx$, and $c_*,p_*$ are the typical magnitudes of solute concentrations and hydrostatic pressures.
 Here, the dimensionless unknowns with $\hat{\cdot}$ notation are functions in the rescaled space and time $(\hat{t},\hat{x})$.
 
 We have the model equations in the dimensionless form:
@@ -217,24 +219,26 @@ We have the model equations in the dimensionless form:
     \frac{\partial}{\partial \hat{t}}\left( \hat{\alpha}_k \hat{c}_i^k \right)&=-\frac{\partial}{\partial \hat{x}} \hat{f}_i^k - \hat{g}_i^k,\\
     \frac{\partial}{\partial \hat{t}}\left( \hat{\alpha}_0 \hat{c}_i^0 \right)&=-\frac{\partial}{\partial \hat{x}} \hat{f}_i^0 + \sum_k \hat{g}_i^k,
 \end{align}
-    where
+    for $k=\mathrm{D},\mathrm{A},\mathrm{C}$ and $i=\mathrm{s},\mathrm{u}$, where
 \begin{align}
-    \hat{u}_k &:= -\frac{\hat{\alpha}_k}{\hat{\rho}_k}\frac{\partial \hat{p}_k}{\partial \hat{x}},\\
-    \hat{f}_i^k &:= -{\color{red}\hat{\alpha}_k}\hat{D}_k \frac{\partial \hat{c}_i^k}{\partial \hat{x}} + \mathrm{Pe}(\hat{\alpha}_k\hat{u}_k\hat{c}_i^k),\\
-    \hat{w}_k&:= \hat{\zeta}_\mathrm{w}^k\left( \hat{\psi}_k-\hat{\psi}_0 \right),\quad\hat{\psi}_k := \hat{p}_k - \hat{\pi}_.,\quad \hat{\pi}_k := \frac{\hat{a}_k}{\hat{\alpha}_k}+\sum_i \hat{c}_i^k,\\
-    \hat{g}_i^k &:= \hat{j}_i^k+\hat{h}_i^k,\quad \hat{j}_i^k :=\hat{\zeta}_i^k(\hat{\mu}_i^k-\hat{\mu}_i^0),\quad \hat{\mu}_i^k:=\ln \hat{c}_i^k.\label{eq:nd_lasteq}
+    \hat{u}_\cdot &:= -\frac{\hat{\alpha}_\cdot}{\hat{\rho}_\cdot}\frac{\partial \hat{p}_\cdot}{\partial \hat{x}},\\
+    \hat{f}_i^\cdot &:= -{\color{red}\hat{\alpha}_\cdot}\hat{D}_\cdot \frac{\partial \hat{c}_i^\cdot}{\partial \hat{x}} + \mathrm{Pe}(\hat{\alpha}_\cdot\hat{u}_\cdot\hat{c}_i^\cdot),\\
+    \hat{w}_k&:= \hat{\zeta}_\mathrm{w}^k\left( \hat{\psi}_k-\hat{\psi}_0 \right),\quad\hat{\psi}_\cdot := \hat{p}_\cdot - \hat{\pi}_.,\quad \hat{\pi}_\cdot := \frac{\hat{a}_\cdot}{\hat{\alpha}_\cdot}+\sum_i \hat{c}_i^\cdot,\\
+    \hat{g}_i^k &:= \hat{j}_i^k+\hat{h}_i^k,\quad \hat{j}_i^k :=\hat{\zeta}_i^k(\hat{\mu}_i^k-\hat{\mu}_i^0),\quad \hat{\mu}_i^\cdot:=\ln \hat{c}_i^\cdot\label{eq:nd_lasteq}
 \end{align}
-{\color{red}Correction: as in the previous section, the diffusive term should have an additional $\hat{\alpha}_k$}.
+    for $k=\mathrm{D},\mathrm{A},\mathrm{C}$ and $i=\mathrm{s},\mathrm{u}$.
+The label $\cdot$ here is for $0,\mathrm{D},\mathrm{A},\mathrm{C}$.
+{\color{red}Correction: as in the previous section, the diffusive term should have an additional $\hat{\alpha}_\cdot$}.
 Note that we have $h_i^k = \gamma_k\hat{h}_i^k$ for the dimensionless active transport $\hat{h}_i^k$.
 In this dimensionless formulation, we have identified parameters:
 \begin{gather}
-    \mathrm{Pe} = \frac{\bar{\alpha}p_*/\rho_*}{D_*},\quad \hat{\rho}_k = \frac{\rho_k}{\rho_*},\quad \hat{\nu}_k = p_*\nu_k,\quad \hat{\bar{\alpha}}_k = \frac{\bar{\alpha}_k}{\bar{\alpha}},\\
-    \hat{a}_k = \frac{a_k}{\bar{\alpha}c_*},\quad
-    \hat{D}_k = \frac{D_k}{D_*},\quad \hat{\zeta}_\mathrm{w}^k = \frac{\gamma_k c_*L^2}{\bar{\alpha}D_*}\zeta_\mathrm{w}^k,\quad\hat{\zeta}_i^k = \frac{\gamma_kRT L^2}{\bar{\alpha}c_* D_*}\zeta_i^k,
+    \mathrm{Pe} = \frac{\bar{\alpha}p_*/\rho_*}{D_*},\quad \hat{\rho}_\cdot = \frac{\rho_\cdot}{\rho_*},\quad \hat{\nu}_k = p_*\nu_k,\quad \hat{\bar{\alpha}}_\cdot = \frac{\bar{\alpha}_\cdot}{\bar{\alpha}},\quad \hat{\alpha}_* = \frac{\alpha_*}{\bar{\alpha}}\\
+    \hat{a}_\cdot = \frac{a_\cdot}{\bar{\alpha}c_*},\quad
+    \hat{D}_\cdot = \frac{D_\cdot}{D_*},\quad \hat{\zeta}_\mathrm{w}^k = \frac{\gamma_k c_*L^2}{\bar{\alpha}D_*}\zeta_\mathrm{w}^k,\quad\hat{\zeta}_i^k = \frac{\gamma_kRT L^2}{\bar{\alpha}c_* D_*}\zeta_i^k,
 \end{gather}
-    where the subscript $*$ denotes the typical magnitudes of the parameters described in the previous section.
+    for $k=\mathrm{D},\mathrm{A},\mathrm{C}$, where the subscript $*$ denotes the typical magnitudes of the parameters described in the previous section.
 We have the P\'eclet number $\mathrm{Pe}$ which can be interpreted as the ratio between the rate of advection $\bar{\alpha}p_*/\rho_*L$ and the rate of diffusion $D_*/L$.
-The mechanical parameters, which are the hydraulic resistivity $\hat{\rho}_k$, the tubular compliance $\hat{\nu}_k$, and the resting volume density $\hat{\bar{\alpha}}_k$, together with immobile solutes $\hat{a}_k$ and the diffusion coefficients $\hat{D}_k$, persist through the non-dimensionalization.
+The mechanical parameters, which are the hydraulic resistivity $\hat{\rho}_\cdot$, the tubular compliance $\hat{\nu}_\cdot$, and the resting volume density $\hat{\bar{\alpha}}_\cdot$, together with immobile solutes $\hat{a}_\cdot$ and the diffusion coefficients $\hat{D}_\cdot$, persist through the non-dimensionalization.
 The transport parameters, however, are now reduced to only $\hat{\zeta}_\mathrm{w}^k$ and $\hat{\zeta}_i^k$ which combine the geometric parameters $\gamma_k$ with the solute and water permeability.
 
 For the boundary conditions, we have the same form as previously described, but with $\hat{\cdot}$ notations, where we have
@@ -269,6 +273,7 @@ To simplify the notation, we will omit the $\hat{\cdot}$ notation in these equat
 Let $N\in \mathbb{N}$ be the number of uniformly spaced grids in $(0,1)$, and $\delta x = 1/N$ be the spatial grid size.
 Similarly, we denote $\delta t$ as the size of time steps.
 We will use the notation $\alpha^{n}_{kl},c_{il}^{kn}, p_{kl}^{n}$ for the discretization of $\alpha_k,c_i^k$ and $p_k$ at the $l$-th spatial grid and time $t = n\delta t$.
+These correspond to the values in between the spatial grid point, e.g., $\alpha_{kl}^n$ corresponds to $\alpha_k(n\delta t,l-\delta x/2)$.
 
 We define difference quotient operators:
 \begin{equation}
@@ -276,29 +281,141 @@ We define difference quotient operators:
 \end{equation}
 and an average operator:
 \begin{equation}
-    \mathcal{A} y_l^n := \frac{y^n_{l+1}+y^n_l}{2}.
+    \mathcal{A} y_l^n := \frac{y^n_{l+1}+y^n_l}{2},
 \end{equation}
+    where $\{y_l^n\}$ is any discretized variables with $l,n\in \mathbb{N}\cup\{0\}$.
 
 Starting with known values of $\alpha^{n-1}_{kl},c_{il}^{k,n-1}, p_{kl}^{n-1}$, $l = 1,\dots,N$, the first step is to update the unknowns for the next time step $n$.
-We have
+We have the system of equations for $\alpha^{n}_{kl},c_{il}^{kn}, p_{kl}^{n}$, $l=1,\dots,N$, to be solved using an iterative method:
 \begin{align}
-    \mathcal{D}_t \alpha_{kl}^n +\mathrm{Pe}\mathcal{D}_x^-v &= -w_{kl}^{n},\quad k=0,\mathrm{D},\mathrm{A},\mathrm{C}\\
+    \mathcal{D}_t \alpha_{kl}^n +\mathrm{Pe}\mathcal{D}_x^-v_{kl}^n &= \begin{cases}
+        -w_{kl}^{n},\quad &k=\mathrm{D},\mathrm{A},\mathrm{C},\\
+        \sum_{\kappa\neq 0} w_{\kappa l}^n, &k=0,
+    \end{cases}\\
+    \mathcal{D}_t (\alpha_{kl}^nc_{il}^{kn})+\mathcal{D}_x^-f_{il}^{kn}&=\begin{cases}
+        -g_{k n}^{il}, &k=\mathrm{D},\mathrm{A},\mathrm{C},\\
+        \sum_{\kappa \neq 0}g_{il}^{\kappa n}, &k=0.
+    \end{cases}\\
+    p_{kl}^n &= \begin{cases}
+        p_{0l}^n + \frac{1}{\nu_k}\left( \frac{\alpha_{kl}^n}{\bar{\alpha}_{kl}} - 1\right),\quad &k=\mathrm{D},\mathrm{A},\mathrm{C},\\
+        \frac{\alpha_{0l}^n - \alpha_* + \sum_{\kappa\neq 0}\bar{\alpha}_\kappa (\nu_\kappa p_\kappa +1)}{\sum_{\kappa\neq 0}\bar{\alpha}_\kappa \nu_\kappa }, &k=0.
+    \end{cases}
 \end{align}
-where
+where the transmural flux terms $w_{kl}^n$ and $g_{il}^{kn}$ are the discritization of $w_k$ and $g_i^k$ on the same grid as the unknowns:
 \begin{align}
-    w_{kl}^n:=\zeta_\mathrm{w}^k\left( \psi_{kl}^n-\psi_{0l}^n \right),\quad
-    \psi_{\cdot l}^n:= p_{.l}^n - \pi_{\cdot l}^n,\quad \pi_{\cdot l}^n:= \sum_i c_{il}^{\cdot n}
+    w_{kl}^n &:=\zeta_\mathrm{w}^k\left( \psi_{kl}^n-\psi_{0l}^n \right),\quad
+    \psi_{\cdot l}^n:= p_{\cdot l}^n - \pi_{\cdot l}^n,\quad \pi_{\cdot l}^n:= \sum_i c_{il}^{\cdot n},\\
+    g_{il}^{kn}&:= j_{il}^{kn}+h_{il}^{kn},\quad j_{il}^{kn}:=\zeta_i^k\left( \mu_{il}^{kn} - \mu_{il}^{0n} \right),\quad \mu_{il}^{\cdot n}:= \ln c_{il}^{\cdot}.
 \end{align}
+Here, the axial flows of water $v_{kl}^n$ and solutes $f_{il}^{kn}$ are assigned for $l=0,\dots,N$.
+These should be thought as the flow at the \textit{grid points}, e.g., $f_{il}^{kn}$ corresponds to $f_i^k(n\delta t,l\delta x)$.
+For $l=1,\dots,N-1$, we have
+\begin{align}
+    v_{kl}^n &= -\frac{1}{\rho_{kl}}(\mathcal{A}\alpha_{kl}^n)^2 \mathcal{D}_x^+p_{kl}^n,\\
+    f_{il}^{kn} &= -{\color{red}(\mathcal{A}\alpha_{kl}^n)}D_{i}^k \mathcal{D}_x^+ c_{il}^{kn}+ v_{kl}^n \mathcal{A}c_{il}^{kn}.
+\end{align}
+    % where the parameters $D_{il}^k$ and $\rho_{kl}$ are given for $l=0,\dots,N$.
+
+Further, we have the boundary conditions ($l=0,N$):
+\begin{alignat}{2}
+    v_{00}^n &= \min\left\{ 0,\frac{P_\mathrm{v}(n\delta t) - p_{01}^n}{R_{\mathrm{v}}} \right\},\quad &&f_{00}^n = v_{00}^n,\\
+    v_{0N}^n &= 0,\quad &&f_{0N}^n = 0,\\
+    v_{\mathrm{D}0}^n &= \mathrm{GFR}(n\delta t),\quad && f_{i0}^{\mathrm{D}n} = v_{\mathrm{D} 0}^nc_i^\mathrm{filtrate}(n\delta t),\\
+    v_{\mathrm{C}N}^n &= \max\left\{ 0,\frac{p_{\mathrm{C}N}^n - P_\mathrm{p}(n\delta t)}{R_\mathrm{p}} \right\},\quad && f_{iN}^{\mathrm{C}n} = v_{\mathrm{C} N}^nc_{iN}^{\mathrm{C}n}.
+\end{alignat}
+For the coupling between the descending and ascending, we have
+\begin{align}
+    v_{kN}^n &= \frac{(\alpha_{kN}^n)^2}{\rho_k}\left( \frac{p_{kN}^n - \bar{p}_{\mathrm{DA}}^n}{\delta x/2} \right),\\ 
+    f_{iN}^{kn} &= -D_i^k\left( \frac{c_{iN}^{kn} - \bar{c}_{i,\mathrm{DA}}^{n}}{\delta x/2} \right)+\mathrm{Pe}v_{kN}^{n}\bar{c}_{i,\mathrm{DA}}^{n},
+\end{align}
+    for $k=\mathrm{D},\mathrm{A}$, where
+\begin{equation}
+    \bar{p}_{\mathrm{DA}}^n:=\frac{\frac{(\alpha_{\mathrm{D}N}^n)^2}{\rho_\mathrm{D}}p_{\mathrm{D}N}^n+\frac{(\alpha_{\mathrm{A}N}^n)^2}{\rho_\mathrm{A}}p_{\mathrm{A}N}^n}{\frac{(\alpha_{\mathrm{D}N}^n)^2}{\rho_\mathrm{D}}+\frac{(\alpha_{\mathrm{A}N}^n)^2}{\rho_\mathrm{A}}},\quad 
+    \bar{c}_{i,\mathrm{DA}}^n:=\frac{{\color{red}\alpha_{\mathrm{D}N}^n}D_i^\mathrm{D}c_{iN}^{\mathrm{D}n}+{\color{red}\alpha_{\mathrm{A}N}^n}D_i^\mathrm{A}c_{iN}^{\mathrm{A}n}}{{\color{red}\alpha_{\mathrm{D}N}^n}D_i^\mathrm{D}+{\color{red}\alpha_{\mathrm{A}N}^n}D_i^\mathrm{A}}.
+\end{equation}
+These are so that we have the coupling satisfies $v_{\mathrm{D} N}^n+v_{\mathrm{A} N}^n = 0$, and $f_{iN}^{\mathrm{D}n}+ f_{iN}^{\mathrm{A}n} = 0$.
+Here, $\bar{p}_{\mathrm{DA}}^n$ and $\bar{c}_{i,\mathrm{DA}}^n$ correspond to the pressures and the concentrations at $x=1$ of the descending and the ascending tubules.
+Likewise, we also have a similar condition for the coupling between the ascending and the descending tubules:
+\begin{align}
+    v_{k0}^n &= \frac{(\alpha_{k0}^n)^2}{\rho_k}\left( \frac{\bar{p}_{\mathrm{AC}}^n-p_{k0}^n}{\delta x/2} \right),\\ 
+    f_{i0}^{kn} &= -D_i^k\left( \frac{\bar{c}_{i,\mathrm{AC}}^{n}- c_{i0}^{kn}}{\delta x/2} \right)+\mathrm{Pe}v_{k0}^{n}\bar{c}_{i,\mathrm{AC}}^{n},
+\end{align}
+    for $k=\mathrm{A},\mathrm{C}$, where
+\begin{equation}
+    \bar{p}_{\mathrm{AC}}^n:=\frac{\frac{(\alpha_{\mathrm{A} 0}^n)^2}{\rho_\mathrm{A} }p_{\mathrm{A} 0}^n+\frac{(\alpha_{\mathrm{C} 0}^n)^2}{\rho_\mathrm{C} }p_{\mathrm{C} 0}^n}{\frac{(\alpha_{\mathrm{A} 0}^n)^2}{\rho_\mathrm{A} }+\frac{(\alpha_{\mathrm{C} 0}^n)^2}{\rho_\mathrm{C} }},\quad 
+    \bar{c}_{i,\mathrm{AC}}^n:=\frac{{\color{red}\alpha_{\mathrm{A} 0}^n}D_i^\mathrm{A} c_{i0}^{\mathrm{A} n}+{\color{red}\alpha_{\mathrm{C} 0}^n}D_i^\mathrm{C} c_{i0}^{\mathrm{C} n}}{{\color{red}\alpha_{\mathrm{A} 0}^n}D_i^\mathrm{A} +{\color{red}\alpha_{\mathrm{C} 0}^n}D_i^\mathrm{C} }.
+\end{equation}
+
 
 \section{Simulation of the countercurrent mechanism}
 
-In this simulation, we will use $\alpha_* = 1$, $a=0$, and $\bar{\alpha}_k = 1/4$.
-For the transport parameters, we have $\zeta_k,\gamma_i^k$; we assume $\zeta_\mathrm{A} = 0$ and $\gamma$.
-    For illustrating purpose, we assume that
+In this simulation, we will use a simple geometry of $\alpha_* \equiv 1$, with mechanical parameters $\bar{\alpha}_k = 1/4$ and $\nu_k = 0.01$ for $k=\mathrm{D},\mathrm{A},\mathrm{C}$.
+We suppose that $D_\mathrm{s}^k = D_{\mathrm{u}}^k = 1$, $\mathrm{Pe} = 20$, $\rho_k = 1$ for all $k$, and we assume that there is only immobile solute in the interstitium, where we have $a_0 = 1/2$ and $a_k = 0$ for luminal compartments.
+Furthermore, we set the resistance of the coupling with larger vessels and the renal papillae $R_\mathrm{v} = R_\mathrm{p} = 1$.
+
+For the transport parameters, we allow the passive transport of salt only in the descending and the ascending tubules, where we set $\zeta_{\mathrm{s}}^\mathrm{D} = \zeta_{\mathrm{s}}^\mathrm{A} = 1$ and $\zeta_{\mathrm{s}}^\mathrm{C} = 0$.
+Additionally, all the tubular segments are permeable to urea in the inner medulla, i.e., $\zeta_{\mathrm{u}}^k = 10$ for all $k$ and $x\in (\frac{1}{2},1)$ and $\zeta_{\mathrm{u}}^k =0$ elsewhere.
+Furthermore, for illustrating purpose, we consider a simple active transport of salt in the outer medulla of the form
     \begin{equation}
-        h_\mathrm{salt}^\mathrm{A} = h_*(c_\mathrm{salt}^\mathrm{A})^+,\quad \text{on}\quad (0,1/2),
+        h_\mathrm{s}^\mathrm{A} = \begin{cases}
+            h_*c_\mathrm{s}^\mathrm{A},\quad  &\text{in}\quad (0,\frac{1}{2}),\\
+            0\quad &\text{in}\quad [\frac{1}{2},1),
+        \end{cases}
     \end{equation}
-        where $h_*>0$ is the pump strength, and $h^A_\mathrm{salt} = 0$ elsewhere.
-    Also, we assume no active transport other than the pump in the ascending tubule.
+    where $h_*>0$ is the pump strength, which we set to be $h_*=50$.
+For the water transport, the descending tubule will be highly permeable to water with $\zeta_\mathrm{w}^\mathrm{D} = 100$ while the ascending tubule will be completely insulated with $\zeta_\mathrm{w}^\mathrm{A} = 0$. 
+We will consider two cases for the collecting tubules: without ADH, in which we have $\zeta_{\mathrm{w}}^\mathrm{C} = 0$, and when there is some ADH so that $\zeta_{\mathrm{w}}^\mathrm{C} = 50$.
+
+We initialize the simulation by setting the initial condition to be no axial solute and flow with 
+\begin{gather}
+    \alpha_k(0,x) = \frac{1}{4},\quad
+    c_\mathrm{s}^k(0,x) = 1,\quad
+    c_{\mathrm{u}}^k(0,x) = \frac{1}{4},\quad
+    p_k(0,x) = P_\mathrm{v} = P_{\mathrm{p}} = 1   
+\end{gather}
+    for all $x\in (0,1)$ and $k=0,\mathrm{D},\mathrm{A},\mathrm{C}$.
+Then, the glomerular filtration rate gradually increases until it reaches $2.5$:
+\begin{equation}
+    \mathrm{GFR}(t) = \min\{2.5, t/8\}.
+\end{equation}
+
+\subsection{Results}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.9\textwidth]{../results/4-7-2023/noADH_p_alpha.png}
+    \caption{The pressures and volume densities without ADH}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.9\textwidth]{../results/4-7-2023/noADH_c.png}
+    \caption{The concentration of salt and urea without ADH}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.9\textwidth]{../results/4-7-2023/noADH_flows.png}
+    \caption{The water flow without ADH}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.9\textwidth]{../results/4-7-2023/ADH_p_alpha.png}
+    \caption{The pressures and volume densities with ADH}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.9\textwidth]{../results/4-7-2023/ADH_c.png}
+    \caption{The concentration of salt and urea with ADH}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.9\textwidth]{../results/4-7-2023/ADH_flows.png}
+    \caption{The water flow with ADH}
+\end{figure}
+
 
 \end{document}
