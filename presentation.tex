@@ -1,11 +1,13 @@
 % !TEX program = xelatex
-\documentclass[serif]{beamer}
+\documentclass{beamer}
+\usefonttheme[onlymath]{serif}
+\setbeamerfont{footnote}{size=\tiny}
 
 % use multiple languages
 \input{preambles/polyglot.tex}
 
 %% ---- Title page details ---- %%
-\title[Rat nephron]{Rat nephron model review}
+\title[]{A simple time-dependent kidney model}
 \author[C. Sint]{Chanoknun Sintavanuruk 
 % \\ (ชนกนันท์ สินธวานุรักษ์; 馬予棟) \inst{1} 
 % \and author2 \inst{2}
@@ -26,327 +28,248 @@
     \titlepage 
 \end{frame}
 % Remove logo from the next slides
-\logo{}
+% \logo{}
 
 % Outline frame
 \begin{frame}{Outline}
     \tableofcontents
 \end{frame}
 
-\section{Overview of structures}
+\section{Model equations}
+
 \begin{frame}{Compartments}
-    \nobibliography*
+    Multiphasic medulla on the domain $(0,L)$ (superficial $\to$ deep).
     \begin{enumerate}
-        \item nephrons
-        \item medullary vasculature
-        \item medullary interstitium
+        \item Combined interstitium-vascular compartment
+        \item Descending tubule
+        \item Ascending tubule
+        \item Collecting tubule
     \end{enumerate}
-    \begin{figure}
-        \centering
-        \includegraphics[width=0.5\textwidth]{figures/compartments.png}
-        \caption{model compartments \citep{Weinstein2017}\footnote[frame,1]{\tiny\bibentry{Weinstein2017}}}
-    \end{figure}
-    \note{
-        The model has 3 compartments: nephrons, medullary vasculature and medullary interstitium.
-        \\~\\
-        Nephrons and blood vessels are divided into multiple segments.
-        In terms of spatial dimension, each segment has only length with the direction either going up or down the medulla.
-        \\~\\
-        The interstitial compartment is divided into 8 different homogeneous sub-compartments; each represents different depth and contains some segments of blood vessels and nephrons.
-    }
-
 \end{frame}
 
-\begin{frame}{Tubular segments of nephrons (1/2)}
-    \note<1>{
-        The nephron compartment is composed of many distinct tubular segments which can be grouped into unbranched segments and the distal nephron ensembles or the collecting ducts.
-    }
-    \begin{columns}
-        %% ---- left column ---- %%
-        \begin{column}{0.5\linewidth}
-            \begin{enumerate}
-                \item unbranched segments
-                \begin{enumerate}
-                    \item Superficial (SF) nephrons
-                    \item Juxtamedullary (JM) nephrons
-                \end{enumerate}
-                \item \textcolor<2->{lightgray}{distal nephron ensembles: collecting ducts}
-            \end{enumerate}
-        \end{column}\hfill
-        %% ---- right column ---- %%
-        \begin{column}{0.5\linewidth}
-            \onslide<2->{\begin{figure}
-                \centering
-                \includegraphics[width=.82\textwidth]{figures/unbranched.png}
-                \caption{Unbranched tubules \citep{Weinstein2015}\footnote<2->[frame,1]{\tiny{\bibentry{Weinstein2015}}}}
-            \end{figure}}
-        \end{column}
-    \end{columns}    
-    \note<2>{
-        The unbranched segments are connected in series in mainly two different ways resulting the superficial or SF and juxtamedullary or JM nephron.
-        \\~\\
-        These nephrons have distal segments that are identical, which are the thick ascending limbs, or AHL, in the outer medulla and the cortex. 
-        Meanwhile, the proximal convoluted tubule, or PCT, and straight tubule, or PST, of these two differ in the glomerular filtration rate, which determines the initial flow and pressure at the PCT, and ion permeabilities --- which are mostly higher in the JM nephron.
-        \\~\\
-        For the segments in the middle, the SF nephron has only one segment of the descending Henle's limb, or DHL, at the outer medulla; while in JM nephron, DHL descends into the inner medulla in 5 different depths and comes back up via thin ascending Henle's limb, or tAHL.
-    }
-\end{frame}
-
-\begin{frame}{Tubular structure of DHL and tAHL}
-    \begin{figure}
-        \centering
-        \includegraphics[width=0.5\textwidth]{figures/thin_tubule.png}
-        \caption{transepithelial fluxes of DHL and tAHL \citep{Weinstein2015}\footnote[frame,1]{\tiny{\bibentry{Weinstein2015}}}}
-    \end{figure}
-    \begin{figure}
-        \centering
-        \includegraphics[width=0.45\textwidth]{figures/thick_tubule.png}
-        \caption{epithelial cells and lateral interspaces \citep{Weinstein2010}\footnote[frame,2]{\tiny{\bibentry{Weinstein2010}}}}
-    \end{figure}
-    \note{
-        These segments of DHL and tAHL in the middle, which are parts of the thin Henle's loop, do not have cellular structures and lateral interspaces.
-        So transepithelial fluxes of ions and water are all passive.
-        \\~\\
-        The rest of the tubular segments including those of collecting ducts, however, have epithelial cells and lateral interspaces included which separate the luminal and the basement membranes.
-    }
-\end{frame}
-
-\begin{frame}{Tubular segments of nephrons (2/2)}
-    \note{
-        In distal nephron, the distal convoluted tubules, or DCT, come after the AHL.
-        So there are total of 6 different profiles of DCT which receive flow from either 1 SF nephron or 5 JM nephrons.
-        All of these flows into the connecting tubule, or CNT, in the way that each CNT are identical.
-        \\~\\
-        Similar branching can also be found at the inner medullary collecting ducts, or IMCD.
-    }
-    \begin{columns}
-        %% ---- left column ---- %%
-        \begin{column}{0.5\linewidth}
-            \begin{enumerate}
-                \item \textcolor{lightgray}{unbranched segments}
-                \begin{enumerate}
-                    \item \textcolor{lightgray}{Superficial (SF) nephrons}
-                    \item \textcolor{lightgray}{Juxtamedullary (JM) nephrons}
-                \end{enumerate}
-                \item distal nephron ensembles: collecting ducts
-            \end{enumerate}
-        \end{column}\hfill
-        %% ---- right column ---- %%
-        \begin{column}{0.5\linewidth}
-            \onslide{\begin{figure}
-                \centering
-                \includegraphics[width=.90\textwidth]{figures/distal_nephron.png}
-                \caption{distal nephron \citep{Weinstein2008}\footnote[frame,1]{\tiny{\bibentry{Weinstein2008}}}}
-            \end{figure}}
-        \end{column}
-    \end{columns}    
-\end{frame}
-
-\begin{frame}{Vasa recta}
-    \onslide<2>{AVR:DVR $= 2:1$.}
-    \begin{figure}
-        \centering
-        \includegraphics[width=0.6\textwidth]{figures/vasa_recta.png}
-        \caption{7 distinct types of vasa recta \citep{Weinstein2017}\footnote[frame,1]{\tiny\bibentry{Weinstein2017}}}
-    \end{figure}
-    \note<1>{
-        In the vascular compartments, there are 5 different kinds of vasa recta: the short one, the long ones which reaches 5 different depths, and the medullary ray vasa recta, or MRVR, which is the blood vessels that surround the cortical AHL.
-        \\~\\
-        Similar to the thin Henle's loop, vasa recta are assumed to not have cellular and paracellular structures.
-        Each types of vasa recta is composed of segments with 3 different profiles of solute permeability, first at outer medulla and MRVR, which is assumed to be the same as MRVR, second at the inner medulla vasa recta, or IMVR, at the descending direction; and this is different from the third profile of ascending IMVR.
-    }
-    \note<2>{
-        It is also worth noting that, the branching of vasa recta is represented by the ratio between the number ascending vasa recta or AVR to the descending DVR; which was set to be $2:1$.
-    }
-\end{frame}
-
-\begin{frame}{Medullary interstitium}
-    8 sub-compartments
-    \begin{figure}
-        \centering
-        \includegraphics[width=0.95\textwidth]{figures/interstitium.png}
-        \caption{interstitial sub-compartments \citep{Weinstein2017}\footnote[frame,1]{\tiny\bibentry{Weinstein2017}}}
-    \end{figure}
-    \note<1>{
-        The third and last compartment is the medullary interstitium which is divided into 8 sub-compartments: 2 outer medulla, 5 inner medullae, and part of medullary ray that reaches the superficial layer.
-        The cortical interstitium is not included and its solute concentrations and hydrostatic pressure are kept constant.
-        \\~\\
-        At the cortex, we have the PCT of SF and JM nephron, DCT, and CNT.
-        \\~\\
-        At the outer medulla junction, the cortex-medulla junction is separated into the part that continues from the cortex, which contains the PST, and from the medullary ray, which has the distal portion of medulla AHL.
-        The two outer medulla sub-compartments then contain the short DHL, upper long DHL, and the outer medullary collecting duct and vasa recta.
-    }
-    \note<2>{
-        The inner medulla has 5 levels of depth after the outer-inner medullary junction.
-        These contain the rest of the thin Henle's loop, and the inner medullary collecting ducts and vasa recta.
-        \\~\\
-        Lastly, the medullary ray.
-        This contains the AHL, cortical collecting ducts, or CCD, and the MRVR.
-    }
-\end{frame}
-
-\section{Model formulation}
-
-\begin{frame}{Thick tubules (with cellular structures)}
-    \begin{columns}
-        \begin{column}{0.45\linewidth}
-            \begin{enumerate}
-                \item lumen (M)
-                \item epithelial cell (I)
-                \item lateral interspace (E)
-            \end{enumerate}
-        \end{column}
-
-        \begin{column}{0.55\linewidth}
-            \begin{figure}
-                \centering
-                \includegraphics[width=.75\textwidth]{figures/epithelium.png}
-                \caption{epithelial cells and LIS \citep{Weinstein1998}\footnote[frame,1]{\tiny\bibentry{Weinstein1998}}}
-            \end{figure}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-\begin{frame}{Thick tubules: lumen (M)}
-    \onslide<1->{balance equations:
-    \begin{align}
-        \frac{\partial A_\mathrm{M}}{\partial t} &= -\frac{\partial F_\mathrm{vM}}{\partial x}-B_\mathrm{M}\left(J_\mathrm{vME}+J_\mathrm{vMI}\right),\\
-        \frac{\partial }{\partial t}\left(A_\mathrm{M}C_{\mathrm{M},i}\right) &= -\frac{\partial F_{\mathrm{M},i}}{\partial x}-B_\mathrm{M}\left(J_{\mathrm{ME},i}+J_{\mathrm{ME},i}\right)+s_{\mathrm{M},i}.
-    \end{align}}
-    \begin{figure}
-        \centering
-        \includegraphics[width=0.7\textwidth]{figures/thick_tubule.png}
-    \end{figure}
-\end{frame}
-
-\begin{frame}{Thick tubules: cells (I) \& LIS (E)}
-    balance equations for $\alpha$ ($\alpha$ represents I or E.):
-    \begin{align}
-        \frac{\partial V_{\alpha}}{\partial t} &= J_{\mathrm{vM}\alpha} \mp J_{\mathrm{vIE}}-J_{\mathrm{v}\alpha\mathrm{S}},\\
-        \frac{\partial}{\partial t}\left(V_{\alpha}C_{\alpha,i}\right) &= J_{\mathrm{M}\alpha,i} \mp J_{\mathrm{IE},i}-J_{\alpha\mathrm{S},i}+s_{\alpha,i}
+\begin{frame}{Volume density}
+    \begin{equation}\label{eq:vol_conserv}
+        \sum_k \alpha_k = \alpha_*
+    \end{equation}
+        where $\alpha_*:(0,L)\to \mathbb{R}_+$ is the total volume density.
+    \pause
+    \begin{align}\label{eq:volume_dynamics}
+        \frac{\partial \alpha_k}{\partial t} + \frac{\partial}{\partial x}\left( \alpha_k u_k \right) &= -\gamma_kw_k,\quad k=\mathrm{D},\mathrm{A},\mathrm{C},\\
+        \frac{\partial \alpha_0}{\partial t} + \frac{\partial }{\partial x}\left( \alpha_0 u_0 \right) &= \sum_{k=\mathrm{D},\mathrm{A},\mathrm{C}} \gamma_kw_k.
     \end{align}
-    \begin{figure}
-        \centering
-        \includegraphics[width=0.5\textwidth]{figures/cell_LIS.png}
-    \end{figure}
 \end{frame}
 
-\begin{frame}{Thin tubules}
-    Only lumen:
-    \begin{align}
-        \frac{\partial A_\mathrm{M}}{\partial t} &= -\frac{\partial F_\mathrm{vM}}{\partial x}-B_\mathrm{M}\left(J_\mathrm{vMS}+J_\mathrm{vMS}\right),\\
-        \frac{\partial }{\partial t}\left(A_\mathrm{M}C_{\mathrm{M},i}\right) &= -\frac{\partial F_{\mathrm{M},i}}{\partial x}-B_\mathrm{M}\left(J_{\mathrm{MS},i}+J_{\mathrm{MS},i}\right)+s_{\mathrm{M},i}.
+\begin{frame}{Water flow and transport}
+    Poiseuille's equation:
+    \begin{equation}
+        \frac{\rho_k u_k}{\alpha_k} = -\frac{\partial p_k}{\partial x},\quad k=0,\mathrm{D},\mathrm{A},\mathrm{C},
+    \end{equation}
+    Water transport:
+    \begin{equation}
+        w_k := \zeta_\mathrm{w}^k\left( \psi_k - \psi_0 \right),\quad \psi_k:=p_k - \pi_k,\quad k=\mathrm{D},\mathrm{A},\mathrm{C}
+    \end{equation}
+    \pause
+    Osmotic pressure:
+    \begin{equation}
+        \pi_k:= \sum_{i=\mathrm{s},\mathrm{u}}c_i^k+\frac{a_k}{\alpha_k},\quad k=0,\mathrm{D},\mathrm{A},\mathrm{C}.
+    \end{equation}
+\end{frame}
+
+\begin{frame}{Pressure-compliance relationship}
+    \begin{equation}
+        \nu_k(p_k - p_0) = \frac{\alpha_k}{\bar{\alpha}_k} - 1,\quad k=\mathrm{D},\mathrm{A},\mathrm{C},
+    \end{equation}
+    $p_0$ is determined by the constaint total volume density (\ref{eq:vol_conserv}).
+\end{frame}
+
+\begin{frame}{Solute dynamics}
+    Only salt and urea
+    \begin{align}\label{eq:solute_dynamics}
+        \frac{\partial}{\partial t}\left( \alpha_k c_i^k \right)&=-\frac{\partial}{\partial x} f_i^k - \gamma_kg_i^k,\quad k=\mathrm{D},\mathrm{A},\mathrm{C},\\
+        \frac{\partial}{\partial t}\left( \alpha_0 c_i^0 \right)&=-\frac{\partial}{\partial x} f_i^0 + \sum_{k=\mathrm{D},\mathrm{A},\mathrm{C}} \gamma_k g_i^k,
     \end{align}
-    \begin{figure}
-        \centering
-        \includegraphics[width=0.75\textwidth]{figures/thin_tubule.png}    
-        \caption{luminal flow \& transepithelial fluxes \citep{Weinstein2015}\footnote[frame,1]{\tiny{\bibentry{Weinstein2015}}}}
-    \end{figure}
+    \pause
+    Axial solute flow:
+    \begin{equation}
+        f_i^k := -\alpha_kD_i^k\frac{\partial c_i^k}{\partial x}+\alpha_ku_kc_i^k,\quad k=0,\mathrm{D},\mathrm{A},\mathrm{C},
+    \end{equation}
 \end{frame}
 
-\begin{frame}{Blood vessels (C)}
-    \onslide<1->{
-        Only lumen \citep{Weinstein2017}\footnote[frame,1]{\tiny{\bibentry{Weinstein2017}}}:
-        \begin{align}
-            \frac{\partial F_\mathrm{vC}}{\partial x} &= - B_{\mathrm{C}} J_\mathrm{vCS},\\
-            \frac{\partial F_{\mathrm{C},i}}{\partial x} &= -B_\mathrm{C}J_{\mathrm{CS},i}+s_{\mathrm{C},i}.
-        \end{align}
-        }
-    \onslide<2->{
-        Relation between blood ($F_{\mathrm{bC}}$) and volume flow ($F_\mathrm{vC}$):
-        \begin{align}
-            F_\mathrm{vC}&=F_\mathrm{bC}\left(1-\mathrm{Hct}\right),\\
-            0 &= \frac{\partial}{\partial x}\left(F_\mathrm{bC}\cdot\mathrm{Hct}\right).
-        \end{align}
-            }
+\begin{frame}{solute transport}
+    \begin{equation}
+        g_i^k := j_i^k+h_i^k,\quad 
+    \end{equation}
+    \begin{equation}
+        j_i^k = \zeta_i^k\left( \mu_i^k - \mu_i^0 \right),\quad ,
+    \end{equation}
+    \begin{equation}
+        \mu_i^k:= RT\ln c_i^k,\quad 
+    \end{equation}
+    where $k=0,\mathrm{D},\mathrm{A},\mathrm{C}$.
 \end{frame}
 
-\begin{frame}{Solute ($J_{\alpha\beta,i}$) and water fluxes ($J_{\mathrm{v}\alpha\beta}$)}
-    % *$\alpha,\beta$ represents different compartments . 
-    Water fluxes \citep{Weinstein1983}\footnote[frame,1]{\tiny{\bibentry{Weinstein1983}}}:
-    \begin{multline}
-        J_{\mathrm{v}\alpha\beta} = 
-            L_{\mathrm{v}\alpha\beta}A_{\alpha\beta}\bigg(P_\alpha-P_\beta+\pi_\beta-\pi_\alpha\\
-            +RT\sum_i\sigma_{\alpha\beta,i}\left(C_{\beta,i}-C_{\alpha,i}\right)\bigg)
-    \end{multline}
-    Solute fluxes:
-    \begin{multline}
-        J_{\alpha\beta,i} = (1-\sigma_{\alpha\beta,i})J_{\mathrm{v}\alpha\beta}\overline{C}_{\alpha\beta,i}\\
-        +z_ih_{\alpha\beta,i}A_{\alpha\beta}\phi_{\alpha\beta}\left(\frac{C_{\alpha,i}-C_{\beta,i}e^{-z_i\phi_{\alpha\beta}}}{1-e^{-z_i\phi_{\alpha\beta}}}\right)\\
-        +A_{\alpha\beta}\sum_j L_{\alpha\beta;i,j}\mu_{\alpha\beta,j} + J^{\mathrm{act}}_{\alpha\beta,i}
-    \end{multline}
-
+\begin{frame}{Boundary condition: interstitium}
+    No flux at the bottom:
+    \begin{align}
+        u_0(t,L) &= 0,\\ 
+        f_i^0(t,L)&=0,\quad i=\mathrm{s},\mathrm{u}.
+    \end{align}
+    Advective flow at the top:
+    \begin{align}
+        (\alpha_0u_0)(t,0) &= \min\left\{ 0,\frac{P_{\mathrm{v}}-p_0(t,0) }{R_{\mathrm{v}}}\right\},\\ 
+        f_i^0(t,0) &= (\alpha_0 u_0 c_i^0)(t,0),\quad i=\mathrm{s},\mathrm{u}.
+    \end{align}
 \end{frame}
-        
-\begin{frame}{Hydrostatic pressure (M \& C)}
-    Poiseuille's flow equations:
+
+\begin{frame}{Boundary condition: input from PCT}
+    \begin{align}
+        (\alpha_\mathrm{D} u_\mathrm{D})(t,0) &= \mathrm{GFR}(t),\\
+        f_i^\mathrm{D}(t,0) &= (\alpha_\mathrm{D}u_\mathrm{D}c_i^\mathrm{D})(t,0),\quad i=\mathrm{s,u}\\
+        c_i^\mathrm{D}(t,0) &= c_{i}^{\mathrm{filtrate}}(t)
+    \end{align}
+\end{frame}
+
+\begin{frame}{Boudnary condition: couplings}
+    \begin{align}
+        (\alpha_\mathrm{D}u_\mathrm{D}+\alpha_\mathrm{A}u_\mathrm{A})(t,L) &= 0,\\
+        \quad\left( f_i^\mathrm{D}+f_i^\mathrm{A} \right)(t,L) &= 0,\\
+        p_\mathrm{D}(t,L)&= p_{\mathrm{A}}(t,L),\\ 
+        c_i^\mathrm{D}(t,L) &=c_i^\mathrm{A}(t,L)
+    \end{align}
+    and, similarly,
+    \begin{align}
+        (\alpha_\mathrm{A}u_\mathrm{A}+\alpha_\mathrm{C}u_\mathrm{C})(t,0) &= 0,\\
+        \quad\left( f_i^\mathrm{A}+f_i^\mathrm{C} \right)(t,0) &= 0,\\
+        p_\mathrm{A}(t,0)&= p_{\mathrm{C}}(t,0),\\ 
+        c_i^\mathrm{A}(t,0) &=c_i^\mathrm{C}(t,0).
+    \end{align}
+\end{frame}
+
+\begin{frame}{Boundary condition: papillary outflow}
+    \begin{align}
+        (\alpha_\mathrm{C} u_\mathrm{C} )(t,L) &= \max\left\{ 0,\frac{p_\mathrm{C} (t,L) - P_{\mathrm{p}} }{R_{\mathrm{p}}}\right\},\\
+        f_i^\mathrm{C}(t,L) &= (\alpha_\mathrm{C}  u_\mathrm{C}  c_i^\mathrm{C})(t,L),\quad i=\mathrm{s},\mathrm{u}.
+    \end{align}
+\end{frame}
+
+\section{Non-dimensionalization}
+\begin{frame}{Rescaling}
+    \begin{equation}
+        x = L\hat{x},\quad t = \frac{L^2}{D_*}\hat{t},
+    \end{equation}
+    Unknowns:
+    \begin{gather}
+        \alpha_k = \bar{\alpha}\hat{\alpha},\quad c_i^k = c_*\hat{c}_i^k,\quad p_k = p_*\hat{p}_k,
+        % \quad u_k = \frac{\bar{\alpha}p_*}{\rho_* L}\hat{u}
+    \end{gather}    
+\end{frame}
+
+\begin{frame}{Dimensionless model}
+    \begin{align}
+        \frac{\partial \hat{\alpha}_k}{\partial \hat{t}}  + \mathrm{Pe}\frac{\partial}{\partial \hat{x}}\left( \hat{\alpha}_k \hat{u}_k \right) &= - \hat{w}_k,\\ \label{eq:nd_1steq}
+        \frac{\partial\hat{\alpha}_0}{\partial \hat{t}}+\mathrm{Pe}\frac{\partial}{\partial \hat{x}}\left( \hat{\alpha}_0 \hat{u}_0 \right) &=\sum_k \hat{w}_k,\\
+        \hat{\nu}_k\left( \hat{p}_k - \hat{p}_0 \right) &= \frac{\hat{\alpha}_k}{\hat{\bar{\alpha}}_k}-1,\\
+        \hat{\alpha}_0 + \sum_{k} \hat{\alpha}_k &= \hat{\alpha}_*,\\
+        \frac{\partial}{\partial \hat{t}}\left( \hat{\alpha}_k \hat{c}_i^k \right)&=-\frac{\partial}{\partial \hat{x}} \hat{f}_i^k - \hat{g}_i^k,\\
+        \frac{\partial}{\partial \hat{t}}\left( \hat{\alpha}_0 \hat{c}_i^0 \right)&=-\frac{\partial}{\partial \hat{x}} \hat{f}_i^0 + \sum_k \hat{g}_i^k,
+    \end{align}
+\end{frame}
+
+\begin{frame}{Dimensionless flows and transports}
+    \begin{align}
+        \hat{u}_\cdot &:= -\frac{\hat{\alpha}_\cdot}{\hat{\rho}_\cdot}\frac{\partial \hat{p}_\cdot}{\partial \hat{x}},\\
+        \hat{f}_i^\cdot &:= -{\hat{\alpha}_\cdot}\hat{D}_\cdot \frac{\partial \hat{c}_i^\cdot}{\partial \hat{x}} + \mathrm{Pe}(\hat{\alpha}_\cdot\hat{u}_\cdot\hat{c}_i^\cdot),\\
+        \hat{w}_k&:= \hat{\zeta}_\mathrm{w}^k\left( \hat{\psi}_k-\hat{\psi}_0 \right),\quad\hat{\psi}_\cdot := \hat{p}_\cdot - \hat{\pi}_.,\quad \hat{\pi}_\cdot := \frac{\hat{a}_\cdot}{\hat{\alpha}_\cdot}+\sum_i \hat{c}_i^\cdot,\\
+        \hat{g}_i^k &:= \hat{j}_i^k+\hat{h}_i^k,\quad \hat{j}_i^k :=\hat{\zeta}_i^k(\hat{\mu}_i^k-\hat{\mu}_i^0),\quad \hat{\mu}_i^\cdot:=\ln \hat{c}_i^\cdot\label{eq:nd_lasteq}
+    \end{align}
+        for $k=\mathrm{D},\mathrm{A},\mathrm{C}$ and $i=\mathrm{s},\mathrm{u}$.
+\end{frame}
+
+\begin{frame}{Parameters}
+    \begin{gather}
+        \mathrm{Pe} = \frac{\bar{\alpha}p_*/\rho_*}{D_*},\quad \hat{\rho}_\cdot = \frac{\rho_\cdot}{\rho_*},\quad \hat{\nu}_k = p_*\nu_k,\quad \hat{\bar{\alpha}}_\cdot = \frac{\bar{\alpha}_\cdot}{\bar{\alpha}},\quad \hat{\alpha}_* = \frac{\alpha_*}{\bar{\alpha}}\\
+        \hat{a}_\cdot = \frac{a_\cdot}{\bar{\alpha}c_*},\quad
+        \hat{D}_\cdot = \frac{D_\cdot}{D_*},\quad \hat{\zeta}_\mathrm{w}^k = \frac{\gamma_k c_*L^2}{\bar{\alpha}D_*}\zeta_\mathrm{w}^k,\quad\hat{\zeta}_i^k = \frac{\gamma_kRT L^2}{\bar{\alpha}c_* D_*}\zeta_i^k,
+    \end{gather}
+\end{frame}
+
+\section{Simulation}
+
+\begin{frame}{Specification}
     \begin{itemize}
-        \item tubules \citep{Weinstein1998}\footnote[frame,1]{\tiny{\bibentry{Weinstein1998}}}:
-        \begin{equation}
-            \frac{\partial P_\mathrm{M}}{\partial x}+\frac{8\pi\eta}{A^2_\mathrm{M}}\cdot F_\mathrm{vM}=0,
-        \end{equation}
-        \item vessels \citep{Weinstein2017}\footnote[frame,2]{\tiny{\bibentry{Weinstein2017}}}:
-        \begin{equation}
-            \frac{\partial P_\mathrm{C}}{\partial x}+\frac{8\pi\eta_\mathrm{C}}{A^2_\mathrm{C}}\cdot F_\mathrm{bC}=0.
-        \end{equation}
+        \item $\alpha_* \equiv 1$, $\bar{\alpha}_k = 1/4$, and $\nu_k = 0.01$ for $k=\mathrm{D},\mathrm{A},\mathrm{C}$.
+        \item Suppose that $D_\mathrm{s}^k = D_{\mathrm{u}}^k = 1$, $\mathrm{Pe} = 20$, $\rho_k = 1$ for all $k$
+        \item Only immobile solute in the interstitium, i.e., $a_0 = 1/2$ and $a_k = 0$.
+        \item $R_\mathrm{v} = R_\mathrm{p} = 1$ and $P_\mathrm{v} = P_\mathrm{p} = 1$
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Tubular compliance}
-    Thick tubules of nephron are compliant \citep{Weinstein2007,Weinstein2015}\footnote[frame,1]{\tiny{\bibentry{Weinstein2007}\\ \bibentry{Weinstein2015}}}:
-    \begin{align}
-        R_\mathrm{M}&=R_{\mathrm{M}0}\left(1+\frac{1}{2}\tanh\big(\nu_\mathrm{M}(P_\mathrm{M}-P_\mathrm{S})\big)\right)
-    \end{align}
-    Compliant lateral interspaces:
-    \begin{align}
-        A_\mathrm{ES} &=A_{\mathrm{ES}0}\left(1+\nu_\mathrm{AE}(P_\mathrm{M}-P_\mathrm{S})\right),\\
-        V_\mathrm{E} &=V_{\mathrm{E}0}\left(1+\nu_\mathrm{VE}(P_\mathrm{M}-P_\mathrm{S}).\right)
-    \end{align}
+\begin{frame}{Solute transports}
+    Passive transport of salt only in the descending and the ascending tubules: $\zeta_{\mathrm{s}}^\mathrm{D} = \zeta_{\mathrm{s}}^\mathrm{A} = 1$ and $\zeta_{\mathrm{s}}^\mathrm{C} = 0$.
+
+    \pause
+    Active transport:
+    \begin{equation}
+        h_\mathrm{s}^\mathrm{A} = \begin{cases}
+            h_*c_\mathrm{s}^\mathrm{A},\quad  &\text{in}\quad (0,\frac{1}{2}),\\
+            0\quad &\text{in}\quad [\frac{1}{2},1),
+        \end{cases}
+    \end{equation}
+
+    \pause
+    Urea permeable in the inner medulla: $\zeta_{\mathrm{u}}^k = 10$ for all $k$ and $x\in (\frac{1}{2},1)$ and $\zeta_{\mathrm{u}}^k =0$ elsewhere.
+
+    \pause
+    High water permeability in the descending tubule, $\zeta_\mathrm{w}^\mathrm{D} = 100$, while the ascending tubule is completely insulated: $\zeta_\mathrm{w}^\mathrm{A} = 0$.
 \end{frame}
 
-\begin{frame}{Flow-dependent transport of PCT}
-    PCT transporter density parameters ($\mathrm{Par}$) depend on torque of microvilous ($T_M$)\citep{Weinstein2007}\footnote[frame,1]{\tiny{\bibentry{Weinstein2007}}}:
-    \begin{align}
-        \mathrm{Par} &= \mathrm{Par}_0\left(1+T_\mathrm{s}\left(\frac{T_\mathrm{M}}{T_{\mathrm{M}0}}\right)\right)\\
-        T_\mathrm{M} &= \frac{8\eta l F_{\mathrm{vM}}}{R_\mathrm{M}^2}\left(1+\frac{l+\delta}{R_\mathrm{M}}+\frac{l^2}{2R^2_\mathrm{M}}\right)
-    \end{align}
+\begin{frame}{ADH on/off}
+    \begin{itemize}
+        \item ADH on: $\zeta_{\mathrm{w}}^\mathrm{C} = 0$
+        \item ADH off: $\zeta_{\mathrm{w}}^\mathrm{C} = 50$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{ADH off}
+    
+\begin{columns}[T]
+
+    \begin{column}{0.5\textwidth}
     \begin{figure}
         \centering
-        \includegraphics[width=0.4\textwidth]{figures/PCT_epithelium.png}
+        \includegraphics[width=\textwidth]{results/4-7-2023/noADH_p_alpha.png}
     \end{figure}
-\end{frame}
+    \end{column}
+    
+    \begin{column}{0.5\textwidth}
+        \begin{figure}
+            \centering
+            \includegraphics[width=\textwidth]{results/4-7-2023/noADH_c.png}
+        \end{figure}
+    \end{column}
 
-\begin{frame}{Solute generation ($s_{\mathrm{\alpha},i}$) in M \& C}
-    \onslide<1->{Acid-base (\ce{ H+ + B <=> HB }) \citep{Weinstein2017}\footnote[frame,1]{\tiny\bibentry{Weinstein2017}}:
-    \begin{gather}
-        s_{\alpha,\mathrm{B}}+s_{\alpha,\mathrm{HB}}=0\\
-        C_{\mathrm{M},\ce{ H+ }} = K_1\frac{C_{\mathrm{M},\ce{ HB }_1}}{C_{\mathrm{M},\ce{ B- }_1}} = K_2\frac{C_{\mathrm{M},\ce{ HB }_2}}{C_{\mathrm{M},\ce{ B- }_2}} = \ldots\\
-        \sum_iz_is_{\mathrm{M},i}=0,\quad \sum_iz_iC_{\mathrm{M},i}=0
-    \end{gather}}
-    \onslide<2->{\ce{ CO2 }: (\ce{ H+ + HCO3^- <=> H2CO3^- <=>[$k_+$][$k_-$] H2O + CO2}):
-    \begin{gather}
-        s_{\alpha,\ce{ HCO3 }} + s_{\alpha,\ce{ H2CO3 }} + s_{\alpha,\ce{ CO2 }} = 0\\
-        s_{\mathrm{I},\ce{ HCO3 }} + s_{\mathrm{I},\ce{ H2CO3 }} + s_{\mathrm{I},\ce{ CO2 }} = M_{\mathrm{I},\ce{ CO2 }}
-    \end{gather}}
-\end{frame}    
-
-\begin{frame}{Hemoglobin buffering species}
+\end{columns}
     
 \end{frame}
-
-\begin{frame}{Global variables}
+\begin{frame}{ADH on}
     
-\end{frame}
+\begin{columns}[T]
 
-\begin{frame}{Tubulo-glomerular feedback (TGF)}
+    \begin{column}{0.5\textwidth}
+    \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth]{results/4-7-2023/ADH_p_alpha.png}
+    \end{figure}
+    \end{column}
     
-\end{frame}
+    \begin{column}{0.5\textwidth}
+        \begin{figure}
+            \centering
+            \includegraphics[width=\textwidth]{results/4-7-2023/ADH_c.png}
+        \end{figure}
+    \end{column}
 
-\begin{frame}{End-DCT pressure}
-    
-\end{frame}
-
-\begin{frame}{Interstitial variables}
+\end{columns}
     
 \end{frame}
 
