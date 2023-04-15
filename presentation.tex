@@ -114,19 +114,37 @@
         u_0(t,L) &= 0,\\ 
         f_i^0(t,L)&=0,\quad i=\mathrm{s},\mathrm{u}.
     \end{align}
-    Advective flow at the top:
+    \cancel{Advective} flow at the top:
+    \begin{equation*}
+        \xcancel{
+            \begin{aligned}
+                (\alpha_0u_0)(t,0) &= \min\left\{ 0,\frac{P_{\mathrm{v}}-p_0(t,0) }{R_{\mathrm{v}}}\right\},\\ 
+                f_i^0(t,0) &= (\alpha_0 u_0 c_i^0)(t,0),\quad i=\mathrm{s},\mathrm{u}.
+            \end{aligned}
+        }
+    \end{equation*}
+    {\color{red}
     \begin{align}
-        (\alpha_0u_0)(t,0) &= \min\left\{ 0,\frac{P_{\mathrm{v}}-p_0(t,0) }{R_{\mathrm{v}}}\right\},\\ 
-        f_i^0(t,0) &= (\alpha_0 u_0 c_i^0)(t,0),\quad i=\mathrm{s},\mathrm{u}.
-    \end{align}
+        p_0(t,0) &= P_\mathrm{v}(t),\\ 
+        c_i^0(t,0) &= c_i^\mathrm{v}(t).
+    \end{align}}
 \end{frame}
 
 \begin{frame}{Boundary condition: input from PCT}
-    \begin{align}
-        (\alpha_\mathrm{D} u_\mathrm{D})(t,0) &= \mathrm{GFR}(t),\\
-        f_i^\mathrm{D}(t,0) &= (\alpha_\mathrm{D}u_\mathrm{D}c_i^\mathrm{D})(t,0),\quad i=\mathrm{s,u}\\
-        c_i^\mathrm{D}(t,0) &= c_{i}^{\mathrm{filtrate}}(t)
-    \end{align}
+    \begin{equation}
+        (\alpha_\mathrm{D} u_\mathrm{D})(t,0) = \cancelto{{\color{red}\mathrm{end\ PCT\ flow}}}{\mathrm{GFR}}(t),\qquad
+    \end{equation}
+    \begin{equation*}
+        \xcancel{
+            \begin{aligned}
+                f_i^\mathrm{D}(t,0) &= (\alpha_\mathrm{D}u_\mathrm{D}c_i^\mathrm{D})(t,0),\quad i=\mathrm{s,u}\\
+            c_i^\mathrm{D}(t,0) &= c_{i}^{\mathrm{filtrate}}(t)
+            \end{aligned}
+        }
+    \end{equation*}
+    {\color{red}\begin{align}
+        c_i^\mathrm{D}(t,0) = c_i^\mathrm{end\ PCT}(t)
+    \end{align}}
 \end{frame}
 
 \begin{frame}{Boudnary condition: couplings}
@@ -136,21 +154,45 @@
         p_\mathrm{D}(t,L)&= p_{\mathrm{A}}(t,L),\\ 
         c_i^\mathrm{D}(t,L) &=c_i^\mathrm{A}(t,L)
     \end{align}
-    and, similarly,
+    % and, similarly,
     \begin{align}
-        (\alpha_\mathrm{A}u_\mathrm{A}+\alpha_\mathrm{C}u_\mathrm{C})(t,0) &= 0,\\
-        \quad\left( f_i^\mathrm{A}+f_i^\mathrm{C} \right)(t,0) &= 0,\\
-        p_\mathrm{A}(t,0)&= p_{\mathrm{C}}(t,0),\\ 
-        c_i^\mathrm{A}(t,0) &=c_i^\mathrm{C}(t,0).
+        (\alpha_\mathrm{A}u_\mathrm{A}+\alpha_\mathrm{C}u_\mathrm{C})(t,0) &= \cancel{0}\ {\color{red}r_\mathrm{w}(t)},\\
+        \quad\left( f_i^\mathrm{A}+f_i^\mathrm{C} \right)(t,0) &= \cancel{0}\ {\color{red}r_i(t)},\\
+        \cancel{p_\mathrm{A}(t,0)}&=  \cancel{p_{\mathrm{C}}(t,0)} {
+            \color{red}
+            \ \frac{\partial c_i^\mathrm{C}}{\partial x}(t,0) = 0\quad \mathrm{or}
+        }\\ 
+        \cancel{c_i^\mathrm{A}(t,0)} &= \cancel{c_i^\mathrm{C}(t,0)}\quad {\color{red}c_i^\mathrm{C}(t,0) = c_i^{\mathrm{end\ DCT}}(t)?}.\nonumber
     \end{align}
 \end{frame}
 
 \begin{frame}{Boundary condition: papillary outflow}
-    \begin{align}
-        (\alpha_\mathrm{C} u_\mathrm{C} )(t,L) &= \max\left\{ 0,\frac{p_\mathrm{C} (t,L) - P_{\mathrm{p}} }{R_{\mathrm{p}}}\right\},\\
-        f_i^\mathrm{C}(t,L) &= (\alpha_\mathrm{C}  u_\mathrm{C}  c_i^\mathrm{C})(t,L),\quad i=\mathrm{s},\mathrm{u}.
-    \end{align}
+    \begin{equation*}
+        \xcancel{\begin{aligned}
+            (\alpha_\mathrm{C} u_\mathrm{C} )(t,L) &= \max\left\{ 0,\frac{p_\mathrm{C} (t,L) - P_{\mathrm{p}} }{R_{\mathrm{p}}}\right\},\\
+            f_i^\mathrm{C}(t,L) &= (\alpha_\mathrm{C}  u_\mathrm{C}  c_i^\mathrm{C})(t,L),\quad i=\mathrm{s},\mathrm{u}.
+        \end{aligned}}
+    \end{equation*}
+    {\color{red}
+        % Proposal:
+        \begin{align}
+            % p_\mathrm{C}(t,L) &= P_\mathrm{p}(t),\\
+            (\alpha_\mathrm{C}u_\mathrm{C})(t,L) &= (\alpha_\mathrm{D}u_\mathrm{D})(t,0) - r_w(t)+(\alpha_0u_0)(t,0),\\
+            % c_i^\mathrm{C}(t,L) &= K*\left( f_i^\mathrm{C}\left( \cdot,L \right) \right)(t)=\int_{\mathbb{R}}K(t-s) f_i^\mathrm{C}(s,L)\,ds,
+            \frac{\partial c_i^\mathrm{C}}{\partial x}(t,L) &= 0.\label{eq:no_diff_pap}
+        \end{align}
+        % where $K\in L^1(\mathbb{R})$ is non-negative, monotone decreasing in $\mathbb{R}_+$, and $K(t)=0$ for $t<0$.
+        Problem: can $\alpha_\mathrm{C}u_\mathrm{C}(t,L)<0$?
+    }
 \end{frame}
+
+% \begin{frame}[Boundary condition: papillary outflow (2/2)]
+%     {\color{red} Or we can replace (\ref{eq:no_diff_pap}) by
+%     \begin{equation}
+%         c_i^\mathrm{C}(t,L) = K*\left( f_i^\mathrm{C}\left( \cdot,L \right) \right)(t)=\int_{\mathbb{R}}K(t-s) f_i^\mathrm{C}(s,L)\,ds,
+%     \end{equation}
+%     where $K\in L^1(\mathbb{R})$ is non-negative, monotone decreasing in $\mathbb{R}_+$, and $K(t)=0$ for $t<0$.}
+% \end{frame}
 
 \section{Non-dimensionalization}
 \begin{frame}{Rescaling}
