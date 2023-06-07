@@ -111,8 +111,7 @@ In this model, for each compartment $k$, we will only consider two unknown conce
 The rest of the solute species will be treated as a fixed immobile solute, and we denote the total amount (per unit depth) by $a_k$.
 We define the osmotic pressure by
 \begin{equation}
-    % \pi_k:= RT\left( \sum_{i=\mathrm{s},\mathrm{u}}c_i^k+\frac{a_k}{\alpha_k} \right),\quad k=0,\mathrm{D},\mathrm{A},\mathrm{C}.
-    \pi_k:= RT\left( 2c_\mathrm{s}^k+c_{\mathrm{u}}^k+\frac{a_k}{\alpha_k} \right),\quad k=0,\mathrm{D},\mathrm{A},\mathrm{C}.
+    \pi_k:= \sum_{i=\mathrm{s},\mathrm{u}}c_i^k+\frac{a_k}{\alpha_k},\quad k=0,\mathrm{D},\mathrm{A},\mathrm{C}.
 \end{equation}
 
 Now, similarly to the dynamics of the volume density, we have equations for the salt and urea concentrations:
@@ -125,10 +124,10 @@ The axial flow and transmural flux of the solute $i$ are denoted by $f_i^k$ and 
 The axial flow has two components: diffusion and advection.
 We write $f_i^k$ as
 \begin{equation}
-    f_i^k := -\alpha_k D_i^k\frac{\partial c_i^k}{\partial x}+\alpha_ku_kc_i^k,\quad k=0,\mathrm{D},\mathrm{A},\mathrm{C},
+    f_i^k := -{\color{red}\alpha_k}D_i^k\frac{\partial c_i^k}{\partial x}+\alpha_ku_kc_i^k,\quad k=0,\mathrm{D},\mathrm{A},\mathrm{C},
 \end{equation}
     where $D_i^k$ are the diffusion coefficients.
-% {\color{red}Correction: since $f_i^k$ is a \textit{flow} and $-D_i^k\partial c_i^k/\partial x$ is a diffusive \textit{flux}, we should have an additional $\alpha_k$ as indicated above.}
+{\color{red}Correction: since $f_i^k$ is a \textit{flow} and $-D_i^k\partial c_i^k/\partial x$ is a diffusive \textit{flux}, we should have an additional $\alpha_k$ as indicated above.}
 For the transmural fluxes $g_i^k$, we have
 \begin{equation}
     g_i^k := j_i^k+h_i^k,\quad k=\mathrm{D},\mathrm{A},\mathrm{C}
@@ -156,102 +155,65 @@ For the interstitial compartment, we assume no-flux boundary at $x=L$, i.e.,
 On the other hand, we allow interstitial water flow and advective solute flow at $x=0$ in the negative direction.
 More precisely,
 \begin{align}
-    % (\alpha_0u_0)(t,0) &= 
-    % \min\left\{ 0,\frac{P_{\mathrm{v}}-p_0(t,0) }{R_{\mathrm{v}}}\right\},\\ 
-    p_0(t,0) &= P_{\mathrm{v}},\\ 
-    % f_i^0(t,0) &= (\alpha_0 u_0 c_i^0)(t,0),\quad i=\mathrm{s},\mathrm{u},
-    c_i^0(t,0) &= c_i^\mathrm{v}(t),\quad i=\mathrm{s},\mathrm{u},
+    (\alpha_0u_0)(t,0) &= \min\left\{ 0,\frac{P_{\mathrm{v}}-p_0(t,0) }{R_{\mathrm{v}}}\right\},\\ 
+    f_i^0(t,0) &= (\alpha_0 u_0 c_i^0)(t,0),\quad i=\mathrm{s},\mathrm{u},
 \end{align}
-    where $P_{\mathrm{v}}$ is the pressure inside larger vessels which are coupled to the interstitial compartment.
-    % , and $R_\mathrm{v}$ is the resistance of the coupling.
-% The rectification is so that we avoid having to specify the solute input from the outside when the pressure $p_0(t,0)$ is less than that of the pressure $P_\mathrm{vessel}$ of larger vessels.
-%%%%%%%
-% To avoid the scenario where we have transient inward water and solute flux at $x=0$, we impose another condition:
-% \begin{equation}
-%     \frac{\partial p_0}{\partial x}(t,0)\geq 0,\quad \frac{\partial c_i^0}{\partial x}(t,0)\geq 0,\quad i=\mathrm{s,u}.
-% \end{equation}
-%%%%%%%
-% With this same reason, we do not allow diffusive solute flow through this coupling.
+    where $P_{\mathrm{v}}$ is the pressure inside larger vessels which are coupled to the interstitial compartment, and $R_\mathrm{v}$ is the resistance of the coupling.
+The rectification is so that we avoid having to specify the solute input from the outside when the pressure $p_0(t,0)$ is less than that of the pressure $P_\mathrm{vessel}$ of larger vessels.
+With this same reason, we do not allow diffusive solute flow through this coupling.
 
 For the luminal compartments, we have solute and water input from the proximal tubules in the descending compartment at $x=0$.
 Formally, we write
 \begin{align}
-    (\alpha_\mathrm{D} u_\mathrm{D})(t,0) &= F_\mathrm{PCT}(t),\\
-    % f_i^\mathrm{D}(t,0) &= (\alpha_\mathrm{D}u_\mathrm{D}c_i^\mathrm{D})(t,0),\quad i=\mathrm{s,u}\\
-    c_i^\mathrm{D}(t,0) &= c_{i}^{\mathrm{PCT}}(t),\quad i=\mathrm{s,u},
+    (\alpha_\mathrm{D} u_\mathrm{D})(t,0) &= \mathrm{GFR}(t),\\
+    f_i^\mathrm{D}(t,0) &= (\alpha_\mathrm{D}u_\mathrm{D}c_i^\mathrm{D})(t,0),\quad i=\mathrm{s,u}\\
+    c_i^\mathrm{D}(t,0) &= c_{i}^{\mathrm{filtrate}}(t)
 \end{align}
-    % where $\mathrm{GFR}$ is a non-negative function of time, which can be given or depend on other model unknowns such as the pressure of the descending tubule or the salt concentration in the ascending tubule.
-    where $F_\mathrm{PCT}$ is a non-negative function of time, which can be given or depend on other model unknowns such as the pressure of the descending tubule or the salt concentration in the ascending tubule.
-We also have the concentration at the beginning of the descending tubule $c_i^\mathrm{PCT}$ given.
+    where $\mathrm{GFR}$ is a non-negative function of time, which can be given or depend on other model unknowns such as the pressure of the descending tubule or the salt concentration in the ascending tubule.
+We also have the concentration at the beginning of the descending tubule $c_i^\mathrm{filtrate}$ given.
 Furthermore, we have couplings between the descending and ascending tubules at $x=L$ and between the ascending and collecting tubules at $x=0$, i.e., we have
 \begin{align}
-    (\alpha_\mathrm{D}u_\mathrm{D}+\alpha_\mathrm{A}u_\mathrm{A})(t,L) &= 0,\label{eq:bdry_ADw} \\
-    \quad\left( f_i^\mathrm{D}+f_i^\mathrm{A} \right)(t,L) &= 0,\label{eq:bdry_ADs}\\
+    (\alpha_\mathrm{D}u_\mathrm{D}+\alpha_\mathrm{A}u_\mathrm{A})(t,L) &= 0,\\
+    \quad\left( f_i^\mathrm{D}+f_i^\mathrm{A} \right)(t,L) &= 0,\\
     p_\mathrm{D}(t,L)&= p_{\mathrm{A}}(t,L),\\ 
-    c_i^\mathrm{D}(t,L) &=c_i^\mathrm{A}(t,L).\label{eq:bdry_ADc}
+    c_i^\mathrm{D}(t,L) &=c_i^\mathrm{A}(t,L)
 \end{align}
-
-To avoid modeling the distal convoluted tubules (DCT) and the connecting tubules (CNT), which join the distal end of the ascending tubules and the collecting tubules, we assume that the amount of urea at both ends stay the same while the salt content is reabsorbed by DCT and CNT by a factor of $1-q$ where $0<q\leq 1$.
-Formally, we write
+and, similarly,
 \begin{align}
-    \left( f_{\mathrm{u}}^\mathrm{A}+f_\mathrm{u}^\mathrm{C} \right)(t,0) &= 0,\\
-    \left( qf_{\mathrm{s}}^\mathrm{A}+f_\mathrm{s}^\mathrm{C} \right)(t,0) &= 0.
-\end{align}
-Further, we assume that 
-\begin{align}
-    % (\alpha_\mathrm{A}u_\mathrm{A}+\alpha_\mathrm{C}u_\mathrm{C})(t,0) &= 0,\\
-    % \quad\left( f_i^\mathrm{A}+f_i^\mathrm{C} \right)(t,0) &= 0,\\
+    (\alpha_\mathrm{A}u_\mathrm{A}+\alpha_\mathrm{C}u_\mathrm{C})(t,0) &= 0,\\
+    \quad\left( f_i^\mathrm{A}+f_i^\mathrm{C} \right)(t,0) &= 0,\\
     p_\mathrm{A}(t,0)&= p_{\mathrm{C}}(t,0),\\ 
-    % c_i^\mathrm{A}(t,0) &=c_i^\mathrm{C}(t,0),
-    % \frac{\partial c_i^\mathrm{A}}{\partial x}(t,0)&= 0,\quad i = \mathrm{s},\mathrm{u},
-    f_i^\mathrm{A}(t,L) &= (\alpha_\mathrm{A}  u_\mathrm{A}  c_i^\mathrm{A})(t,L),\quad i = \mathrm{s},\mathrm{u},\\ 
-    (2c_\mathrm{s}^\mathrm{C}+c_\mathrm{u}^\mathrm{C})(t,0) &=c_\mathrm{cortex}(t),
+    c_i^\mathrm{A}(t,0) &=c_i^\mathrm{C}(t,0),
 \end{align}
-    % where $i = \mathrm{s},\mathrm{u}$.
-    i.e., the pressure drop across and the diffusive flux into the DCT and the CNT are negligible, and the water is reabsorbed so that the osmolarity of the fluid at the initial CNT is iso-osmotic, given by $c_\mathrm{cortex}$.
-% Note that in our simplification, we are bypassing the distal convoluted tubules in the coupling between the ascending and the collecting tubules.
-%%%%%
-% Note that the above boundary conditions are not complete when the axial solute diffusions are present; we need two more relations as we have in (\ref{eq:bdry_ADw})-(\ref{eq:bdry_ADc}).
-% Nevertheless, we shall see later after non-dimensionalization that, if the solute diffusion is small compared to the rate of advection, the second order derivative terms describing the diffusive flux vanish.
-% Thus, the above number of boundary condition suffices.
-
-Finally, since the volume density of the collecting tubule is the model unknown, we need to specify the solute and water flow at $x=L$ similarly to those in the interstitium:
+    where $i = \mathrm{s},\mathrm{u}$.
+Note that in our simplification, we are bypassing the distal convoluted tubules in the coupling between the ascending and the collecting tubules.
+Finally, since the volume density of the collecting tubule is the model unknown, we need to specify the solute and water flow at $x=L$ where we use the same idea as those of the interstitium:
 \begin{align}
-    % (\alpha_\mathrm{C} u_\mathrm{C} )(t,L) &= \max\left\{ 0,\frac{p_\mathrm{C} (t,L) - P_{\mathrm{p}} }{R_{\mathrm{p}}}\right\},\\
-    p_\mathrm{C} (t,L) &= P_{\mathrm{p}}(t),\\
+    (\alpha_\mathrm{C} u_\mathrm{C} )(t,L) &= \max\left\{ 0,\frac{p_\mathrm{C} (t,L) - P_{\mathrm{p}} }{R_{\mathrm{p}}}\right\},\\
     f_i^\mathrm{C}(t,L) &= (\alpha_\mathrm{C}  u_\mathrm{C}  c_i^\mathrm{C})(t,L),\quad i=\mathrm{s},\mathrm{u},
 \end{align}
-    where $P_\mathrm{p}$ is the papillary pressure.
-    % and $R_\mathrm{p}$ is the resistance of the coupling between the collecting tubules and the renal papillae.
-% Again, under the condition that the axial solute diffusions are small, we need no further boundary condition.
+    where $P_\mathrm{p}$ is the papillary pressure and $R_\mathrm{p}$ is the resistance of the coupling between the collecting tubules and the renal papillae.
 
 \section{Non-dimensionalization}
 
 We now consider the rescaling of space and time:
 \begin{equation}
-    % x = L\hat{x},\quad t = \frac{L^2}{D_*}\hat{t},
-    x = L\hat{x},\quad t = \tau\hat{t},
+    x = L\hat{x},\quad t = \frac{L^2}{D_*}\hat{t},
 \end{equation}
-    % where $D_*$ is the typical magnitude of the diffusion coefficients across all solutes and compartments.
-    where $\tau$ is an advection timescale given by
-\begin{equation}
-    \tau:=\frac{L^2}{\bar{\alpha}p_*/\rho_*}=\frac{\rho_*L^2}{\bar{\alpha}c_*RT}.
-\end{equation}
-Here, $p_*=c_*RT$ is a typical magnitude of hydrostatic pressures with $c_*$ being that of solute concentrations; $\bar{\alpha} = \frac{1}{L}\int_0^L\alpha_*(x)\,dx$ is the average volume density; $\rho_*$ is a typical magnitude of hydraulic resistivity.
+    where $D_*$ is the typical magnitude of the diffusion coefficients across all solutes and compartments.
 With this, we rescale the model unknowns as follows:
 \begin{gather}
-    \alpha_k = \bar{\alpha}\hat{\alpha},\quad c_i^k = c_*\hat{c}_i^k,\quad p_k = p_*\hat{p}_k = c_*RT\hat{p}_k,
+    \alpha_k = \bar{\alpha}\hat{\alpha},\quad c_i^k = c_*\hat{c}_i^k,\quad p_k = p_*\hat{p}_k,
     % \quad u_k = \frac{\bar{\alpha}p_*}{\rho_* L}\hat{u}
 \end{gather}
     % where $\bar{\alpha} = \frac{1}{L}\int_0^L\alpha_*(x)\,dx$, and $c_*,p_*,\rho_*$ are the typical magnitudes of all solute concentrations, hydrostatic pressures, and hydraulic resistivity.
-    for $k=0,\mathrm{D},\mathrm{A},\mathrm{C}$.
-    % , and $c_*,p_*$ are the typical magnitudes of solute concentrations and hydrostatic pressures.
-The dimensionless unknowns with $\hat{\cdot}$ notation here are functions in the rescaled space and time $(\hat{t},\hat{x})$.
+    for $k=0,\mathrm{D},\mathrm{A},\mathrm{C}$, where $\bar{\alpha} = \frac{1}{L}\int_0^L\alpha_*(x)\,dx$, and $c_*,p_*$ are the typical magnitudes of solute concentrations and hydrostatic pressures.
+Here, the dimensionless unknowns with $\hat{\cdot}$ notation are functions in the rescaled space and time $(\hat{t},\hat{x})$.
 
 We have the model equations in the dimensionless form:
 \begin{align}
-    \frac{\partial \hat{\alpha}_k}{\partial \hat{t}}  + \frac{\partial}{\partial \hat{x}}\left( \hat{\alpha}_k \hat{u}_k \right) &= - \hat{w}_k,\\ \label{eq:nd_1steq}
-    \frac{\partial\hat{\alpha}_0}{\partial \hat{t}}+\frac{\partial}{\partial \hat{x}}\left( \hat{\alpha}_0 \hat{u}_0 \right) &=\sum_k \hat{w}_k,\\
+    \frac{\partial \hat{\alpha}_k}{\partial \hat{t}}  + \mathrm{Pe}\frac{\partial}{\partial \hat{x}}\left( \hat{\alpha}_k \hat{u}_k \right) &= - \hat{w}_k,\\ \label{eq:nd_1steq}
+    \frac{\partial\hat{\alpha}_0}{\partial \hat{t}}+\mathrm{Pe}\frac{\partial}{\partial \hat{x}}\left( \hat{\alpha}_0 \hat{u}_0 \right) &=\sum_k \hat{w}_k,\\
     \hat{\nu}_k\left( \hat{p}_k - \hat{p}_0 \right) &= \frac{\hat{\alpha}_k}{\hat{\bar{\alpha}}_k}-1,\\
     \hat{\alpha}_0 + \sum_{k} \hat{\alpha}_k &= \hat{\alpha}_*,\\
     \frac{\partial}{\partial \hat{t}}\left( \hat{\alpha}_k \hat{c}_i^k \right)&=-\frac{\partial}{\partial \hat{x}} \hat{f}_i^k - \hat{g}_i^k,\\
@@ -259,49 +221,31 @@ We have the model equations in the dimensionless form:
 \end{align}
     for $k=\mathrm{D},\mathrm{A},\mathrm{C}$ and $i=\mathrm{s},\mathrm{u}$, where
 \begin{align}
-    \hat{u}_\cdot &:= -\frac{\hat{\alpha}_\cdot}{\hat{\rho}_\cdot}\frac{\partial \hat{p}_\cdot}{\partial \hat{x}} = \frac{\tau}{L}u_\cdot,\\
-    \hat{f}_i^\cdot &:= -\hat{\alpha}_\cdot\hat{D}_i^\cdot \frac{\partial \hat{c}_i^\cdot}{\partial \hat{x}} + \hat{\alpha}_\cdot\hat{u}_\cdot\hat{c}_i^\cdot=\tau\bar{\alpha}c_* f_i^\cdot,\\
-    \hat{w}_k&:= \hat{\zeta}_\mathrm{w}^k\left( \hat{\psi}_k-\hat{\psi}_0 \right)=\frac{\tau\gamma_k}{\bar{\alpha}}w_k,\quad\hat{\psi}_\cdot := \hat{p}_\cdot - \hat{\pi}_.,\quad \hat{\pi}_\cdot := \frac{\hat{a}_\cdot}{\hat{\alpha}_\cdot}+\sum_i \hat{c}_i^\cdot,\\
-    \hat{g}_i^k &:= \hat{j}_i^k+\hat{h}_i^k=\frac{\tau \gamma_k}{\bar{\alpha}c_*}g_i^k,\quad \hat{j}_i^k :=\hat{\zeta}_i^k(\hat{\mu}_i^k-\hat{\mu}_i^0),\quad \hat{\mu}_i^\cdot:=\ln \hat{c}_i^\cdot\label{eq:nd_lasteq}
+    \hat{u}_\cdot &:= -\frac{\hat{\alpha}_\cdot}{\hat{\rho}_\cdot}\frac{\partial \hat{p}_\cdot}{\partial \hat{x}},\\
+    \hat{f}_i^\cdot &:= -{\color{red}\hat{\alpha}_\cdot}\hat{D}_\cdot \frac{\partial \hat{c}_i^\cdot}{\partial \hat{x}} + \mathrm{Pe}(\hat{\alpha}_\cdot\hat{u}_\cdot\hat{c}_i^\cdot),\\
+    \hat{w}_k&:= \hat{\zeta}_\mathrm{w}^k\left( \hat{\psi}_k-\hat{\psi}_0 \right),\quad\hat{\psi}_\cdot := \hat{p}_\cdot - \hat{\pi}_.,\quad \hat{\pi}_\cdot := \frac{\hat{a}_\cdot}{\hat{\alpha}_\cdot}+\sum_i \hat{c}_i^\cdot,\\
+    \hat{g}_i^k &:= \hat{j}_i^k+\hat{h}_i^k,\quad \hat{j}_i^k :=\hat{\zeta}_i^k(\hat{\mu}_i^k-\hat{\mu}_i^0),\quad \hat{\mu}_i^\cdot:=\ln \hat{c}_i^\cdot\label{eq:nd_lasteq}
 \end{align}
     for $k=\mathrm{D},\mathrm{A},\mathrm{C}$ and $i=\mathrm{s},\mathrm{u}$.
 The label $\cdot$ here is for $0,\mathrm{D},\mathrm{A},\mathrm{C}$.
-% {\color{red}Correction: as in the previous section, the diffusive term should have an additional $\hat{\alpha}_\cdot$}.
-Note that we have $\hat{h}_i^k=(\gamma_k\tau/\bar{\alpha}c_*)h_i^k$ for the dimensionless active transport $\hat{h}_i^k$.
+{\color{red}Correction: as in the previous section, the diffusive term should have an additional $\hat{\alpha}_\cdot$}.
+Note that we have $h_i^k = \gamma_k\hat{h}_i^k$ for the dimensionless active transport $\hat{h}_i^k$.
 In this dimensionless formulation, we have identified parameters:
 \begin{gather}
-    % \mathrm{Pe} = \frac{\bar{\alpha}p_*/\rho_*}{D_*},\quad 
-    \hat{\rho}_\cdot = \frac{\rho_\cdot}{\rho_*},\quad 
-    \hat{\nu}_k = p_*\nu_k,\quad \hat{\bar{\alpha}}_\cdot = \frac{\bar{\alpha}_\cdot}{\bar{\alpha}},\quad \hat{\alpha}_* = \frac{\alpha_*}{\bar{\alpha}}\\
+    \mathrm{Pe} = \frac{\bar{\alpha}p_*/\rho_*}{D_*},\quad \hat{\rho}_\cdot = \frac{\rho_\cdot}{\rho_*},\quad \hat{\nu}_k = p_*\nu_k,\quad \hat{\bar{\alpha}}_\cdot = \frac{\bar{\alpha}_\cdot}{\bar{\alpha}},\quad \hat{\alpha}_* = \frac{\alpha_*}{\bar{\alpha}}\\
     \hat{a}_\cdot = \frac{a_\cdot}{\bar{\alpha}c_*},\quad
-    \hat{D}_i^\cdot = \frac{\tau}{L^2}D_i^\cdot,\quad 
-    % \hat{\zeta}_\mathrm{w}^k = \frac{\gamma_k c_*L^2}{\bar{\alpha}D_*}\zeta_\mathrm{w}^k,\quad\hat{\zeta}_i^k = \frac{\gamma_kRT L^2}{\bar{\alpha}c_* D_*}\zeta_i^k,
-    \hat{\zeta}_\mathrm{w}^k = \frac{\gamma_k p_*\tau}{\bar{\alpha}}\zeta_\mathrm{w}^k,\quad\hat{\zeta}_i^k = \frac{\gamma_kp_*\tau}{\bar{\alpha}c_*^2}\zeta_i^k,
+    \hat{D}_\cdot = \frac{D_\cdot}{D_*},\quad \hat{\zeta}_\mathrm{w}^k = \frac{\gamma_k c_*L^2}{\bar{\alpha}D_*}\zeta_\mathrm{w}^k,\quad\hat{\zeta}_i^k = \frac{\gamma_kRT L^2}{\bar{\alpha}c_* D_*}\zeta_i^k,
 \end{gather}
     for $k=\mathrm{D},\mathrm{A},\mathrm{C}$, where the subscript $*$ denotes the typical magnitudes of the parameters described in the previous section.
-% We have the P\'eclet number $\mathrm{Pe}$ which can be interpreted as the ratio between the rate of advection $\bar{\alpha}p_*/\rho_*L$ and the rate of diffusion $D_*/L$.
-The mechanical parameters, which are the hydraulic resistivity $\hat{\rho}_\cdot$, the tubular compliance $\hat{\nu}_\cdot$, the resting volume density $\hat{\bar{\alpha}}_\cdot$, immobile solutes $\hat{a}_\cdot$, and the diffusion coefficients $\hat{D}_\cdot$ persist through the non-dimensionalization.
+We have the P\'eclet number $\mathrm{Pe}$ which can be interpreted as the ratio between the rate of advection $\bar{\alpha}p_*/\rho_*L$ and the rate of diffusion $D_*/L$.
+The mechanical parameters, which are the hydraulic resistivity $\hat{\rho}_\cdot$, the tubular compliance $\hat{\nu}_\cdot$, and the resting volume density $\hat{\bar{\alpha}}_\cdot$, together with immobile solutes $\hat{a}_\cdot$ and the diffusion coefficients $\hat{D}_\cdot$, persist through the non-dimensionalization.
 The transport parameters, however, are now reduced to only $\hat{\zeta}_\mathrm{w}^k$ and $\hat{\zeta}_i^k$ which combine the geometric parameters $\gamma_k$ with the solute and water permeability.
 
-% We see that the dimensionless diffusion coefficients $\hat{D}_i^\cdot$, which should be thought as the ratio between the rate of diffusion $D_i^k/L$ and the rate of advection $\bar{\alpha}p_*/\rho_*L = L/\tau$, is small for all compartments except for the interstitium.
-% The magnitude of the diffusion coefficients $D_i^k$ in the tubules is approximately $1.5\times 10^{-5}$ $\mathrm{cm}^2/\mathrm{s}$.
-% Taking $L=0.1$ cm, with water flow velocity of about $0.005$ to $0.05$ cm/s, we have $\hat{D}_i^k\approx 0.03$ to $0.003$.
-% On the other hand, the diffusion coefficients in the interstitium $D_i^0$, which reflect the movement of solute resulting from the countercurrent flow of vasa recta, is about $2.5\times 10^{-4}$ $\mathrm{cm}^2/\mathrm{s}$ while the water flow velocity is approximately $1\times 10^{-4}$ $\mathrm{cm}/\mathrm{s}$.
-% This gives $D_i^0\approx 25$.
-% Therefore, it is reasonable to set $\hat{D}_i^k=0$ for $k\neq 0$.
-
-% With this, the boundary conditions given in the previous section are enough since the highest order of partial derivative with respect to $x$ is now of order 1.
-% Note that the condition (\ref{eq:bdry_ADw}) and (\ref{eq:bdry_ADc}) now implies (\ref{eq:bdry_ADs}), so this will not raise an inconsistency.
-The boundary conditions are of the same form as previously described, but with $\hat{\cdot}$ notations, where we have
-% \begin{equation}
-%     \mathrm{GFR} = \frac{\bar{\alpha}^2 p_*}{\rho_* L}\widehat{\mathrm{GFR}},\quad
-%     P_\cdot = p_*\hat{P}_\cdot,\quad R_\cdot = \frac{\rho_* L}{\bar{\alpha}^2}\hat{R}_\cdot,
-% \end{equation}
-\begin{gather}
-    F_\mathrm{PCT} = \frac{\bar{\alpha}L}{\tau}\hat{F}_\mathrm{PCT},\quad
-    P_\cdot = p_*\hat{P}_\cdot,\quad
-    c_i^\cdot = c_*\hat{c}_i^*,\quad c_\mathrm{cortex} = c_*\hat{c}_\mathrm{cortex},
-\end{gather}
+For the boundary conditions, we have the same form as previously described, but with $\hat{\cdot}$ notations, where we have
+\begin{equation}
+    \mathrm{GFR} = \frac{\bar{\alpha}^2 p_*}{\rho_* L}\widehat{\mathrm{GFR}},\quad
+    P_\cdot = p_*\hat{P}_\cdot,\quad R_\cdot = \frac{\rho_* L}{\bar{\alpha}^2}\hat{R}_\cdot,
+\end{equation}
     where the subscript $\cdot$ represents $\mathrm{v}$ and $\mathrm{p}$.
 
 \section{Numerical method}
@@ -323,7 +267,7 @@ The boundary conditions are of the same form as previously described, but with $
 %     % := \ln\left( \frac{c_i^k}{c_i^0} \right).
 % \end{align}
 
-We now give an implicit scheme to numerically solve the dimensionless system (\ref{eq:nd_1steq}) - (\ref{eq:nd_lasteq}) described in the previous section with $\hat{D}_i^k=0$ for $k\neq 0$.
+We now give an implicit scheme to numerically solve the dimensionless system (\ref{eq:nd_1steq}) - (\ref{eq:nd_lasteq}) described in the previous section.
 To simplify the notation, we will omit the $\hat{\cdot}$ notation in these equations.
 
 Let $N\in \mathbb{N}$ be the number of uniformly spaced grids in $(0,1)$, and $\delta x = 1/N$ be the spatial grid size.
@@ -344,7 +288,7 @@ and an average operator:
 Starting with known values of $\alpha^{n-1}_{kl},c_{il}^{k,n-1}, p_{kl}^{n-1}$, $l = 1,\dots,N$, the first step is to update the unknowns for the next time step $n$.
 We have the system of equations for $\alpha^{n}_{kl},c_{il}^{kn}, p_{kl}^{n}$, $l=1,\dots,N$, to be solved using an iterative method:
 \begin{align}
-    \mathcal{D}_t \alpha_{kl}^n + \mathcal{D}_x^-v_{kl}^n &= \begin{cases}
+    \mathcal{D}_t \alpha_{kl}^n +\mathrm{Pe}\mathcal{D}_x^-v_{kl}^n &= \begin{cases}
         -w_{kl}^{n},\quad &k=\mathrm{D},\mathrm{A},\mathrm{C},\\
         \sum_{\kappa\neq 0} w_{\kappa l}^n, &k=0,
     \end{cases}\\
@@ -368,47 +312,39 @@ These should be thought as the flow at the \textit{grid points}, e.g., $f_{il}^{
 For $l=1,\dots,N-1$, we have
 \begin{align}
     v_{kl}^n &= -\frac{1}{\rho_{kl}}(\mathcal{A}\alpha_{kl}^n)^2 \mathcal{D}_x^+p_{kl}^n,\\
-    % f_{il}^{kn} &= -{\color{red}(\mathcal{A}\alpha_{kl}^n)}D_{i}^k \mathcal{D}_x^+ c_{il}^{kn}+ v_{kl}^n \mathcal{A}c_{il}^{kn}.
-    f_{il}^{kn} &= v_{kl}^n \mathcal{A}c_{il}^{kn}.
+    f_{il}^{kn} &= -{\color{red}(\mathcal{A}\alpha_{kl}^n)}D_{i}^k \mathcal{D}_x^+ c_{il}^{kn}+ v_{kl}^n \mathcal{A}c_{il}^{kn}.
 \end{align}
     % where the parameters $D_{il}^k$ and $\rho_{kl}$ are given for $l=0,\dots,N$.
 
 Further, we have the boundary conditions ($l=0,N$):
 \begin{alignat}{2}
-    % v_{00}^n &= \min\left\{ 0,\frac{P_\mathrm{v}(n\delta t) - p_{01}^n}{R_{\mathrm{v}}} \right\},\quad &&f_{00}^n = v_{00}^n,\\
-    v_{00}^n &=\frac{(\alpha_{01}^n)^2}{\rho_{00}} \left( \frac{P_\mathrm{v}(n\delta t) - p_{01}^n}{\delta x/2} \right),\quad &&f_{00}^n = v_{00}^nc_i^\mathrm{v},\\
+    v_{00}^n &= \min\left\{ 0,\frac{P_\mathrm{v}(n\delta t) - p_{01}^n}{R_{\mathrm{v}}} \right\},\quad &&f_{00}^n = v_{00}^n,\\
     v_{0N}^n &= 0,\quad &&f_{0N}^n = 0,\\
-    v_{\mathrm{D}0}^n &= F_\mathrm{PCT}(n\delta t),\quad && f_{i0}^{\mathrm{D}n} = v_{\mathrm{D} 0}^nc_i^\mathrm{PCT}(n\delta t),\\
-    v_{\mathrm{C}N}^n &= \frac{(\alpha_{\mathrm{C} N}^n)^2}{\rho_{\mathrm{C} N}}\left( \frac{p_{\mathrm{C}N}^n - P_\mathrm{p}(n\delta t)}{\delta x/2} \right),\quad && f_{iN}^{\mathrm{C}n} = v_{\mathrm{C} N}^nc_{iN}^{\mathrm{C}n}.
+    v_{\mathrm{D}0}^n &= \mathrm{GFR}(n\delta t),\quad && f_{i0}^{\mathrm{D}n} = v_{\mathrm{D} 0}^nc_i^\mathrm{filtrate}(n\delta t),\\
+    v_{\mathrm{C}N}^n &= \max\left\{ 0,\frac{p_{\mathrm{C}N}^n - P_\mathrm{p}(n\delta t)}{R_\mathrm{p}} \right\},\quad && f_{iN}^{\mathrm{C}n} = v_{\mathrm{C} N}^nc_{iN}^{\mathrm{C}n}.
 \end{alignat}
 For the coupling between the descending and ascending, we have
 \begin{align}
     v_{kN}^n &= \frac{(\alpha_{kN}^n)^2}{\rho_k}\left( \frac{p_{kN}^n - \bar{p}_{\mathrm{DA}}^n}{\delta x/2} \right),\\ 
-    % f_{iN}^{kn} &= -D_i^k\left( \frac{c_{iN}^{kn} - \bar{c}_{i,\mathrm{DA}}^{n}}{\delta x/2} \right)+\mathrm{Pe}v_{kN}^{n}\bar{c}_{i,\mathrm{DA}}^{n},
-    f_{iN}^{kn} &= v_{kN}^{n}\bar{c}_{i,\mathrm{DA}}^{n},
+    f_{iN}^{kn} &= -D_i^k\left( \frac{c_{iN}^{kn} - \bar{c}_{i,\mathrm{DA}}^{n}}{\delta x/2} \right)+\mathrm{Pe}v_{kN}^{n}\bar{c}_{i,\mathrm{DA}}^{n},
 \end{align}
     for $k=\mathrm{D},\mathrm{A}$, where
 \begin{equation}
-    % \bar{p}_{\mathrm{DA}}^n:=\frac{\frac{(\alpha_{\mathrm{D}N}^n)^2}{\rho_\mathrm{D}}p_{\mathrm{D}N}^n+\frac{(\alpha_{\mathrm{A}N}^n)^2}{\rho_\mathrm{A}}p_{\mathrm{A}N}^n}{\frac{(\alpha_{\mathrm{D}N}^n)^2}{\rho_\mathrm{D}}+\frac{(\alpha_{\mathrm{A}N}^n)^2}{\rho_\mathrm{A}}},\quad 
     \bar{p}_{\mathrm{DA}}^n:=\frac{\frac{(\alpha_{\mathrm{D}N}^n)^2}{\rho_\mathrm{D}}p_{\mathrm{D}N}^n+\frac{(\alpha_{\mathrm{A}N}^n)^2}{\rho_\mathrm{A}}p_{\mathrm{A}N}^n}{\frac{(\alpha_{\mathrm{D}N}^n)^2}{\rho_\mathrm{D}}+\frac{(\alpha_{\mathrm{A}N}^n)^2}{\rho_\mathrm{A}}},\quad 
-    \bar{c}_{i,\mathrm{DA}}^n:=\frac{{\alpha_{\mathrm{D}N}^n}D_{iN}^{\mathrm{D}}c_{iN}^{\mathrm{D}n}+{\alpha_{\mathrm{A}N}^n}D_{iN}^{\mathrm{A}}c_{iN}^{\mathrm{A}n}}{{\alpha_{\mathrm{D}N}^n}D_{iN}^{\mathrm{D}}+{\alpha_{\mathrm{A}N}^n}D_{iN}^{\mathrm{A}}}.
+    \bar{c}_{i,\mathrm{DA}}^n:=\frac{{\color{red}\alpha_{\mathrm{D}N}^n}D_i^\mathrm{D}c_{iN}^{\mathrm{D}n}+{\color{red}\alpha_{\mathrm{A}N}^n}D_i^\mathrm{A}c_{iN}^{\mathrm{A}n}}{{\color{red}\alpha_{\mathrm{D}N}^n}D_i^\mathrm{D}+{\color{red}\alpha_{\mathrm{A}N}^n}D_i^\mathrm{A}}.
 \end{equation}
 These are so that we have the coupling satisfies $v_{\mathrm{D} N}^n+v_{\mathrm{A} N}^n = 0$, and $f_{iN}^{\mathrm{D}n}+ f_{iN}^{\mathrm{A}n} = 0$.
 Here, $\bar{p}_{\mathrm{DA}}^n$ and $\bar{c}_{i,\mathrm{DA}}^n$ correspond to the pressures and the concentrations at $x=1$ of the descending and the ascending tubules.
-Similarly, we also have a condition for the coupling between the ascending and the descending tubules:
+Likewise, we also have a similar condition for the coupling between the ascending and the descending tubules:
 \begin{align}
-    v_{k0}^n &= \frac{(\alpha_{k0}^n)^2}{\rho_k}\left( \frac{\bar{p}_{\mathrm{AC}}^n-p_{k0}^n}{\delta x/2} \right),\quad k=\mathrm{A},\mathrm{C},\\ 
-    % f_{i0}^{kn} &= -D_i^k\left( \frac{\bar{c}_{i,\mathrm{AC}}^{n}- c_{i0}^{kn}}{\delta x/2} \right)+\mathrm{Pe}v_{k0}^{n}\bar{c}_{i,\mathrm{AC}}^{n},
-    f_{\mathrm{u} 0}^{An} &= -f_{\mathrm{u} 0}^{\mathrm{C}n} = v_{\mathrm{A} 0}^{n}c_{\mathrm{u} 0}^{\mathrm{A} n},\quad 
-    f_{\mathrm{s} 0}^{An} = -f_{\mathrm{s} 0}^{\mathrm{C}n}/q = v_{\mathrm{A} 0}^{n}c_{\mathrm{s} 0}^{\mathrm{A} n},\quad 
+    v_{k0}^n &= \frac{(\alpha_{k0}^n)^2}{\rho_k}\left( \frac{\bar{p}_{\mathrm{AC}}^n-p_{k0}^n}{\delta x/2} \right),\\ 
+    f_{i0}^{kn} &= -D_i^k\left( \frac{\bar{c}_{i,\mathrm{AC}}^{n}- c_{i0}^{kn}}{\delta x/2} \right)+\mathrm{Pe}v_{k0}^{n}\bar{c}_{i,\mathrm{AC}}^{n},
 \end{align}
-    where
+    for $k=\mathrm{A},\mathrm{C}$, where
 \begin{equation}
-    % \bar{p}_{\mathrm{AC}}^n:=\frac{\frac{(\alpha_{\mathrm{A} 0}^n)^2}{\rho_\mathrm{A} }p_{\mathrm{A} 0}^n+\frac{(\alpha_{\mathrm{C} 0}^n)^2}{\rho_\mathrm{C} }p_{\mathrm{C} 0}^n}{\frac{(\alpha_{\mathrm{A} 0}^n)^2}{\rho_\mathrm{A} }+\frac{(\alpha_{\mathrm{C} 0}^n)^2}{\rho_\mathrm{C} }},\quad 
-    % \bar{c}_{i,\mathrm{AC}}^n:=\frac{{\color{red}\alpha_{\mathrm{A} 0}^n}D_i^\mathrm{A} c_{i0}^{\mathrm{A} n}+{\color{red}\alpha_{\mathrm{C} 0}^n}D_i^\mathrm{C} c_{i0}^{\mathrm{C} n}}{{\color{red}\alpha_{\mathrm{A} 0}^n}D_i^\mathrm{A} +{\color{red}\alpha_{\mathrm{C} 0}^n}D_i^\mathrm{C} }.
-    \bar{p}_{\mathrm{AC}}^n:=\frac{\frac{(\alpha_{\mathrm{A} 0}^n)^2}{\rho_\mathrm{A} }(c_{\mathrm{u}0}^{\mathrm{A}n}+qc_{\mathrm{s}0}^{\mathrm{A}n})p_{\mathrm{A} 0}^n+\frac{(\alpha_{\mathrm{C} 0}^n)^2}{\rho_\mathrm{C} }c_{\mathrm{cortex}}(n\delta t)p_{\mathrm{C} 0}^n}{\frac{(\alpha_{\mathrm{A} 0}^n)^2}{\rho_\mathrm{A} }(c_{\mathrm{u}0}^{\mathrm{A}n}+qc_{\mathrm{s}0}^{\mathrm{A}n})+\frac{(\alpha_{\mathrm{C} 0}^n)^2}{\rho_\mathrm{C} }c_{\mathrm{cortex}}(n\delta t)}.
+    \bar{p}_{\mathrm{AC}}^n:=\frac{\frac{(\alpha_{\mathrm{A} 0}^n)^2}{\rho_\mathrm{A} }p_{\mathrm{A} 0}^n+\frac{(\alpha_{\mathrm{C} 0}^n)^2}{\rho_\mathrm{C} }p_{\mathrm{C} 0}^n}{\frac{(\alpha_{\mathrm{A} 0}^n)^2}{\rho_\mathrm{A} }+\frac{(\alpha_{\mathrm{C} 0}^n)^2}{\rho_\mathrm{C} }},\quad 
+    \bar{c}_{i,\mathrm{AC}}^n:=\frac{{\color{red}\alpha_{\mathrm{A} 0}^n}D_i^\mathrm{A} c_{i0}^{\mathrm{A} n}+{\color{red}\alpha_{\mathrm{C} 0}^n}D_i^\mathrm{C} c_{i0}^{\mathrm{C} n}}{{\color{red}\alpha_{\mathrm{A} 0}^n}D_i^\mathrm{A} +{\color{red}\alpha_{\mathrm{C} 0}^n}D_i^\mathrm{C} }.
 \end{equation}
-(This needs a correction)
 
 
 \section{Simulation of the countercurrent mechanism}
