@@ -376,7 +376,8 @@ For $l=1,\dots,N-1$, we have
 Further, we have the boundary conditions ($l=0,N$):
 \begin{alignat}{2}
     % v_{00}^n &= \min\left\{ 0,\frac{P_\mathrm{v}(n\delta t) - p_{01}^n}{R_{\mathrm{v}}} \right\},\quad &&f_{00}^n = v_{00}^n,\\
-    v_{00}^n &=\frac{(\alpha_{01}^n)^2}{\rho_{00}} \left( \frac{P_\mathrm{v}(n\delta t) - p_{01}^n}{\delta x/2} \right),\quad &&f_{00}^n = v_{00}^nc_i^\mathrm{v},\\
+    v_{00}^n &=\frac{(\alpha_{01}^n)^2}{\rho_{00}} \left( \frac{P_\mathrm{v}(n\delta t) - p_{01}^n}{\delta x/2} \right),\nonumber\\
+    \quad f_{00}^n &= v_{00}^nc_i^\mathrm{v}(n\delta t)+\alpha_{01}^nD_{i0}^{0}\left( \frac{c_i^{\mathrm{v}}(n\delta t)-c_{i0}^{0n}}{\delta x/2} \right),\\
     v_{0N}^n &= 0,\quad &&f_{0N}^n = 0,\\
     v_{\mathrm{D}0}^n &= F_\mathrm{PCT}(n\delta t),\quad && f_{i0}^{\mathrm{D}n} = v_{\mathrm{D} 0}^nc_i^\mathrm{PCT}(n\delta t),\\
     v_{\mathrm{C}N}^n &= \frac{(\alpha_{\mathrm{C} N}^n)^2}{\rho_{\mathrm{C} N}}\left( \frac{p_{\mathrm{C}N}^n - P_\mathrm{p}(n\delta t)}{\delta x/2} \right),\quad && f_{iN}^{\mathrm{C}n} = v_{\mathrm{C} N}^nc_{iN}^{\mathrm{C}n}.
@@ -399,16 +400,19 @@ Similarly, we also have a condition for the coupling between the ascending and t
 \begin{align}
     v_{k0}^n &= \frac{(\alpha_{k0}^n)^2}{\rho_k}\left( \frac{\bar{p}_{\mathrm{AC}}^n-p_{k0}^n}{\delta x/2} \right),\quad k=\mathrm{A},\mathrm{C},\\ 
     % f_{i0}^{kn} &= -D_i^k\left( \frac{\bar{c}_{i,\mathrm{AC}}^{n}- c_{i0}^{kn}}{\delta x/2} \right)+\mathrm{Pe}v_{k0}^{n}\bar{c}_{i,\mathrm{AC}}^{n},
-    f_{\mathrm{u} 0}^{An} &= -f_{\mathrm{u} 0}^{\mathrm{C}n} = v_{\mathrm{A} 0}^{n}c_{\mathrm{u} 0}^{\mathrm{A} n},\quad 
-    f_{\mathrm{s} 0}^{An} = -f_{\mathrm{s} 0}^{\mathrm{C}n}/q = v_{\mathrm{A} 0}^{n}c_{\mathrm{s} 0}^{\mathrm{A} n},\quad 
+    f_{i 0}^{\mathrm{A}n} &= v_{\mathrm{A} 0}^{n}c_{i 0}^{\mathrm{A} n},\quad i=\mathrm{s},\mathrm{u},\\
+    f_{i 0}^{\mathrm{C}n} &= v_{\mathrm{C} 0}^{n}c_{i 0}^{\mathrm{C} n}+\alpha_{\mathrm{C}0}^{n}D_{i0}^{\mathrm{C}}\left( \frac{\bar{c}_{i,\mathrm{AC}}^{n} - c_{i0}^{\mathrm{C}n}}{\delta x/2} \right),\quad i=\mathrm{s},\mathrm{u},\\
 \end{align}
     where
-\begin{equation}
+    $\bar{p}_{\mathrm{AC}}^{n},\bar{c}_{i,\mathrm{AC}}^{n}$ satisfy the system of equations:
+\begin{align}
     % \bar{p}_{\mathrm{AC}}^n:=\frac{\frac{(\alpha_{\mathrm{A} 0}^n)^2}{\rho_\mathrm{A} }p_{\mathrm{A} 0}^n+\frac{(\alpha_{\mathrm{C} 0}^n)^2}{\rho_\mathrm{C} }p_{\mathrm{C} 0}^n}{\frac{(\alpha_{\mathrm{A} 0}^n)^2}{\rho_\mathrm{A} }+\frac{(\alpha_{\mathrm{C} 0}^n)^2}{\rho_\mathrm{C} }},\quad 
     % \bar{c}_{i,\mathrm{AC}}^n:=\frac{{\color{red}\alpha_{\mathrm{A} 0}^n}D_i^\mathrm{A} c_{i0}^{\mathrm{A} n}+{\color{red}\alpha_{\mathrm{C} 0}^n}D_i^\mathrm{C} c_{i0}^{\mathrm{C} n}}{{\color{red}\alpha_{\mathrm{A} 0}^n}D_i^\mathrm{A} +{\color{red}\alpha_{\mathrm{C} 0}^n}D_i^\mathrm{C} }.
-    \bar{p}_{\mathrm{AC}}^n:=\frac{\frac{(\alpha_{\mathrm{A} 0}^n)^2}{\rho_\mathrm{A} }(c_{\mathrm{u}0}^{\mathrm{A}n}+qc_{\mathrm{s}0}^{\mathrm{A}n})p_{\mathrm{A} 0}^n+\frac{(\alpha_{\mathrm{C} 0}^n)^2}{\rho_\mathrm{C} }c_{\mathrm{cortex}}(n\delta t)p_{\mathrm{C} 0}^n}{\frac{(\alpha_{\mathrm{A} 0}^n)^2}{\rho_\mathrm{A} }(c_{\mathrm{u}0}^{\mathrm{A}n}+qc_{\mathrm{s}0}^{\mathrm{A}n})+\frac{(\alpha_{\mathrm{C} 0}^n)^2}{\rho_\mathrm{C} }c_{\mathrm{cortex}}(n\delta t)}.
-\end{equation}
-(This needs a correction)
+    % \bar{p}_{\mathrm{AC}}^n:=\frac{\frac{(\alpha_{\mathrm{A} 0}^n)^2}{\rho_\mathrm{A} }(c_{\mathrm{u}0}^{\mathrm{A}n}+qc_{\mathrm{s}0}^{\mathrm{A}n})p_{\mathrm{A} 0}^n+\frac{(\alpha_{\mathrm{C} 0}^n)^2}{\rho_\mathrm{C} }c_{\mathrm{cortex}}(n\delta t)p_{\mathrm{C} 0}^n}{\frac{(\alpha_{\mathrm{A} 0}^n)^2}{\rho_\mathrm{A} }(c_{\mathrm{u}0}^{\mathrm{A}n}+qc_{\mathrm{s}0}^{\mathrm{A}n})+\frac{(\alpha_{\mathrm{C} 0}^n)^2}{\rho_\mathrm{C} }c_{\mathrm{cortex}}(n\delta t)}.
+    \left( \frac{q(\alpha_{\mathrm{A}0}^n)^2c_{\mathrm{s}0}^{\mathrm{A}n}}{\rho_{\mathrm{A}}}+ \frac{(\alpha_{\mathrm{C}0}^n)^2c_{\mathrm{s}0}^{\mathrm{C}n}}{\rho_{\mathrm{C}}}\right)\left( \bar{p}_{\mathrm{AC}}^{n} - p_{\mathrm{A}0}^{n} \right)+\alpha_{\mathrm{C}0}^{n}D_{\mathrm{s}}^{\mathrm{C}}\left( \bar{c}_{\mathrm{s},\mathrm{AC}}^{n} - c_{\mathrm{s}0}^{\mathrm{C}n} \right) &= 0,\\
+    \left( \frac{(\alpha_{\mathrm{A}0}^n)^2c_{\mathrm{u}0}^{\mathrm{A}n}}{\rho_{\mathrm{A}}}+ \frac{(\alpha_{\mathrm{C}0}^n)^2c_{\mathrm{u}0}^{\mathrm{C}n}}{\rho_{\mathrm{C}}}\right)\left( \bar{p}_{\mathrm{AC}}^{n} - p_{\mathrm{A}0}^{n} \right)+\alpha_{\mathrm{C}0}^{n}D_{\mathrm{u}}^{\mathrm{C}}\left( \bar{c}_{\mathrm{u},\mathrm{AC}}^{n} - c_{\mathrm{u}0}^{\mathrm{C}n} \right) &= 0,\\
+    2\bar{c}_{\mathrm{s},\mathrm{AC}}^{n}+\bar{c}_{\mathrm{u},\mathrm{AC}}^{n} - c_{\mathrm{cortex}}(n\delta t)&=0.
+\end{align}
 
 
 \section{Simulation of the countercurrent mechanism}
