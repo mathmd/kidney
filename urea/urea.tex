@@ -1,0 +1,182 @@
+% !TEX program = xelatex
+\documentclass{article}
+
+%% ---- Set up paper margin ---- %%
+%\usepackage[a4paper,top=1in,bottom=1in,left=1in,right=1in]{geometry}
+
+% use multiple languages
+\input{../preambles/polyglot.tex}
+
+%% ---- math packages ---- %%
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bm} % same functionality as \mathbf{} but for greek letters
+\usepackage{diffcoeff}
+\usepackage{physics}
+\usepackage{mathdots}
+% \numberwithin{equation}{section} % equation numbers are formatted as <#Section>.<#eq in the section>
+
+%% ---- define math environment ---- %%
+\usepackage{amsthm}
+% \newtheorem{definition}{Definition}[section]
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{corollary}{Corollary}[definition]
+\newtheorem{remark}{Remark}[definition]
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{problem}[definition]{Problem}
+% \newtheorem*{problem}{Problem}
+
+%% ---- hyperref settings ---- %%
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{cite}
+\usepackage{xcolor}
+\hypersetup{
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={green!50!black},
+    urlcolor={blue!80!black}
+    }
+
+%% ---- misc. packages ---- %%
+\usepackage{enumitem} % allow customizing list environments: enumerate, itemize and description.
+\usepackage{mhchem} % use chemistry notation
+\usepackage{lipsum}
+\usepackage{metalogo} % for extended LaTeX logo such as XeTeX
+\usepackage{subcaption} % allowing subfigure environment
+% \usepackage[section]{placeins} % ensure floats do not go into the next section and allow the use of \FloatBarrier
+\usepackage{graphicx} % allow cropping and rotating images
+\usepackage{caption}
+\usepackage{float} % allow the use of [H] for positioning of tables and figures
+\usepackage{tikz-cd}
+\restylefloat{table}
+
+%% ---- title, authors, and dates ---- %%
+\usepackage{authblk}
+\title{The role of urea in the passive urine concentrating mechanism: a schematic model}
+\author[1]{Chanoknun Sintavanuruk}
+% \affil[1]{Department of Physiology, Faculty of Medicine Siriraj Hospital, Mahidol University}
+% \author[2,3]{XXXX XXXX}
+% \affil[2]{Department of XXXX, XXXX University}
+% \affil[3]{Department of XXXX, XXXX University}
+\date{\today}
+
+\begin{document}
+\sloppy % ช่วยตัดคำภาษาไทย
+\maketitle
+
+\section{Introduction}
+
+Concentration gradient in the renal medullary interstitium is responsible for concentrating urine.
+It is well-understood that the active reabsorption of NaCl from the thick ascending tubules, together with the counter-current multiplication, establish this concentration gradient in the outer medulla.
+For the inner medulla, where there is no such an active transport, it is the passive reabsorption of NaCl and urea that take over; this is the widely accepted passive mechanism hypothesis of urine concentration.
+To have the passive mechanism working, we need to have relatively high tubular concentration of NaCl at the turning of loops of Henle, and of urea in the collecting tubules.
+A common explanation is that the net water and NaCl reabsorption preceding the inner medulla collecting tubules concentrate the urea enough that it diffuses out in the inner medulla.
+This in turn increases osmolality in the interstitium that drives the water reabsorption from the thin descending limbs, concentrating NaCl in the process.
+
+Such a rationale for the passive mechanism is still questionable since many modeling studies incorporating the idea were unsuccessful in producing significant concentration gradient in the inner medulla.
+The ones that yield desirable results need multiple length nephrons with fewer long loops (which is anatomically accurate) to increase the effectiveness of urea, and require parameters far from those experimentally measured.
+Some also suggest existence of active secretion of urea.
+
+This document record an attempt to generate a clearer picture of possible roles of urea in the passive mechanism.
+Here, we derive a schematic model similar to Charles Peskin's model, which was used to study multiple length nephrons by Harold Layton, but with an inclusion of urea and a central core configuration of only the inner medulla.
+
+\section{Model derivation}
+
+We are interested in a steady-state model of the inner medulla.
+We use $k$ to identify the compartments in the inner medulla: the central core ($k=0$), descending tubules ($k=\mathrm{D}$), ascending tubules ($k=\mathrm{A}$), and the collecting tubules ($k=\mathrm{C}$).
+We describe each compartment in a 1-dimensional spatial domain $x\in (0,1)$ where $x=0$ represents the outer-inner medullary junction, and $x=1$ the renal papilla.
+
+With the anticipation that the choices of distribution of multiple length nephrons may yield different results, we denote by $y\in[0,1]$ the spatial variable specify the turning position of loops of Henle.
+We write $c_i^k(x,y)$, $q_k(x,y)$, $f_i^k(x,y)$ for the concentration of salt ($i=\mathrm{s}$) and urea ($i=\mathrm{u}$), the water flow, and the solute flow for $k$ being the descending and the ascending tubule of nephrons which turn at the position $y$.
+For notational convenience, we adopt the same notation for those when $k=0,\mathrm{C}$ where it is understood that they are independent of $y$; otherwise, we simply omit $y$ in the argument.
+The same convention goes for the transmural solute fluxes $j_i^k$ and water fluxes $w_i^k$ from $k=\mathrm{D,A,C}$ into $k=0$.
+
+We assume that the axial solute flow in every compartment is purely advective, i.e.,
+\begin{equation}
+    f_i^k = q_kc_i^k,\quad \forall k.
+\end{equation}
+By the mass balance relation, we require that
+\begin{equation}
+    \frac{\partial f_i^k}{\partial x} = -j_i^k,\quad \frac{\partial q_k}{\partial x} = -w_k,\quad k=\mathrm{D,A,C}.
+\end{equation}
+This gives
+\begin{equation}\label{eq:tubule_mass_balance}
+    q_k\frac{\partial c_i^k}{\partial x} = c_i^kw_k - j_i^k,\quad k=\mathrm{D,A,C}.
+\end{equation}
+
+To capture the explanation that the NaCl concentration increases by the water reabsorption, and since we are interested in the antidiuretic state of the kidney where the water reabsorption from the collecting tubule is at the maximum, we idealize the model by assuming infinite water permeability, i.e., we assume $w_\mathrm{D}, w_\mathrm{C}$ are so that
+\begin{equation}
+    C(x):=2c_s^0(x)+ c_\mathrm{u}^0(x) = 2c_\mathrm{s}^k(x,y)+c_\mathrm{u}^k(x,y),\quad k=\mathrm{D},\mathrm{C}.
+\end{equation}
+On the other hand, the ascending tubule, where we expect the passive salt reabsorption, is completely impermeable to water, i.e.,
+\begin{equation}
+    w_\mathrm{A}\equiv 0.
+\end{equation}
+
+Further, we assume that
+\begin{equation}
+    j_\mathrm{s}^\mathrm{D},j_\mathrm{u}^\mathrm{D},j_\mathrm{u}^\mathrm{A},j_\mathrm{s}^\mathrm{C}\equiv 0.
+\end{equation}
+With this, the mass balance relations for the central core read
+\begin{align}
+    \frac{d f_s^0}{dx}(x) &= J_\mathrm{s}^A(x):=\int_x^1 j_s^\mathrm{A}(x,y)\,d\rho(y),\\
+    \frac{d f_\mathrm{u}^0}{dx} &= j_\mathrm{u}^\mathrm{C},\\
+    \frac{dq_0}{dx} &= W_D+w_c,\quad W_D(x):= \int_x^1 w_D(x,y)\,d\rho(y),
+\end{align}
+    where $\rho$ is the distribution on $[0,1]$ so that $\int_a^bd\rho$ is the number of loops of Henle turning within $[a,b]$.
+This implies that
+\begin{equation}
+    q_0\frac{dC}{dx} = -C(W_\mathrm{D}+w_\mathrm{C})+2J_\mathrm{s}^A+j_\mathrm{u}^\mathrm{C}.
+\end{equation}
+Together with (\ref{eq:tubule_mass_balance}), we obtain:
+\begin{equation}\label{eq:core_osmolality}
+    \left( Q_\mathrm{D}+q_\mathrm{C}+q_0 \right)\frac{dC}{dx} = 2J_\mathrm{s}^\mathrm{A},\quad Q_\mathrm{D}(x):=\int_x^1q_\mathrm{D}(x,y)\,d\rho(y).
+\end{equation}
+
+If we assume that the solute flux entering the descending tubules are the same regardless of the loop length, i.e., $f_i^\mathrm{D}(0,y)$ is a constant, then we have $Q_\mathrm{D}(x) = (2S+U)\varphi(x)/C(x)$ where $S:= f_\mathrm{s}^\mathrm{D}\int_0^1\,d\rho$ and $U:=f_\mathrm{u}^\mathrm{D}\int_0^1\,d\rho$ are the total solute flux from the outer medulla and $\varphi(x):=\int_x^1d\rho/\int_0^1\,d\rho$ is the fraction of loops of Henle reaching $x$.
+We also notice that $q_0 = -\frac{1}{C}\int_x^1(2J_\mathrm{s}^A+j_\mathrm{u}^\mathrm{C})$ and $q_\mathrm{C}(x) = \frac{1}{C}(2f_\mathrm{s}^\mathrm{C}(0)+f_\mathrm{u}^\mathrm{C}(x))$.
+Suppose that the urea content going out the ascending tubule stays the same while salt is actively reabsorbed by the factor of $1-\varepsilon$ for $\varepsilon\in(0,1)$, then we have $q_\mathrm{C} = \frac{1}{C}(2\varepsilon (S-\int_0^1J_s^A)+U-\int_0^x j_\mathrm{u}^\mathrm{C})$.
+Substituting these equations for $Q_\mathrm{D},q_\mathrm{C},q_0$ into (\ref{eq:core_osmolality}) yields a differential equation of $C$ satisfying
+\begin{equation}
+    C(x) = C(0)\exp\left( \int_0^x\frac{J_\mathrm{s}^A(\xi)}{ P +2\left( S\varphi(\xi)-\int_\xi^1J_\mathrm{s}^\mathrm{A} \right)+U\varphi(\xi)}\,d\xi \right)
+\end{equation}
+where
+\begin{equation}
+    P = 2\varepsilon\left( S - \int_0^1 J_\mathrm{s}^A \right)+\left( U-\int_0^1j_\mathrm{u}^\mathrm{C} \right).
+\end{equation}
+Note that, since we must have $S\geq\int_0^1 J_\mathrm{s}^A$ and $U\geq \int_0^1j_\mathrm{u}^\mathrm{C}$, we have $P\geq 0$.
+
+\section{Discussion}
+
+First, let us consider the case of single nephron, i.e., $\rho = N\delta_x$, where $\delta_x$ is the delta distribution centered at $x\in [0,1]$ and $N$ is the total number of nephrons.
+We have $\rho = N\delta_0$ if all the nephrons are short-looped, and we have $C(x) = C(0)$ as we expect.
+More generally, for $\rho = N\delta_{x'}$, we have $C$ being constant in $[x',1]$.
+If we are being optimistic by ignoring the requirement that $J_\mathrm{s}^\mathrm{A}$ and $j_\mathrm{u}^\mathrm{C}$ need to be passive transports and allow $J_\mathrm{s}^\mathrm{A},j_\mathrm{u}^\mathrm{C}\geq 0$ be arbitrary, then we can have $P=0$, $C$ is monotone increasing and
+\begin{equation}
+    \begin{split}
+        C(x') &\leq C(0)\exp\left( \int_0^x\frac{J_\mathrm{s}^A(\xi)}{ 2\left( S-\int_\xi^1J_\mathrm{s}^\mathrm{A} \right)+U}\,d\xi \right)\\
+        &\leq C(0)\exp\left( \frac{S}{U} \right)
+    \end{split}
+\end{equation}
+    where the equality is achieved if and only if $\int_\xi^1 J_\mathrm{s}^A = S$ for all $\xi<x'$.
+Of course, both $P=0$ and $\int_\xi^1 J_\mathrm{s}^A = S$, $\forall \xi\in (0,x')$ is physically impossible, but this demonstrates that, unlike in Harold Layton's analysis of Charles Peskin's model, we do not have the theoretical limitation by a factor of $e$ as we can see in the case of $U=0$.
+In any case, we also see that having $U>0$ is unnecessary and, in fact, would hinder the urine concentrating capability.
+This suggests that, as long as we have vigorous active transport of NaCl at the deepest part of the ascending tubules, we do not need urea at all.
+However, in reality, we know that only short-looped nephrons fit such a description.
+
+So what if we have passive transport of NaCl in the inner medulla?
+Assuming that we can raise NaCl concentration enough that it can diffuse out of the ascending tubule, the best case scenario would be having infinite salt permeability in the ascending tubule, i.e., $J_\mathrm{s}^A$ is such that $c_\mathrm{s}^\mathrm{A}(x) = c_\mathrm{s}^0(x)$ for $x\in (0,1)$.
+With such an assumption, we have
+\begin{equation}
+    J_\mathrm{s}^\mathrm{A} = -q_\mathrm{A}\frac{d c_\mathrm{s}^0}{dx} = \frac{S}{c_\mathrm{s}^0(1)}\frac{dc_s^0}{dx}
+\end{equation}
+    where, by continuity of the concentration, we require that $c_\mathrm{s}^\mathrm{A}(1) = c_\mathrm{s}^\mathrm{D}(1) = c_\mathrm{s}^0(1)$.
+Further, assume for simplicity that $\varepsilon = 0$ so that we have
+\begin{equation}
+    C(x) = C(0)\exp\left( \frac{S}{c_\mathrm{s}^0(1)}\int_0^x\frac{(dc_\mathrm{s}^0/dx)(\xi)}{2 S\frac{c_\mathrm{s}^0(\xi)}{c_\mathrm{s}^0(1)}+2U - \int_0^1 j_\mathrm{u}^\mathrm{C}} \,d\xi\right).
+\end{equation}
+
+\end{document}
