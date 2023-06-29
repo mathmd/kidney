@@ -1,0 +1,107 @@
+% !TEX program = xelatex
+\documentclass{article}
+
+%% ---- Set up paper margin ---- %%
+%\usepackage[a4paper,top=1in,bottom=1in,left=1in,right=1in]{geometry}
+
+% use multiple languages
+\input{../preambles/polyglot.tex}
+
+%% ---- math packages ---- %%
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bm} % same functionality as \mathbf{} but for greek letters
+\usepackage{diffcoeff}
+\usepackage{physics}
+\usepackage{mathdots}
+% \numberwithin{equation}{section} % equation numbers are formatted as <#Section>.<#eq in the section>
+
+%% ---- define math environment ---- %%
+\usepackage{amsthm}
+% \newtheorem{definition}{Definition}[section]
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{corollary}{Corollary}[definition]
+\newtheorem{remark}{Remark}[definition]
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{problem}[definition]{Problem}
+% \newtheorem*{problem}{Problem}
+
+%% ---- hyperref settings ---- %%
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{cite}
+\usepackage{xcolor}
+\hypersetup{
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={green!50!black},
+    urlcolor={blue!80!black}
+    }
+
+%% ---- misc. packages ---- %%
+\usepackage{enumitem} % allow customizing list environments: enumerate, itemize and description.
+\usepackage{mhchem} % use chemistry notation
+\usepackage{lipsum}
+\usepackage{metalogo} % for extended LaTeX logo such as XeTeX
+\usepackage{subcaption} % allowing subfigure environment
+% \usepackage[section]{placeins} % ensure floats do not go into the next section and allow the use of \FloatBarrier
+\usepackage{graphicx} % allow cropping and rotating images
+\usepackage{caption}
+\usepackage{float} % allow the use of [H] for positioning of tables and figures
+\usepackage{tikz-cd}
+\restylefloat{table}
+
+%% ---- title, authors, and dates ---- %%
+\usepackage{authblk}
+\title{The role of urea in the passive urine concentrating mechanism: a schematic model}
+\author[1]{Chanoknun Sintavanuruk}
+% \affil[1]{Department of Physiology, Faculty of Medicine Siriraj Hospital, Mahidol University}
+% \author[2,3]{XXXX XXXX}
+% \affil[2]{Department of XXXX, XXXX University}
+% \affil[3]{Department of XXXX, XXXX University}
+\date{\today}
+
+\begin{document}
+\sloppy % ช่วยตัดคำภาษาไทย
+\maketitle
+
+\section{Introduction}
+
+Concentration gradient in the renal medullary interstitium is responsible for concentrating urine.
+It is well-understood that the active reabsorption of NaCl from the thick ascending tubules, together with the counter-current multiplication, establish this concentration gradient in the outer medulla.
+For the inner medulla, where there is no such an active transport, it is the passive reabsorption of NaCl and urea that take over; this is the widely accepted passive mechanism hypothesis of urine concentration.
+To have the passive mechanism working, we need to have relatively high tubular concentration of NaCl at the turning of loops of Henle, and of urea in the collecting tubules.
+A common explanation is that the net water and NaCl reabsorption preceding the inner medulla collecting tubules concentrate the urea enough that it diffuses out in the inner medulla.
+This in turn increases osmolality in the interstitium that drives the water reabsorption from the thin descending limbs, concentrating NaCl in the process.
+
+Such a rationale for the passive mechanism is still questionable since many modeling studies incorporating the idea were unsuccessful in producing significant concentration gradient in the inner medulla.
+The ones that yield desirable results need multiple length nephrons with fewer long loops (which is anatomically accurate) to increase the effectiveness of urea, and require parameters far from those experimentally measured.
+Some also suggest existence of active secretion of urea.
+
+This document record an attempt to generate a clearer picture of possible roles of urea in the passive mechanism.
+Here, we derive a schematic model similar to Charles Peskin's model, which was used to study multiple length nephrons by Harold Layton, but with an inclusion of urea and a central core configuration of only the inner medulla.
+
+\section{Model derivation}
+
+We are interested in a steady-state model of the inner medulla.
+We use $k$ to identify the compartments in the inner medulla: the central core ($k=0$), descending tubules ($k=\mathrm{D}$), ascending tubules ($k=\mathrm{A}$), and the collecting tubules ($k=\mathrm{C}$).
+We describe each compartment in a 1-dimensional spatial domain $x\in (0,1)$ where $x=0$ represents the outer-inner medullary junction, and $x=1$ the renal papilla.
+
+We assume that the axial solute flow in every compartment is purely advective, i.e.,
+\begin{equation}
+    f_c^k = q_kc_k,\quad \forall k,
+\end{equation}
+    where $f_c^k,q_k$ are axial solute and water fluxes, and $c_k$ is the solute concentration.
+Here, we use $i=\mathrm{s},\mathrm{u}$ to identify salt and urea respectively.
+Let us denote by $j_i^k:=\gamma_i^k(c_i^k - c_i^0)$ and $w_k = \zeta_k(2c_\mathrm{s}^k+c_\mathrm{u}^k)$ the transmural solute and water fluxes from $k=\mathrm{D,A,C}$ into the central core.
+By the mass balance relation, we require that
+\begin{gather}
+    \frac{\partial f_i^k}{\partial x} = -j_i^k,\quad \frac{\partial q_k}{\partial x} = -w_k,\quad k=\mathrm{D,A,C},\\
+    \frac{\partial f_i^0}{\partial x} = \sum_{k=\mathrm{D,A,C}} j_i^k,\quad \frac{\partial q_0}{\partial x} = \sum_{k=\mathrm{D,A,C}} w_k,
+\end{gather}
+
+
+
+\end{document}
