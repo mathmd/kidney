@@ -14,12 +14,12 @@
 \usepackage{diffcoeff}
 \usepackage{physics}
 \usepackage{mathdots}
-% \numberwithin{equation}{section} % equation numbers are formatted as <#Section>.<#eq in the section>
+\numberwithin{equation}{section} % equation numbers are formatted as <#Section>.<#eq in the section>
 
 %% ---- define math environment ---- %%
 \usepackage{amsthm}
-% \newtheorem{definition}{Definition}[section]
-\newtheorem{definition}{Definition}
+\newtheorem{definition}{Definition}[section]
+% \newtheorem{definition}{Definition}
 \newtheorem{proposition}[definition]{Proposition}
 \newtheorem{theorem}[definition]{Theorem}
 \newtheorem{corollary}{Corollary}[definition]
@@ -76,33 +76,134 @@ To have the passive mechanism working, we need to have relatively high tubular c
 A common explanation is that the net water and NaCl reabsorption preceding the inner medulla collecting tubules concentrate the urea enough that it diffuses out in the inner medulla.
 This in turn increases osmolality in the interstitium that drives the water reabsorption from the thin descending limbs, concentrating NaCl in the process.
 
-Such a rationale for the passive mechanism is still questionable since many modeling studies incorporating the idea were unsuccessful in producing significant concentration gradient in the inner medulla.
-The ones that yield desirable results need multiple length nephrons with fewer long loops (which is anatomically accurate) to increase the effectiveness of urea, and require parameters far from those experimentally measured.
-Some also suggest existence of active secretion of urea.
+% Such a rationale for the passive mechanism is still questionable since many modeling studies incorporating the idea were unsuccessful in producing significant concentration gradient in the inner medulla.
+However, the passive mechanism remains poorly understood.
+Many modeling studies incorporating the idea were only partially successful in producing significant concentration gradient in the inner medulla.
+% The ones that yield desirable results need multiple length nephrons with fewer long loops (which is anatomically accurate) to increase the effectiveness of urea, and require parameters far from those experimentally measured.
+The ones that yield desirable results need nephrons require parameters far from those experimentally measured.
+% Some also suggest existence of active secretion of urea and that we need multiple length of nephrons.
 
-This document record an attempt to generate a clearer picture of possible roles of urea in the passive mechanism.
-Here, we derive a schematic model of inner medulla with a central core configuration and containing only two solute species: salt and urea.
-We show that, with a few additional assumptions, the model can be reduced to a differential-algebraic system with only 3 ordinary differential equations.
+The aim of this document is to generate a clearer picture of the passive mechanism.
+We derive a schematic model of inner medulla with a central core configuration and containing only two solute species: salt and urea.
+We show that, with a few additional assumptions, the model can be reduced to a system of 3 ordinary differential equations.
+The hope is that, in this simplified model, we can better understand and identify factors that contribute to the passive mechanism.
 
 \section{Model derivation}
 
-We are interested in a steady-state model of the inner medulla.
-We use $k$ to identify the compartments in the inner medulla: the central core ($k=0$), descending tubules ($k=\mathrm{D}$), ascending tubules ($k=\mathrm{A}$), and the collecting tubules ($k=\mathrm{C}$).
-We describe each compartment in a 1-dimensional spatial domain $x\in (0,1)$ where $x=0$ represents the outer-inner medullary junction, and $x=1$ the renal papilla.
+The key idea behind the construction of this model is to qualitatively reproduce the explanation of the passive mechanism that passive urea reabsorption from the collecting tubules drives descending tubules water and ascending tubules NaCl reabsorption.
+Any assumption we made in the process will be in the favor of this explanation.
 
-We assume that the axial solute flow in every compartment is purely advective, i.e.,
-\begin{equation}
-    f_c^k = q_kc_k,\quad \forall k,
+We will consider a steady-state model of the inner medulla.
+We use $k$ to identify the compartments in the inner medulla: the central core ($k=0$), descending tubules ($k=\mathrm{D}$), ascending tubules ($k=\mathrm{A}$), and the collecting tubules ($k=\mathrm{C}$).
+Each compartment is described in a 1-dimensional spatial domain $x\in (0,1)$ where $x=0$ represents the outer-inner medullary junction, and $x=1$ the renal papilla.
+
+We denote by $s_k$, $u_k$ and $q_k$, as a function of $x$, the salt and urea concentration and the axial water flow in the compartment $k$ respectively.
+For simplicity, we will assume that the urea content in the descending tubule and the salt content in the collecting tubule are negligible, i.e., $u_\mathrm{D}=s_\mathrm{C}\equiv 0$.
+Thus, there are total of 9 unknowns in the model: the water flow $q_\mathrm{D},q_\mathrm{A},q_\mathrm{C},q_0$ and the solute concentrations $s_\mathrm{D},s_\mathrm{A},s_0,u_\mathrm{C},u_0$.
+
+We assume that the transmural water fluxes are allowed only for the descending tubules and the collecting tubules into the interstitium, and these are formally described as $w_\mathrm{D}:=\zeta_\mathrm{D}(2s_0+u_0-s_\mathrm{D})$ and $w_\mathrm{C}:=\zeta_\mathrm{C}(2s_0+u_0 - u_\mathrm{C})$ where $\zeta_k>0$ is the water permeability, i.e., the fluxes are proportional to the osmolarity differences.
+Note that the osmolarity of salt is twice the concentration.
+By mass balance, we require that
+\begin{align}
+    \frac{dq_\mathrm{D}}{dx} &= -\zeta_\mathrm{D}\left( 2s_0+u_0 - s_\mathrm{D} \right) = -w_\mathrm{D},\label{eq:q_D_eq}\\
+    \frac{dq_\mathrm{A}}{dx} &= 0,\label{eq:q_A_eq}\\
+    \frac{dq_\mathrm{C}}{dx} &= -\zeta_\mathrm{C}\left( 2s_0+u_0 - u_\mathrm{C} \right) = -w_\mathrm{C},\label{eq:q_C_eq}\\
+    \frac{dq_0}{dx} &= w_\mathrm{D}+w_\mathrm{C}.\label{eq:q_0_eq}
+\end{align}
+These equations are accompanied by 4 boundary conditions:
+\begin{equation}\label{eq:q_bdry}
+    q_\mathrm{D}(0) = \frac{2S}{C},\quad q_\mathrm{A}(1) = -q_\mathrm{D}(1),\quad q_\mathrm{C}(0) = \frac{U}{C},\quad q(1) = 0.
 \end{equation}
-    where $f_c^k,q_k$ are axial solute and water fluxes, and $c_k$ is the solute concentration.
-Here, we use $i=\mathrm{s},\mathrm{u}$ to identify salt and urea respectively.
-Let us denote by $j_i^k:=\gamma_i^k(c_i^k - c_i^0)$ and $w_k = \zeta_k(2c_\mathrm{s}^k+c_\mathrm{u}^k)$ the transmural solute and water fluxes from $k=\mathrm{D,A,C}$ into the central core.
-By the mass balance relation, we require that
+Here, we assume that the initial osmolarity at the beginning (outer-inner medullary junction) of the descending and the collecting tubule is $C$, and the initial salt and urea flow are $S$ and $U$ respectively.
+The second equality represents the turning of the loop of Henle, and we have no-flux boundary at the papillary interstitium for the last equality.
+
+Similarly, we only allow passive transmural fluxes of salt from the ascending tubule and of urea from the collecting tubules.
+The fluxes are given by $\gamma_s(s_\mathrm{A} - s_0)$ and $\gamma_u(u_\mathrm{C} - u_0)$ respectively, where $\gamma_s$ is the ascending tubule salt permeability and $\gamma_u$ is the collecting tubule urea permeability.
+Further, we assume that the axial solute flows are purely advective, i.e., the salt and urea flows are $s_kq_k$ and $u_kq_k$.
+As earlier, we have balance equations for salt and urea:
+\begin{align}
+    \frac{d}{dx}(s_\mathrm{D}q_\mathrm{D}) &= 0,\label{eq:s_D_eq}\\
+    \frac{d}{dx}(s_\mathrm{A}q_\mathrm{A}) &= -\gamma_s(s_\mathrm{A} - s_0),\label{eq:s_A_eq}\\
+    \frac{d}{dx}(s_\mathrm{0}q_\mathrm{0}) &= \gamma_s(s_\mathrm{A} - s_0),\label{eq:s_0_eq}\\
+    \frac{d}{dx}(u_\mathrm{C}q_\mathrm{C}) &= -\gamma_u(u_\mathrm{C} - u_0),\label{eq:u_C_eq}\\
+    \frac{d}{dx}(u_\mathrm{0}q_\mathrm{0}) &= \gamma_u(u_\mathrm{C} - u_0).\label{eq:u_0_eq}
+\end{align}
+The equations (\ref{eq:s_D_eq}) and (\ref{eq:u_C_eq}) are subject to boundary conditions:
+\begin{equation}\label{eq:solute_bdry}
+    2s_\mathrm{D}(0) = u_\mathrm{C}(0) = C,
+\end{equation}
+    which describe the initial osmolarity of the descending and the collecting tubules.
+
+Since we have nine ODEs, we need 3 more boundary conditions.
+These are obtained by the conservation of water, salt and urea:
+\begin{align}
+    \frac{2S}{C}+q(0)+q_\mathrm{A}+\frac{U}{C} &= q_\mathrm{C}(1),\label{eq:w_consv}\\
+    S+q_\mathrm{A}(0)s_\mathrm{A}(0)+s_0(0)q_0(0) &= 0,\label{eq:s_consv}\\
+    U+u_0(0)q_0(0) &= u_\mathrm{C}(1)q_\mathrm{C}(1).\label{eq:u_consv}
+\end{align}
+
+The system of nine ordinary differential equations we just obtained can be simplified even further.
+First, we can turn the differential equations describing the descending tubules, (\ref{eq:q_D_eq}) and (\ref{eq:s_D_eq}), into algebraic equations.
+By assuming that the water permeability in the descending tubule is large, we approximate the equation(\ref{eq:q_D_eq}) by taking the limit $\zeta_\mathrm{D}\to\infty$ which results in
+\begin{equation}\label{eq:s_D_limit}
+    s_\mathrm{D} = s_0+\frac{u_0}{2}.
+\end{equation}
+With the boundary condition $s_\mathrm{D}(0)q_\mathrm{D}(0) = S$ and (\ref{eq:s_D_limit}), integrating (\ref{eq:s_D_eq}) yields
+\begin{equation}\label{eq:q_D}
+    q_\mathrm{D} = \frac{S}{s_\mathrm{D}} = \frac{2S}{2s_0+u_0}.
+\end{equation}
+
+For the ascending tubule, in place of the water balance equation (\ref{eq:q_A_eq}), we simply have $q_A$ being constant.
+With the salt conservation (\ref{eq:s_consv}) and the first equality of (\ref{eq:q_D}), summing (\ref{eq:s_A_eq}) and (\ref{eq:s_0_eq}) and taking integral gives
+\begin{equation}\label{eq:s}
+    S+s_\mathrm{A}q_\mathrm{A}+s_0q_0 = s_\mathrm{D}q_\mathrm{D}+s_\mathrm{A}q_\mathrm{A}+s_0q_0 = 0.
+\end{equation}
+Note the second equality of (\ref{eq:s}) and the boundary condition $q_\mathrm{A}(1) = -q_\mathrm{D}(1)$ imply that $s_\mathrm{D}(1) = s_\mathrm{A}(1)$.
+Consequently, by integrating (\ref{eq:q_A_eq}) we obtain an equation for $q_A$:
+\begin{equation}\label{eq:q_A}
+    q_\mathrm{A} = -q_\mathrm{D}(1) = -\frac{S}{s_\mathrm{D}(1)} = -\frac{S}{s_\mathrm{A}(1)}.
+\end{equation}
+The salt concentration $s_\mathrm{A}$ is still governed by the same equation (\ref{eq:s_A_eq}), with a boundary condition (\ref{eq:s_consv}).
+
+Now, we solve the equations for the central core (\ref{eq:q_0_eq}), (\ref{eq:s_0_eq}), and (\ref{eq:u_0_eq}).
+Similarly to how we obtain (\ref{eq:s}), using the urea conservation (\ref{eq:u_consv}), we have by summing (\ref{eq:u_C_eq}) and (\ref{eq:u_0_eq}) and integrating
+\begin{equation}\label{eq:u}
+    u_\mathrm{C}q_\mathrm{C}+u_0q_0 = u_\mathrm{C}(1)q_\mathrm{C}(1).
+\end{equation}
+From the first equality of (\ref{eq:s}) and (\ref{eq:q_A}), we can write
+\begin{equation}\label{eq:q_0}
+    q_0 =-\frac{s_\mathrm{A}q_\mathrm{A}+S}{s_0} = -\frac{S}{s_0}\left( 1-\frac{s_\mathrm{A}}{s_\mathrm{A}(1)}  \right).
+\end{equation}
+Substituting $q_0$ into (\ref{eq:u}) yields
+\begin{equation}\label{eq:su1}
+    s_0\left( u_\mathrm{C}(1)q_\mathrm{C}(1) - u_\mathrm{C}q_\mathrm{C} \right) + u_0S\left( 1-  \frac{s_\mathrm{A}}{s_\mathrm{A}(1)} \right) = 0.
+\end{equation}
+We can do the same for the water conservation as well.
+Summing (\ref{eq:q_D_eq}), (\ref{eq:q_A_eq}), (\ref{eq:q_C_eq}) and (\ref{eq:q_0_eq}) and integrating, we have $q_\mathrm{D}+q_\mathrm{A}+q_\mathrm{C}+q_0 = q_\mathrm{C}(1)$.
+By substituting $q_\mathrm{D}$, $q_\mathrm{A}$, $q_0$ from (\ref{eq:q_D}), (\ref{eq:q_A}) and (\ref{eq:q_0}), we obtain
+\begin{equation}\label{eq:su2}
+    \frac{2S}{2s_0+u_0}-\frac{S}{s_\mathrm{D}(1)}+q_\mathrm{C}-\frac{S}{s_0}\left( 1-\frac{s_\mathrm{A}}{s_\mathrm{A}(1)} \right) = q_\mathrm{C}(1).
+\end{equation}
+We can now solve (\ref{eq:su1}) and (\ref{eq:su2}) for $s_0$ and $u_0$ in terms of $\mathrm{s}_A$, $u_\mathrm{C}$ and $q_\mathrm{C}$:
 \begin{gather}
-    \frac{\partial f_i^k}{\partial x} = -j_i^k,\quad \frac{\partial q_k}{\partial x} = -w_k,\quad k=\mathrm{D,A,C},\\
-    \frac{\partial f_i^0}{\partial x} = \sum_{k=\mathrm{D,A,C}} j_i^k,\quad \frac{\partial q_0}{\partial x} = \sum_{k=\mathrm{D,A,C}} w_k,
+    u_0 = Rs_0,\quad s_0 = S\left( \frac{1-\frac{s_\mathrm{A}}{s_\mathrm{A}(1)} - \frac{2}{2+R}}{q_\mathrm{C} - q_\mathrm{C}(1) - \frac{S}{s_\mathrm{A}(1)}} \right),\label{eq:su}\\
+    R:=\frac{u_\mathrm{C}q_\mathrm{C} - u_\mathrm{C}(1)q_\mathrm{C}(1)}{S\left( 1-\frac{s_\mathrm{A}}{s_\mathrm{A}(1)} \right)}
 \end{gather}
 
+With all the 6 unknowns solved, the problem is reduced to a system of ODEs with only 3 differential equations:
+\begin{align}
+    \frac{ds_\mathrm{A}}{dx} &= -\frac{\gamma_s}{q_\mathrm{A}}(s_\mathrm{A} - s_0),\\
+    \frac{dq_\mathrm{C}}{dx} &= -\zeta_\mathrm{C}(2s_0+u_0-u_\mathrm{C}),\\
+    \frac{du_\mathrm{C}}{dx} &= \frac{1}{q_\mathrm{C}}\left(\zeta_\mathrm{C}u_\mathrm{C}(2 s_0+u_0 - u_\mathrm{C})- \gamma_u(u_\mathrm{C} - u_0)\right),
+\end{align}
+    with boundary conditions
+\begin{equation}
+    s_\mathrm{A}(0) = s_\mathrm{A}(1)\left( 1+\frac{s_0(0)q_0(0)}{S} \right),\quad q_\mathrm{C}(0) = \frac{U}{C},\quad u_\mathrm{C}(0) = U,
+\end{equation}
+    where $q_\mathrm{A} = -S/s_A(1)$, and $s_0,u_0$ are given in (\ref{eq:su}).
+The model parameters are the ascending tubule salt permeability $\gamma_s$, the ADH dependent urea permeability $\gamma_u$ and water permeability $\zeta_\mathrm{C}$, the salt and urea input $S,U$, and $C$ the osmolarity of the descending and the collecting tubules at the outer-inner medullary junction.
 
+\section{Numerical method}
+We use a central difference method to solve the system of ODEs.
 
 \end{document}
