@@ -57,10 +57,10 @@
         where $\alpha_*:(0,L)\to \mathbb{R}_+$ is the fixed medullary cross-sectional area.
     \pause
     \begin{align}\label{eq:volume_dynamics}
-        \frac{\partial \alpha_k}{\partial t} + \frac{\partial}{\partial x}\left( \alpha_k u_k \right) &= -\gamma_kw_k,\quad k=\mathrm{D},\mathrm{A},\mathrm{C},\\
-        \frac{\partial \alpha_0}{\partial t} + \frac{\partial }{\partial x}\left( \alpha_0 u_0 \right) &= \sum_{k=\mathrm{D},\mathrm{A},\mathrm{C}} \gamma_kw_k.
+        \frac{\partial \alpha_k}{\partial t} + \frac{\partial}{\partial x}\left( \alpha_k u_k \right) &= -\beta_kw_k,\quad k=\mathrm{D},\mathrm{A},\mathrm{C},\\
+        \frac{\partial \alpha_0}{\partial t} + \frac{\partial }{\partial x}\left( \alpha_0 u_0 \right) &= \sum_{k=\mathrm{D},\mathrm{A},\mathrm{C}} \beta_kw_k.
     \end{align}
-    $u_k$: axial flow \textit{velocity} (cm/s); $w_k$: transmural flux (cm/s); $\gamma_k$: total tubular circumferences (cm)
+    $u_k$: axial flow \textit{velocity} (cm/s); $w_k$: transmural flux (cm/s); $\beta_k$: total tubular circumferences (cm)
 \end{frame}
 
 \begin{frame}{Water flow and transport}
@@ -74,7 +74,7 @@
 
     Water transport:
     \begin{equation}
-        w_k := \zeta_\mathrm{w}^k\left( \psi_k - \psi_0 \right),\quad  k=\mathrm{D},\mathrm{A},\mathrm{C}
+        w_k := \zeta_k\left( \psi_k - \psi_0 \right),\quad  k=\mathrm{D},\mathrm{A},\mathrm{C}
     \end{equation}
     % \pause
     % Osmotic pressure:
@@ -85,7 +85,7 @@
         \end{aligned} \right\}
         \quad k=0,\mathrm{D},\mathrm{A},\mathrm{C}.
     \end{equation}
-    $\zeta_\mathrm{w}^k$: water permeability (mmHg$\cdot$s); $c_i^k$: concentration (mmol/$\text{cm}^3$)
+    $\zeta_k$: water permeability (mmHg$\cdot$s); $c_i^k$: concentration (mmol/$\text{cm}^3$)
 \end{frame}
 
 \begin{frame}{Pressure-compliance relationship}
@@ -98,8 +98,8 @@
 
 \begin{frame}{Solute dynamics}
     \begin{align}\label{eq:solute_dynamics}
-        \frac{\partial}{\partial t}\left( \alpha_k c_i^k \right)&=-\frac{\partial}{\partial x} f_i^k - \gamma_kg_i^k,\quad k=\mathrm{D},\mathrm{A},\mathrm{C},\\
-        \frac{\partial}{\partial t}\left( \alpha_0 c_i^0 \right)&=-\frac{\partial}{\partial x} f_i^0 + \sum_{k=\mathrm{D},\mathrm{A},\mathrm{C}} \gamma_k g_i^k,
+        \frac{\partial}{\partial t}\left( \alpha_k c_i^k \right)&=-\frac{\partial}{\partial x} f_i^k - \beta_kg_i^k,\quad k=\mathrm{D},\mathrm{A},\mathrm{C},\\
+        \frac{\partial}{\partial t}\left( \alpha_0 c_i^0 \right)&=-\frac{\partial}{\partial x} f_i^0 + \sum_{k=\mathrm{D},\mathrm{A},\mathrm{C}} \beta_k g_i^k,
     \end{align}
     $f_i^k$: Axial solute flow (mmol/s):
     \begin{equation}
@@ -117,12 +117,12 @@
     \end{equation}
     \begin{equation}
         % \left. \begin{aligned}
-        %     j_i^k &= \zeta_i^k\left( \mu_i^k - \mu_i^0 \right)\\
+        %     j_i^k &= \gamma_i^k\left( \mu_i^k - \mu_i^0 \right)\\
         %     \mu_i^k &:= RT\ln c_i^k,\quad 
         % \end{aligned} \right\}\quad k=0,\mathrm{D},\mathrm{A},\mathrm{C}
-        j_i^k = \zeta_i^k\left( c_i^k - c_i^0 \right),\quad k=0,\mathrm{D},\mathrm{A},\mathrm{C}.
+        j_i^k = \gamma_i^k\left( c_i^k - c_i^0 \right),\quad k=0,\mathrm{D},\mathrm{A},\mathrm{C}.
     \end{equation}
-    $\zeta_i^k$: solute permeability (cm/s).
+    $\gamma_i^k$: solute permeability (cm/s).
 
     $h_i^k$: active transport:
     \begin{equation}
@@ -228,8 +228,8 @@
     \begin{align}
         \hat{u}_{k} &:= -\frac{\hat{\alpha}_{k}}{\hat{\rho}_{k}}\frac{\partial \hat{p}_{k}}{\partial \hat{x}},\\
         \hat{f}_i^{k} &:= \hat{\alpha}_{k}\left( -\hat{D}_i^{k} \frac{\partial \hat{c}_i^{k}}{\partial \hat{x}} + \hat{u}_{k}\hat{c}_i^{k} \right),\\
-        \hat{w}_k&:= \hat{\zeta}_\mathrm{w}^k\left( \hat{\psi}_k-\hat{\psi}_0 \right),\quad\hat{\psi}_{k} := \hat{p}_{k} - \left(  2\hat{c}_\mathrm{s}^{k}+\hat{c}_\mathrm{u}^{k} \right),\\
-        \hat{g}_i^k &:= \hat{j}_i^k+\hat{h}_i^k,\quad \hat{j}_i^k =\hat{\zeta}_i^k(\hat{c}_i^k-\hat{c}_i^0). \label{eq:nd_lasteq}\\
+        \hat{w}_k&:= \hat{\zeta}_k\left( \hat{\psi}_k-\hat{\psi}_0 \right),\quad\hat{\psi}_{k} := \hat{p}_{k} - \left(  2\hat{c}_\mathrm{s}^{k}+\hat{c}_\mathrm{u}^{k} \right),\\
+        \hat{g}_i^k &:= \hat{j}_i^k+\hat{h}_i^k,\quad \hat{j}_i^k =\hat{\gamma}_i^k(\hat{c}_i^k-\hat{c}_i^0). \label{eq:nd_lasteq}\\
         \hat{h}_\mathrm{s}^\mathrm{A} &= \begin{cases}
             \frac{\hat{h}_\mathrm{s,max}^\mathrm{A}}{1+\hat{M}/\hat{c}_\mathrm{s}^\mathrm{A}}\quad &\text{in}\quad (0,\frac{1}{3})\\
             0\quad &\text{in}\quad [\frac{1}{3},1)
@@ -238,15 +238,15 @@
 \end{frame}
 
 \begin{frame}{Parameters and boundary conditions}
-    Parameters (note that $\gamma_k$ is absorbed into $\hat{\zeta}^k_i,\hat{\zeta^k_{\mathrm{w}}}$):
+    Parameters (note that $\beta_k$ is absorbed into $\hat{\zeta}^k_i,\hat{\zeta^k_{\mathrm{w}}}$):
     \begin{gather*}
         % \mathrm{Pe} = \frac{\bar{\alpha}p_*/\rho_*}{D_*},\quad 
         \hat{\rho}_{k} = \frac{8\pi\eta_{k}}{\rho_*},\quad 
         \hat{\nu}_k = p_*\nu_k,\quad \hat{\bar{\alpha}}_{k} = \frac{\bar{\alpha}_{k}}{\bar{\alpha}},\quad \hat{\alpha}_* = \frac{\alpha_*}{\bar{\alpha}}\\
         \hat{D}_i^{k} = \frac{\tau}{L^2}D_i^{k},\quad 
-        % \hat{\zeta}_\mathrm{w}^k = \frac{\gamma_k c_*L^2}{\bar{\alpha}D_*}\zeta_\mathrm{w}^k,\quad\hat{\zeta}_i^k = \frac{\gamma_kRT L^2}{\bar{\alpha}c_* D_*}\zeta_i^k,
-        \hat{\zeta}_\mathrm{w}^k = \frac{\gamma_k p_*\tau}{\bar{\alpha}}\zeta_\mathrm{w}^k,\quad\hat{\zeta}_i^k = \frac{\gamma_kp_*\tau}{\bar{\alpha}c_*^2}\zeta_i^k,\\
-        \hat{h}_\mathrm{s}^\mathrm{A} = \frac{\gamma_\mathrm{A}\tau}{\bar{\alpha}c_*}h_\mathrm{s}^\mathrm{A},\quad \hat{M} = \frac{M}{c_*}.
+        % \hat{\zeta}_k = \frac{\beta_k c_*L^2}{\bar{\alpha}D_*}\zeta_k,\quad\hat{\gamma}_i^k = \frac{\beta_kRT L^2}{\bar{\alpha}c_* D_*}\gamma_i^k,
+        \hat{\zeta}_k = \frac{\beta_k p_*\tau}{\bar{\alpha}}\zeta_k,\quad\hat{\gamma}_i^k = \frac{\beta_kp_*\tau}{\bar{\alpha}c_*^2}\gamma_i^k,\\
+        \hat{h}_\mathrm{s}^\mathrm{A} = \frac{\beta_\mathrm{A}\tau}{\bar{\alpha}c_*}h_\mathrm{s}^\mathrm{A},\quad \hat{M} = \frac{M}{c_*}.
     \end{gather*}
     Boundary conditions are the same but with $\hat{\cdot}$ notation where
     \begin{gather*}
@@ -267,7 +267,7 @@
 \end{frame}
 
 \begin{frame}{Parameters}
-    Physical and geometric parameters (take $\bar{\alpha}_k = \pi r^2$, $\gamma_k = 2\pi r_k$, $\alpha_* = \sum_k \bar{\alpha}_k$):
+    Physical and geometric parameters (take $\bar{\alpha}_k = \pi r^2$, $\beta_k = 2\pi r_k$, $\alpha_* = \sum_k \bar{\alpha}_k$):
 
     \resizebox{\textwidth}{!}{
     \begin{tabular}{||c c c|c|c|c c c c||} 
@@ -286,9 +286,9 @@
     \resizebox{\textwidth}{!}{
     \begin{tabular}{||c c c|c c c|c c c|c c||} 
         \hline
-        $\zeta_\mathrm{w}^\mathrm{D}$ & $\zeta_\mathrm{w}^\mathrm{A}$ & $\zeta_\mathrm{w}^{\mathrm{C}}$ &
-         $\zeta_\mathrm{s}^\mathrm{D}$ & $\zeta_\mathrm{s}^\mathrm{A}$ & $\zeta_\mathrm{s}^\mathrm{C}$ & 
-         $\zeta_\mathrm{u}^\mathrm{D}$ & $\zeta_\mathrm{u}^\mathrm{A}$ & $\zeta_\mathrm{u}^\mathrm{C}$ & $h_\mathrm{s}^{\mathrm{A}}$ & $M$ \\
+        $\zeta_\mathrm{D}$ & $\zeta_\mathrm{A}$ & $\zeta_{\mathrm{C}}$ &
+         $\gamma_\mathrm{s}^\mathrm{D}$ & $\gamma_\mathrm{s}^\mathrm{A}$ & $\gamma_\mathrm{s}^\mathrm{C}$ & 
+         $\gamma_\mathrm{u}^\mathrm{D}$ & $\gamma_\mathrm{u}^\mathrm{A}$ & $\gamma_\mathrm{u}^\mathrm{C}$ & $h_{\mathrm{s,max}}^{\mathrm{A}}$ & $M$ \\
         \hline
         \multicolumn{3}{||c|}{{\tiny ($\times 10^{-8}$ cm/mmHg$\cdot$s)}} & \multicolumn{6}{|c|}{{\tiny ($\times 10^{-5}$ cm/s)}} & {\tiny ($\frac{10^{-6}\text{mmol}}{\text{cm}^2\cdot\text{s}}$)} & {\tiny ($\frac{\text{mmol}}{\text{cm}^{3}}$)} \\ %[1ex] 
         \hline\hline
@@ -337,13 +337,147 @@
 \end{frame}
 
 \begin{frame}{Model derivation}
-    Consider a steady state of the previous dimensionless model but rescale $\hat{x}\in (0,1)$ to be the inner medulla instead (from now on, we omit the $\hat{\cdot}$ notation). 
-    Writing $q_k = \alpha_ku_k$, $s_k = c_\mathrm{s}^k$, $u_k = c_\mathrm{u}^k$, and assuming that $1/\nu_k$ and $D_i^k$ are small.
-    (continued in the document)
+    Consider a steady state of the previous dimensionless model but rescale $\hat{x}\in (0,1)$ to be the \textit{inner medulla} instead (from now on, we omit the $\hat{\cdot}$ notation).
+    We further make simplifying assumptions that 
+    \begin{itemize}
+        \item The descending and ascending tubule urea concentration and the collecting tubule salt concentration are negligible.
+        \item Zero salt permeability in the descending tubule.
+    \end{itemize}
+
+    
 \end{frame}
 
+\begin{frame}{}
+    Rewriting $q_k = \alpha_ku_k$, $s_k = c_\mathrm{s}^k$, $u_k = c_\mathrm{u}^k$, $\gamma_s = \gamma_\mathrm{s}^\mathrm{A}$, $\gamma_u = \gamma_\mathrm{u}^\mathrm{C}$, and assuming that $1/\nu_k$ and $D_i^k$ are small, we arrive at the leading order equations:
+    \begin{columns}[T]
 
-\begin{frame}[allowframebreaks]{References}
+        \begin{column}{0.5\textwidth}
+            \begin{align}
+                \frac{dq_\mathrm{D}}{dx} &= -\zeta_\mathrm{D}\left( 2s_0+u_0 - 2s_\mathrm{D} \right) = -w_\mathrm{D},\label{eq:q_D_eq}\\
+                \frac{dq_\mathrm{A}}{dx} &= 0,\label{eq:q_A_eq}\\
+                \frac{dq_\mathrm{C}}{dx} &= -\zeta_\mathrm{C}\left( 2s_0+u_0 - u_\mathrm{C} \right) = -w_\mathrm{C},\label{eq:q_C_eq}\\
+                \frac{dq_0}{dx} &= w_\mathrm{D}+w_\mathrm{C},\label{eq:q_0_eq}
+            \end{align}
+        \end{column}
+        
+        \begin{column}{0.5\textwidth}
+            \begin{align}
+                \frac{d}{dx}(s_\mathrm{D}q_\mathrm{D}) &= 0,\label{eq:s_D_eq}\\
+                \frac{d}{dx}(s_\mathrm{A}q_\mathrm{A}) &= -\gamma_s(s_\mathrm{A} - s_0),\label{eq:s_A_eq}\\
+                \frac{d}{dx}(s_\mathrm{0}q_\mathrm{0}) &= \gamma_s(s_\mathrm{A} - s_0),\label{eq:s_0_eq}\\
+                \frac{d}{dx}(u_\mathrm{C}q_\mathrm{C}) &= -\gamma_u(u_\mathrm{C} - u_0),\label{eq:u_C_eq}\\
+                \frac{d}{dx}(u_\mathrm{0}q_\mathrm{0}) &= \gamma_u(u_\mathrm{C} - u_0).\label{eq:u_0_eq}
+            \end{align}
+        \end{column}
+    
+    \end{columns}
+    
+\end{frame}
+
+\begin{frame}
+    9 unknowns: the water flow $q_\mathrm{D},q_\mathrm{A},q_\mathrm{C},q_0$ and the solute concentrations $s_\mathrm{D},s_\mathrm{A},s_0,u_\mathrm{C},u_0$. (Note that in the limit as $1/\nu_k\searrow 0$, $p_k$ are identical.)
+
+    The ODEs are completed with 9 boundary conditions:
+    \begin{equation}\label{eq:q_bdry}
+        q_\mathrm{D}(0) = \frac{2S}{C},\quad q_\mathrm{A}(1) = -q_\mathrm{D}(1),\quad q_\mathrm{C}(0) = \frac{U}{C},\quad q(1) = 0.
+    \end{equation}
+    \begin{equation}\label{eq:solute_bdry}
+        2s_\mathrm{D}(0) = u_\mathrm{C}(0) = C,
+    \end{equation}        
+    \begin{align}
+        \frac{2S}{C}+q_0(0)+q_\mathrm{A}+\frac{U}{C} &= q_\mathrm{C}(1),\label{eq:w_consv}\\
+        S+q_\mathrm{A}(0)s_\mathrm{A}(0)+s_0(0)q_0(0) &= 0,\label{eq:s_consv}\\
+        U+u_0(0)q_0(0) &= u_\mathrm{C}(1)q_\mathrm{C}(1).\label{eq:u_consv}
+    \end{align}
+    The problem can be reduced even further!
+\end{frame}
+
+\begin{frame}
+    After some tedious calculation, we can explicitly solve for $q_\mathrm{A}$, $q_0$, $s_\mathrm{D}$, $s_0$, $u_0$ in terms of $q_\mathrm{D}$, $q_\mathrm{C}$, $s_\mathrm{A}$, $u_\mathrm{C}$.
+    Hence, this problem is equivalent to
+    \begin{align}
+        \frac{dq_\mathrm{D}}{dx} &= -\zeta_\mathrm{D}\left( 2s_0+u_0-\frac{2S}{q_\mathrm{D}} \right) \label{eq:sys_q_D}\\
+        \frac{ds_\mathrm{A}}{dx} &= -\frac{\gamma_s}{q_\mathrm{A}}(s_\mathrm{A} - s_0),\label{eq:sys_s}\\
+        \frac{dq_\mathrm{C}}{dx} &= -\zeta_\mathrm{C}(2s_0+u_0-u_\mathrm{C}),\label{eq:sys_q_C}\\
+        \frac{du_\mathrm{C}}{dx} &= \frac{1}{q_\mathrm{C}}\left(\zeta_\mathrm{C}u_\mathrm{C}(2 s_0+u_0 - u_\mathrm{C})- \gamma_u(u_\mathrm{C} - u_0)\right),\label{eq:sys_u}
+    \end{align}
+        with boundary conditions
+    \begin{equation}\label{eq:sys_bdry}
+        % \begin{gathered}
+            % s_\mathrm{A}(0) = s_0(0) + s_\mathrm{A}(1)\left( 1-\frac{s_0(0)}{S} \left( \frac{2S+U}{C} - q_\mathrm{C}(1) \right) \right),\\
+            q_\mathrm{D}(0) = \frac{2S}{C},\quad
+            s_\mathrm{A}(1) = S/q_\mathrm{D}(1),\quad
+             q_\mathrm{C}(0) = \frac{U}{C},\quad u_\mathrm{C}(0) = C.
+        % \end{gathered}
+    \end{equation}
+        % where $q_\mathrm{A} = -q_\mathrm{D}(1)$, and $s_0,u_0$ are given by
+        % \begin{equation}\label{eq:su}
+        %     s_0 = \frac{S-s_\mathrm{A}q_\mathrm{D}(1)}{q_\mathrm{D} - q_\mathrm{D}(1)+q_\mathrm{C} - q_\mathrm{C}(1)},\quad u_0 = \frac{u_\mathrm{C}q_\mathrm{C} - u_\mathrm{C}(1)q_\mathrm{C}(1)}{q_\mathrm{D} - q_\mathrm{D}(1)+q_\mathrm{C} - q_\mathrm{C}(1)}.
+        % \end{equation}
+\end{frame}
+
+\begin{frame}{Exploring passive mechanism}
+    The system of ODEs is approximated using central difference scheme, then solved using an iterative method.
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\linewidth]{../results/7-20-2023/osm_low_solute_perm.png}
+            \caption{$\gamma_u = \gamma_s = 0.1$}
+            \label{fig:low_sol_perm}
+            \vspace*{4mm}
+        \end{subfigure}%
+        \begin{subfigure}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\linewidth]{../results/7-20-2023/osm_high_solute_perm.png}
+            \caption{$\gamma_u = \gamma_s = 1.2$}
+            \label{fig:high_sol_perm}
+        \end{subfigure}
+        \caption{$\zeta_\mathrm{D} = \zeta_\mathrm{C} = 10$, $S = 1$, $U = 2$, $C = 2$}
+        \label{fig:typical_sol}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \begin{figure}
+    \centering
+    \begin{subfigure}{0.4\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../results/7-20-2023/core_osm.png}
+        \caption{papillary core osmolarity}
+        \label{fig:core_osm}
+    \end{subfigure}%
+    \begin{subfigure}{0.4\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../results/7-20-2023/urine_osm.png}
+        \caption{urine osmolarity}
+        \label{fig:urine_osm}
+    \end{subfigure}
+    \begin{subfigure}{0.4\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../results/7-20-2023/loop_osm.png}
+        \caption{osmolarity at the turning of Henle's loop}
+        \label{fig:loop_osm}
+    \end{subfigure}
+    \caption{$\zeta_\mathrm{D} = \zeta_\mathrm{C} = 10$, $S = 1$, $U = 2$, $C = 2$}
+    \label{fig:pap_osm}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+    Conclusion \#1: urea is an `enabler' of salt reabsorption, while both salt and urea act as sources of osmotic drive.
+\end{frame}
+
+\begin{frame}{Long-short loop proportion}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.8\textwidth]{../results/7-20-2023/osm_loop_fraction.png}
+        \caption{$\zeta_\mathrm{D} = \zeta_\mathrm{C} = 10$, $\gamma_u = \gamma_s = 1.2$, $U = 2$, $C = 2$}
+        \label{fig:loop_frac}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[allowframebreaks]
     \bibliographystyle{plainnat}
     \tiny\bibliography{../bibliography}
 \end{frame}
