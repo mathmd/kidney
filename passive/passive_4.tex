@@ -67,7 +67,7 @@
 \sloppy % ช่วยตัดคำภาษาไทย
 \maketitle
 
-\section{Introduction}
+\section{Introduction and research log}
 
 Concentration gradient in the renal medullary interstitium is responsible for concentrating urine.
 It is well-understood that the active reabsorption of NaCl from the thick ascending tubules, together with the counter-current multiplication, establish this concentration gradient in the outer medulla.
@@ -75,11 +75,44 @@ For the inner medulla, where there is no such an active transport, it is the pas
 To have the passive mechanism working, we need to have relatively high tubular concentration of NaCl at the turning of loops of Henle, and of urea in the collecting tubules.
 A common explanation is that the net water and NaCl reabsorption preceding the inner medulla collecting tubules concentrate the urea enough that it diffuses out in the inner medulla.
 This in turn increases osmolality in the interstitium that drives the water reabsorption from the thin descending limbs, concentrating NaCl in the process.
-
 The aim of this document is to provide a clean picture of the passive mechanism through a relatively simple model.
-We derive a schematic model of inner medulla with a central core configuration and containing only two solute species: salt and urea.
-We show that the model can be reduced to a system of 4 ordinary differential equations.
-Finally, we perform numerical simulations to examine factors that contribute to the passive mechanism.
+
+\subsection{Research log}
+
+\begin{proof}[July 20, 2023.]
+    With certain simplifying assumptions, we derive a schematic model of inner medulla with a central core configuration and containing only two solute species: salt and urea (Section \S2).
+    We show that the model can be written as a system of 4 ordinary differential equations.
+    Our numerical simulations identify factors that contribute to the passive mechanism: the salt input from the outer medulla (which reflects the ratio between short- and long-loop nephrons), and the solute permeability.
+    The roles of urea and long-loop nephron are briefly discussed in Section \S3.
+\end{proof}
+
+\begin{proof}[July 26, 2023.]
+    After meeting with Alan Weinstein, we learned that yielding a negative result from the schematic model would be very meaningful; it would strongly signal that we need a new idea to tackle this problem, e.g., \textit{salt dump} by red blood cells (suggested by Alan Weinstein).
+    Indeed, the derivation of this model is in the favor of the classical explanation of the passive mechanism, which makes this model a `\textit{best case scenario}' model.
+    We need to determine the extent of concentrating capability to which this model can generate.
+    The factors that we need to consider are the size of urea permeable region (realistically, this is the lower $1/3$ of the collect tubule) and the parameter space of the solute permeability (our numerical method only yield convergence for the small values).
+
+    Suppose that this is true, then we can also use this model to investigate the salt dump by adding a source term in the equation for the central core.
+\end{proof}
+
+\begin{proof}[August 4, 2023.]
+    After introducing salt dump, we discover another steady state solution which collides with the previously known solution as we increase the rate of salt dump, resembling a saddle-node bifurcation.
+    It turns out that this steady state also exists and went unnoticed when there is no salt dump.
+    However, we can only compute this for a small region of $\gamma_s,\gamma_u\in (1.0,1.2)$.
+    We need a dynamic simulation to understand what is going on.
+    Namely, we want to know the stability of the steady states and the dynamical behavior in the unknown region of parameter space.
+\end{proof}
+
+\begin{proof}[August 16, 2023]
+    We go back to the balance equations for the 5 solutes and 4 water flows.
+    The time derivative terms are reintroduced for the 5 solutes.
+    After numerical experiment, we found that the original steady state is stable while the other is not.
+    Moreover, there is yet another stable steady state above the unstable one, thus we have a bistability when $\gamma_s=\gamma_u=1.2$.
+    Interestingly, when we increase $\gamma_u,\gamma_s$ beyond $\sim 1.3$ the osmolarity at $x=1$ seems to grow exponentially fast, possibly reaching singularity.
+    Apparently, this is the behavior after the unstable and the original steady states merge.
+    But what happens to the new stable steady state?
+\end{proof}
+
 
 \section{Model derivation}
 
@@ -94,7 +127,7 @@ We denote by $s_k$, $u_k$ and $q_k$, as a function of $x$, the salt and urea con
 For simplicity, we will assume that the urea content in the descending tubule and the salt content in the collecting tubule are negligible, i.e., $u_\mathrm{D}=s_\mathrm{C}\equiv 0$.
 Thus, there are total of 9 unknowns in the model: the water flow $q_\mathrm{D},q_\mathrm{A},q_\mathrm{C},q_0$ and the solute concentrations $s_\mathrm{D},s_\mathrm{A},s_0,u_\mathrm{C},u_0$.
 
-We assume that the transmural water fluxes are allowed only for the descending tubules and the collecting tubules into the interstitium, and these are formally described as $w_\mathrm{D}:=\zeta_\mathrm{D}(2s_0+u_0-s_\mathrm{D})$ and $w_\mathrm{C}:=\zeta_\mathrm{C}(2s_0+u_0 - u_\mathrm{C})$ where $\zeta_k>0$ is the water permeability, i.e., the fluxes are proportional to the osmolarity differences.
+We assume that the transmural water fluxes are allowed only for the descending tubules and the collecting tubules into the interstitium, and these are formally described as $w_\mathrm{D}:=\zeta_\mathrm{D}(2s_0+u_0-2s_\mathrm{D})$ and $w_\mathrm{C}:=\zeta_\mathrm{C}(2s_0+u_0 - u_\mathrm{C})$ where $\zeta_k>0$ is the water permeability, i.e., the fluxes are proportional to the osmolarity differences.
 Note that the osmolarity of salt is twice the concentration.
 By mass balance, we require that
 \begin{align}
@@ -134,6 +167,8 @@ These are obtained by the conservation of water, salt and urea:
     S+q_\mathrm{A}(0)s_\mathrm{A}(0)+s_0(0)q_0(0) &= 0,\label{eq:s_consv}\\
     U+u_0(0)q_0(0) &= u_\mathrm{C}(1)q_\mathrm{C}(1).\label{eq:u_consv}
 \end{align}
+
+
 
 The system of nine ordinary differential equations we just obtained can be simplified even further.
 First, we can turn the differential equation describing the salt concentration in the descending tubules (\ref{eq:s_D_eq}) into an algebraic equation.
