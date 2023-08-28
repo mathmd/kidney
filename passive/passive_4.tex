@@ -75,7 +75,8 @@ For the inner medulla, where there is no such an active transport, it is the pas
 To have the passive mechanism working, we need to have relatively high tubular concentration of NaCl at the turning of loops of Henle, and of urea in the collecting tubules.
 A common explanation is that the net water and NaCl reabsorption preceding the inner medulla collecting tubules concentrate the urea enough that it diffuses out in the inner medulla.
 This in turn increases osmolality in the interstitium that drives the water reabsorption from the thin descending limbs, concentrating NaCl in the process.
-The aim of this document is to provide a clean picture of the passive mechanism through a relatively simple model.
+
+The original aim of this model is to provide a clean picture of the passive mechanism through a relatively simple model.
 
 \subsection{Research log}
 
@@ -91,8 +92,7 @@ The aim of this document is to provide a clean picture of the passive mechanism 
     Indeed, the derivation of this model is in the favor of the classical explanation of the passive mechanism, which makes this model a `\textit{best case scenario}' model.
     We need to determine the extent of concentrating capability to which this model can generate.
     The factors that we need to consider are the size of urea permeable region (realistically, this is the lower $1/3$ of the collect tubule) and the parameter space of the solute permeability (our numerical method only yield convergence for the small values).
-
-    Suppose that this is true, then we can also use this model to investigate the salt dump by adding a source term in the equation for the central core.
+    At the same time, we will also investigate the salt dump by adding a source term in the equation for the central core.
 \end{proof}
 
 \begin{proof}[August 4, 2023.]
@@ -104,15 +104,27 @@ The aim of this document is to provide a clean picture of the passive mechanism 
 \end{proof}
 
 \begin{proof}[August 16, 2023]
-    We go back to the balance equations for the 5 solutes and 4 water flows.
-    The time derivative terms are reintroduced for the 5 solutes.
-    After numerical experiment, we found that the original steady state is stable while the other is not.
-    Moreover, there is yet another stable steady state above the unstable one, thus we have a bistability when $\gamma_s=\gamma_u=1.2$.
-    Interestingly, when we increase $\gamma_u,\gamma_s$ beyond $\sim 1.3$ the osmolarity at $x=1$ seems to grow exponentially fast, possibly reaching singularity.
-    Apparently, this is the behavior after the unstable and the original steady states merge.
-    But what happens to the new stable steady state?
+    With dynamical simulation, we found that the original steady state is stable while the other is not.
+    Interestingly, perturbing the unstable steady state by throwing in extra salt in the central core yields a sustained concentration gradient as high as 10 times the plasma osmolarity at the papillary end.
+    Moreover, when we increase $\gamma_u,\gamma_s$ beyond $\sim 1.3$ the osmolarity at $x=1$ overshoots.
+    It is possible that the latter stems from our simplifying assumptions, most likely the negligence of diffusion.
+    However, in the light of this finding, we could expect some sort of threshold in a more complete model beyond which the concentration gradient is drastically improved.
+    These dynamical behaviors might be clues to how animal like rodents can generate a high interstitial osmolarity, to which our simulated transience is comparable.
 \end{proof}
 
+\begin{proof}[August 22, 2023]
+    Pseudo-arclength continuation, together with dynamical simulations, reveals that we indeed has a saddle node bifurcation as we increase the permeabilities or the rate of salt dump.
+    Furthermore, as we continue to iterate the numerical continuation from the stable branch, we eventually reach a point of breakdown where we have a large numerical error associated with the emergence of backward flow at the end of collecting tubules.
+    Beyond this point, the model does not make a physical sense.
+    Thus, the dynamic that revolves around the unstable steady state should be considered only for large enough parameters.
+    This breakdown happens when we have large salt `sink'; in case of no salt dump, the breakdown is when $\gamma\approx 1$ which explains our previous failure of convergence outside $\gamma\in(1.0,1.2)$.
+\end{proof}
+
+\begin{proof}[August 25, 2023]
+    A recent preliminary finding by Alan Weinstein on red blood cells suggest that, instead of salt dump, we should have red blood cells soak up water by taking in potassium from the collecting tubule.
+    Apparently, volume regulatory increase (VRI) of red blood cells, which counteracts the osmotically induced cell shrinkage in the inner medulla, is responsible for the potassium reuptake.
+    Hence, we discard the idea of salt dump and introduce a new scheme in which a new salt species (representing \ce{K+} and its anion pair) is reabsorbed from the collecting tubule at a constant rate.
+\end{proof}
 
 \section{Model derivation}
 
